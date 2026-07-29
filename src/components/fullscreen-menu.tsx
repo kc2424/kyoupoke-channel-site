@@ -28,7 +28,7 @@ export function FullscreenMenu() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-full border-2 border-black px-5 py-2.5 text-sm font-bold text-black"
+        className="rounded-full border-2 border-black px-5 py-2.5 text-sm font-bold text-black lg:px-6 lg:py-3 lg:text-base"
       >
         Menu
       </button>
@@ -48,11 +48,11 @@ export function FullscreenMenu() {
 
         <div className="relative flex h-full flex-col justify-between px-6 py-8 sm:px-12 sm:py-10">
           <div className="flex items-center justify-between">
-            <span className="font-wordmark text-brand text-xl">KYOU POKE</span>
+            <span className="font-wordmark text-brand text-xl lg:text-2xl">KYOU POKE</span>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="rounded-full border-2 border-white px-5 py-2.5 text-sm font-bold text-white"
+              className="rounded-full border-2 border-white px-5 py-2.5 text-sm font-bold text-white lg:px-6 lg:py-3 lg:text-base"
             >
               Close
             </button>
@@ -88,7 +88,7 @@ export function FullscreenMenu() {
             ))}
           </nav>
 
-          <div className="flex flex-col gap-4 text-sm font-bold sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-4 text-sm font-bold sm:flex-row sm:items-end sm:justify-between lg:text-base">
             <div>
               <p className="text-white/40 uppercase">Links</p>
               <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">

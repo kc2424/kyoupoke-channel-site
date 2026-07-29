@@ -90,14 +90,14 @@ export function MemberCard({
           style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
         >
           <div className="overflow-hidden">
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700 lg:text-base">
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700 lg:text-lg">
               {text}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold text-neutral-600 lg:px-4 lg:py-1.5 lg:text-sm"
+                  className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold text-neutral-600 lg:px-4 lg:py-1.5 lg:text-base"
                 >
                   {tag}
                 </span>

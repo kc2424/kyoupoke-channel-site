@@ -90,10 +90,10 @@ export default function Home() {
       </header>
 
       <section className="relative overflow-hidden bg-white px-6 pt-24 pb-10 sm:px-10">
-        <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block">
+        <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block lg:text-sm">
           Unofficial Fan Site
         </span>
-        <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block">
+        <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block lg:text-sm">
           YouTube → World
         </span>
 
@@ -139,7 +139,7 @@ export default function Home() {
               text="プロフィール"
               className="font-display text-3xl text-neutral-900 lg:text-5xl"
             />
-            <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
+            <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
               About
             </p>
             <Card className="mt-6 p-6 shadow-sm lg:p-10">
@@ -163,10 +163,10 @@ export default function Home() {
             text="メンバー紹介"
             className="font-display text-3xl text-neutral-900 lg:text-5xl"
           />
-          <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
+          <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
             Members
           </p>
-          <p className="mt-2 text-xs text-neutral-400">
+          <p className="mt-2 text-xs text-neutral-400 lg:text-sm">
             カードをタップすると詳細が開きます
           </p>
           <div className="mt-6 border-t border-neutral-200">
@@ -195,7 +195,7 @@ export default function Home() {
               text="実績・出演"
               className="font-display text-3xl text-white lg:text-5xl"
             />
-            <p className="mt-2 text-xs font-bold tracking-widest text-white/40 uppercase">
+            <p className="mt-2 text-xs font-bold tracking-widest text-white/40 uppercase lg:text-sm">
               Recognition
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:gap-5">
@@ -226,7 +226,7 @@ export default function Home() {
             text="おすすめ動画"
             className="font-display text-3xl text-neutral-900 lg:text-5xl"
           />
-          <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
+          <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
             Videos
           </p>
           {/* TODO: 動画IDを実際のおすすめ動画のIDに差し替えてください */}
@@ -273,7 +273,7 @@ export default function Home() {
               text="リンク"
               className="font-display text-3xl text-white lg:text-5xl"
             />
-            <p className="mt-2 text-xs font-bold tracking-widest text-white/60 uppercase">
+            <p className="mt-2 text-xs font-bold tracking-widest text-white/60 uppercase lg:text-sm">
               Links
             </p>
             {/* TODO: Instagram・TikTokの正式なURLが分かったら差し替えてください */}
@@ -322,7 +322,7 @@ export default function Home() {
           </StickerBadge>
         </div>
 
-        <p className="relative mt-12 px-6 text-center text-sm text-white/60 sm:px-10">
+        <p className="relative mt-12 px-6 text-center text-sm text-white/60 sm:px-10 lg:text-base">
           このページは非公式のファンサイトです。今日ポケの活動を応援しています。
         </p>
       </footer>
