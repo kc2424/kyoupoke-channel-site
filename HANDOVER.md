@@ -1,6 +1,6 @@
 # 今日ポケ ファンサイト 引き継ぎ書
 
-最終更新: 2026-07-30
+最終更新: 2026-07-30（夜、KUYA参考の大幅ブラッシュアップ + 夜間自動ブラッシュアップ設定まで）
 
 ## 1. プロジェクト概要
 
@@ -11,6 +11,7 @@
 - GitHubリポジトリ: https://github.com/kc2424/kyoupoke-channel-site （**Private**）
 - 本番URL: https://kyoupoke-channel-site.vercel.app
 - **Vercel Authentication が有効**（Vercelアカウントでログインしていない人は閲覧不可。非公開状態を維持するための設定）
+- **作業ブランチ: `site-brushup`**（`main` とは別）。2026-07-30時点、見た目まわりの作業はすべてこのブランチで進行中。`main` にマージするかは未定（ユーザー確認待ち）
 
 ## 2. 技術スタック
 
@@ -21,7 +22,8 @@
 - **GSAP + ScrollTrigger**: 巨大タイトルのスクロール連動拡大演出（`src/components/giant-title.tsx`）
 - **Lenis**: 慣性のあるスムーズスクロール（`src/components/smooth-scroll.tsx`）
 - **フォント**:
-  - `Mochiy Pop One`（`--font-logo`）: 「今日ポケ」のロゴ・ワードマーク専用（丸文字・バブル調）
+  - `Titan One`（`--font-wordmark`）: 「KYOU POKE」ロゴタイプ専用（実際のチャンネルブランド= public/3.png 相当のぷっくりしたステッカー体に寄せた）。巨大タイトル（`GiantTitle`）とヘッダー・フッターのロゴ表記で使用
+  - `Mochiy Pop One`（`--font-logo`）: header内の小さい「今日ポケ」和文表記など、丸文字が欲しい箇所に限定使用
   - `Zen Kaku Gothic New`（`--font-display`, weight 900）: 見出し全般（太字グロテスク）
   - `Noto Sans JP`（`--font-body`）: 本文
 
@@ -31,6 +33,12 @@
 - **GitHub CLI (`gh`) をこのPCにインストール・認証済み**（アカウント: kc2424）。新しいターミナルでは `gh repo create` 等がそのまま使える
 - Vercel の **Framework Preset は "Next.js" に設定済み**（最初、静的サイト時代の設定が残っていて "Other" のままだったため、Next.js移行直後のデプロイが1回失敗している。もし今後 "No Output Directory" エラーが出たら、Vercel Project Settings → Build and Deployment → Framework Preset を確認する）
 - ローカル開発サーバー起動時の注意: `npm run dev` を複数回バックグラウンド起動すると**ポートが競合して古いプロセスがCSSを配信し続け、見た目が反映されない**という不具合が過去に発生した。挙動がおかしい時は `node.exe` プロセスを確認して重複起動がないか確認する
+
+## 3.5. 本物のブランド素材（重要・差し替え禁止）
+
+- `public/icon.png`: 実際のYouTubeチャンネルアイコンをスクリーンショット（ユーザー提供の `1.png`）から切り抜いた本物の画像。`LogoMark`コンポーネント（`src/components/logo-mark.tsx`）が使用。以前は独自SVG再現だったが、ユーザーから「ちゃんと写真見たか」と指摘され本物画像に差し替えた経緯あり
+- `public/hero-mascots.png`: 実際のブランドイラスト（くろこ・いろは・バンビーのマスコットキャラがソファでゲームしている絵、「KYOU POKE」ロゴ入り）。ユーザーがチャット添付→ダウンロードフォルダから発見して取り込んだもの。`MemberCard`（個人写真）と「Meet the Members」バナーの両方で使用。**メンバーとの対応: 画像内は左から くろこ・いろは・バンビー**（`focal`座標で位置調整、`src/app/page.tsx`の`members`配列参照）
+- これらは絶対に元のプレースホルダー（Gemini生成の3D風イラスト`hero.png`や自作SVGアイコン）に戻さないこと
 
 ## 4. コンテンツの状態（TODO残あり）
 
@@ -72,3 +80,38 @@
 - Instagram・TikTokリンクの追加
 - Notion をCMS化して自分で更新できるようにする（会話中に提案済み・未着手）
 - 個別メンバー写真があれば、グループ写真のクロップ処理から差し替え可能
+
+## 8. 2026-07-30 セッション: KUYA参考の大幅ブラッシュアップ
+
+前回までのKUYA調査を踏まえ、動き・レイアウト・ブランド統一を大幅に強化した。
+
+### 8.1 実施内容
+- **ブランド統一**: ロゴを本物画像化（3.5節参照）、巨大タイトルを日本語「今日ポケ」からユーザー提供の実際のロゴ表記「KYOU POKE」（ローマ字・Titan One）に変更。ヘッダー/フッターの表記もKYOU POKEに統一
+- **KUYA由来のマイクロインタラクション**（`src/components/`に追加）:
+  - `reveal-text.tsx`: 見出しがスクロールで下から浮き上がって出現（文字ごとにoverflow-hiddenでマスク）
+  - `underline-link.tsx`: ホバーでアンダーバーがscaleXで伸びる（Tailwind v4は`transform`でなく`scale`プロパティを使う点に注意。`getComputedStyle().transform`では検出できないので要注意）
+  - `giant-title.tsx`: マウス位置に応じて文字がふにゃっと伸縮するホバーエフェクト（GSAP `quickTo` + elastic ease）。**スクロール連動で文字が収縮するpin付きエフェクトは一度実装したがLenisとの相性が悪く不自然な挙動になったため削除済み**。同様の「凝った独自スクロール演出」を足す前に、Lenis+ScrollTrigagerの連携（8.2節）を必ず確認すること
+  - `sticker-badge.tsx`: 星形（スターバースト）のCSS `clip-path` バッジ。フッターに設置
+  - `fullscreen-menu.tsx`: ヘッダーの「Menu」ボタンから開くフルスクリーンナビ（KUYAのHome/Work/Info風）
+  - `member-card.tsx`: 写真ホバーで手描き風の丸+チェックマークがSVG `stroke-dashoffset` アニメで描画される
+- **セクション単位の背景色ブロック**: 白（プロフィール/メンバー）→黒（実績）→白（動画）→ブランドオレンジ（リンク）→黒（フッター）と、KUYAのように背景色をセクションごと丸ごと切り替える構成に変更
+- **デスクトップ表示の拡大**: コンテナを`max-w-5xl`→`max-w-[1600px]`に拡大、見出し・カード・ロゴなど主要要素に`lg:`ブレークポイントで大きめサイズを追加（ユーザーから「パソコンで見ると小さい」との指摘への対応）
+
+### 8.2 Lenis + GSAP ScrollTrigger の正式連携（重要）
+以前は`Lenis`が`autoRaf: true`で単独動作し、GSAP ScrollTriggerと同期していなかった。これが原因でpin付きスクロール演出が不自然な挙動になった。`src/components/smooth-scroll.tsx`で以下の公式パターンに修正済み:
+```
+const lenis = new Lenis({ autoRaf: false });
+lenis.on("scroll", ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+```
+また、ページ内アンカーリンク（`#profile`等）のクリックはネイティブジャンプではなく`src/lib/lenis.ts`の`scrollToHash()`経由でLenisのスムーズスクロールを使うように統一した（`UnderlineLink`・`FullscreenMenu`が使用）。**今後アンカーリンクを追加する場合は必ず`scrollToHash`を使うこと。**
+
+### 8.3 夜間の自動ブラッシュアップ（クラウドルーティン）
+ユーザーの希望で、Claude Codeのクラウドルーティン機能を使い、`site-brushup`ブランチに対して**1時間おきに自動でブラッシュアップし続けるタスク**を設定した。
+- ルーティン名: 「今日ポケ サイト ブラッシュアップ」
+- 管理画面: https://claude.ai/code/routines/trig_01HTrsstYCoKjfTjS5vfXQTj
+- 内容: 毎回1つだけ改善（①Awwwards等のWebデザイン賞受賞作品をWeb検索→5つの評価ポイントを分析→②その中で今日ポケのブランドに合うものを1つ今日ポケ独自のコードとして実装→③`npm run build`確認→④分析内容と変更理由を書いたコミットメッセージでpush）
+- **セットアップの詰まりどころ**: クラウドエージェントがPrivateリポジトリにアクセスするには、claude.aiの「Connectors」設定ではなく、**GitHub側で「Claude」という名前のGitHub Appを明示的にインストールする必要がある**（`github.com/settings/installations`の「Installed GitHub Apps」タブ。「Authorized GitHub Apps」タブのOAuth認証だけでは不十分）
+- PCの電源・スリープとは無関係にクラウド側で動くので、**このPCを閉じても翌朝には`site-brushup`ブランチに複数コミットが積まれているはず**。朝一で差分を確認し、良い変更だけ`main`にマージする運用を想定
+- 安全策としてルーティンのプロンプトに「mainブランチに触れない」「破壊的変更をしない」「受賞作品のコードは直接コピーしない」「1回の実行で1変更のみ」を明記済み
