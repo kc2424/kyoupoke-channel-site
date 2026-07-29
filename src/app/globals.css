@@ -103,6 +103,23 @@ body {
   font-family: var(--font-logo), sans-serif;
 }
 
+.font-wordmark {
+  font-family: var(--font-wordmark), sans-serif;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);

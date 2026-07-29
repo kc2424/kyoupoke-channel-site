@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mochiy_Pop_One, Noto_Sans_JP, Zen_Kaku_Gothic_New, Geist } from "next/font/google";
+import { Mochiy_Pop_One, Noto_Sans_JP, Titan_One, Zen_Kaku_Gothic_New, Geist } from "next/font/google";
 import "./globals.css";
 import { IntroLoader } from "@/components/intro-loader";
 import { SmoothScroll } from "@/components/smooth-scroll";
@@ -9,6 +9,12 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const mochiyPopOne = Mochiy_Pop_One({
   variable: "--font-logo",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const titanOne = Titan_One({
+  variable: "--font-wordmark",
   weight: "400",
   subsets: ["latin"],
 });
@@ -40,6 +46,7 @@ export default function RootLayout({
       lang="ja"
       className={cn(
         mochiyPopOne.variable,
+        titanOne.variable,
         zenKakuGothicNew.variable,
         notoSansJP.variable,
         "font-sans",
