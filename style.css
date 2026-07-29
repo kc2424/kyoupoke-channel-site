@@ -41,9 +41,45 @@ body {
   color: transparent;
 }
 
+.hero-sub {
+  margin: 4px 0 0;
+  color: var(--text-sub);
+  font-size: 0.9rem;
+}
+
 .hero-catch {
   margin-top: 8px;
   color: var(--text-sub);
+}
+
+.card p + p {
+  margin-top: 12px;
+}
+
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.member-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.member-name {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+  color: var(--cyan);
+}
+
+.member-role {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: var(--pink);
+  font-weight: bold;
 }
 
 main {
