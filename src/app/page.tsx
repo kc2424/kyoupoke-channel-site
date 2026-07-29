@@ -37,6 +37,17 @@ const members = [
   },
 ];
 
+const achievements = [
+  { label: "YouTube Creator Awards", sub: "銀の盾（登録者10万人）", tone: "brand" },
+  { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演", tone: "black" },
+  { label: "ポケモン竜王戦2024", sub: "ゲーム部門出場", tone: "cream" },
+  { label: "PJCS2025 / WCS2025", sub: "いろは選手が出場権獲得", tone: "brand-dark" },
+  { label: "今日ポケ杯", sub: "ニコニコ生放送と連携開催", tone: "cream" },
+  { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "black" },
+];
+
+const thanksBadges = ["Thank you!", "ありがとう!", "Gracias!", "Merci!", "Danke!"];
+
 const videos = [1, 2, 3];
 
 const links = [
@@ -186,6 +197,34 @@ export default function Home() {
           </div>
         </section>
 
+        <FadeIn>
+          <section id="achievements">
+            <h2 className="font-display text-3xl text-neutral-900">実績・出演</h2>
+            <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
+              Recognition
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {achievements.map((a) => (
+                <div
+                  key={a.label}
+                  className={cn(
+                    "flex aspect-[4/3] cursor-default flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg",
+                    a.tone === "brand" && "bg-brand text-white",
+                    a.tone === "brand-dark" && "bg-brand-dark text-white",
+                    a.tone === "black" && "bg-black text-white",
+                    a.tone === "cream" && "bg-[#f4ede4] text-neutral-900"
+                  )}
+                >
+                  <p className="font-display text-lg leading-tight sm:text-xl">
+                    {a.label}
+                  </p>
+                  <p className="mt-1 text-xs font-bold opacity-70">{a.sub}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </FadeIn>
+
         <section id="videos">
           <h2 className="font-display text-3xl text-neutral-900">おすすめ動画</h2>
           <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
@@ -257,8 +296,27 @@ export default function Home() {
         </FadeIn>
       </main>
 
-      <footer className="border-t border-neutral-200 bg-white py-8 text-center text-sm text-neutral-500">
-        <p>このページは非公式のファンサイトです。今日ポケの活動を応援しています。</p>
+      <footer className="relative overflow-hidden border-t border-neutral-200 bg-black px-6 py-20 text-center sm:px-10">
+        <div className="relative mx-auto inline-block">
+          <h2 className="font-display text-brand text-[16vw] leading-none sm:text-[9vw]">
+            ありがとう
+          </h2>
+          <span className="absolute top-2 -left-4 -translate-x-full rounded-full border border-white/30 px-3 py-1 text-xs font-bold text-white sm:-left-8">
+            {thanksBadges[0]}
+          </span>
+          <span className="absolute top-1/3 -right-4 translate-x-full rounded-full border border-white/30 px-3 py-1 text-xs font-bold text-white sm:-right-10">
+            {thanksBadges[1]}
+          </span>
+          <span className="absolute -bottom-6 left-1/4 rounded-full border border-white/30 px-3 py-1 text-xs font-bold text-white">
+            {thanksBadges[2]}
+          </span>
+          <span className="absolute -bottom-2 right-1/4 rounded-full border border-white/30 px-3 py-1 text-xs font-bold text-white">
+            {thanksBadges[3]}
+          </span>
+        </div>
+        <p className="relative mt-10 text-sm text-white/60">
+          このページは非公式のファンサイトです。今日ポケの活動を応援しています。
+        </p>
       </footer>
     </div>
   );
