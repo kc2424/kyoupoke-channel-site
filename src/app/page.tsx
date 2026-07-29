@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { FadeIn } from "@/components/fade-in";
+import { GiantTitle } from "@/components/giant-title";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -58,31 +59,46 @@ export default function Home() {
         </a>
       </header>
 
-      <div className="relative h-[320px] w-full overflow-hidden sm:h-[420px]">
-        <Image
-          src="/hero.png"
-          alt="今日ポケ メンバーイメージ"
-          fill
-          priority
-          className="object-cover object-top"
-        />
-      </div>
+      <section className="relative overflow-hidden bg-white px-6 pt-20 pb-10 sm:px-10">
+        <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block">
+          Unofficial Fan Site
+        </span>
+        <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block">
+          YouTube → World
+        </span>
 
-      <section className="flex flex-col items-center justify-center gap-4 bg-white px-6 py-16 text-center">
-        <FadeIn>
-          <h1 className="font-display text-5xl text-brand drop-shadow-sm sm:text-7xl">
-            今日ポケ
-          </h1>
-        </FadeIn>
-        <FadeIn delay={0.1}>
-          <p className="text-sm text-neutral-500">（旧称：今日の○○ポケチャンネル）</p>
-        </FadeIn>
-        <FadeIn delay={0.2}>
-          <p className="max-w-xl text-neutral-700">
+        <GiantTitle>今日ポケ</GiantTitle>
+
+        <FadeIn delay={0.3}>
+          <p className="mx-auto mt-6 max-w-xl text-center text-neutral-600">
             世界トップクラスの対戦理論と、笑えるバラエティ企画を届けるポケモン対戦YouTuberグループ。
           </p>
         </FadeIn>
+
+        <div className="mt-12 border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-400 uppercase">
+          Featured
+        </div>
       </section>
+
+      <FadeIn>
+        <section className="bg-white px-6 pb-16 sm:px-10">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <p className="text-sm font-bold text-neutral-500">
+              今日ポケ（旧称：今日の○○ポケチャンネル）
+            </p>
+            <p className="font-display text-2xl text-brand">Meet the Members</p>
+          </div>
+          <div className="relative mt-6 h-[320px] w-full overflow-hidden rounded-2xl sm:h-[460px]">
+            <Image
+              src="/hero.png"
+              alt="今日ポケ メンバーイメージ"
+              fill
+              priority
+              className="object-cover object-top"
+            />
+          </div>
+        </section>
+      </FadeIn>
 
       <main className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 py-16">
         <FadeIn>

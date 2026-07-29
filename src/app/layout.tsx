@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mochiy_Pop_One, Noto_Sans_JP, Geist } from "next/font/google";
 import "./globals.css";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -30,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="ja" className={cn(mochiyPopOne.variable, notoSansJP.variable, "font-sans", geist.variable)}>
       <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );
