@@ -32,7 +32,7 @@ export function GiantTitle({ children }: { children: string }) {
   return (
     <h1
       ref={ref}
-      className="font-display text-brand w-full text-center text-[16vw] leading-[0.95] sm:text-[11vw]"
+      className="font-logo text-brand w-full scale-y-110 text-center text-[16vw] leading-[0.95] tracking-tight sm:text-[11vw]"
     >
       {children}
     </h1>

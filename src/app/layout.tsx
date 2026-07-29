@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
-import { Mochiy_Pop_One, Noto_Sans_JP, Geist } from "next/font/google";
+import { Mochiy_Pop_One, Noto_Sans_JP, Zen_Kaku_Gothic_New, Geist } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const mochiyPopOne = Mochiy_Pop_One({
-  variable: "--font-display",
+  variable: "--font-logo",
   weight: "400",
+  subsets: ["latin"],
+});
+
+const zenKakuGothicNew = Zen_Kaku_Gothic_New({
+  variable: "--font-display",
+  weight: ["700", "900"],
   subsets: ["latin"],
 });
 
@@ -29,7 +35,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={cn(mochiyPopOne.variable, notoSansJP.variable, "font-sans", geist.variable)}>
+    <html
+      lang="ja"
+      className={cn(
+        mochiyPopOne.variable,
+        zenKakuGothicNew.variable,
+        notoSansJP.variable,
+        "font-sans",
+        geist.variable
+      )}
+    >
       <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
         <SmoothScroll>{children}</SmoothScroll>
       </body>

@@ -45,6 +45,7 @@
   --color-brand: var(--brand);
   --color-brand-dark: var(--brand-dark);
   --font-display: var(--font-display);
+  --font-logo: var(--font-logo);
   --font-body: var(--font-body);
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
@@ -94,6 +95,12 @@ body {
 
 .font-display {
   font-family: var(--font-display), sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.font-logo {
+  font-family: var(--font-logo), sans-serif;
 }
 
 .dark {
