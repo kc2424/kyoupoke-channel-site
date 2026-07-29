@@ -3,15 +3,11 @@ import Image from "next/image";
 import { FadeIn } from "@/components/fade-in";
 import { GiantTitle } from "@/components/giant-title";
 import { LogoMark } from "@/components/logo-mark";
+import { MemberCard } from "@/components/member-card";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { WipeLink } from "@/components/wipe-link";
 
 const members = [
   {
@@ -65,17 +61,9 @@ export default function Home() {
           <span className="font-logo text-2xl text-brand">今日ポケ</span>
           <Badge className="bg-brand text-white">FAN SITE</Badge>
         </div>
-        <a
-          href="https://www.youtube.com/@KYOUPOKE"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(
-            buttonVariants({ variant: "default", size: "lg" }),
-            "rounded-full bg-black px-5 text-white hover:bg-black/80"
-          )}
-        >
+        <WipeLink href="https://www.youtube.com/@KYOUPOKE">
           YouTubeを見る
-        </a>
+        </WipeLink>
       </header>
 
       <section className="relative overflow-hidden bg-white px-6 pt-20 pb-10 sm:px-10">
@@ -154,44 +142,20 @@ export default function Home() {
           <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
             Members
           </p>
+          <p className="mt-2 text-xs text-neutral-400">
+            カードをタップすると詳細が開きます
+          </p>
           <div className="mt-6 border-t border-neutral-200">
             {members.map((m, i) => (
               <FadeIn key={m.name} delay={i * 0.1}>
-                <div className="flex flex-col gap-6 border-b border-neutral-200 py-8 sm:flex-row sm:items-center">
-                  <div className="relative h-[220px] w-full overflow-hidden rounded-xl sm:h-[200px] sm:w-[280px] sm:shrink-0">
-                    <Image
-                      src="/hero.png"
-                      alt={m.name}
-                      fill
-                      className="object-cover"
-                      style={{ transform: "scale(2.6)", transformOrigin: m.focal }}
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-xs font-bold tracking-widest text-neutral-400 uppercase">
-                      {String(i + 1).padStart(2, "0")}
-                    </p>
-                    <h3 className="font-display mt-1 text-2xl text-brand sm:text-3xl">
-                      {m.name}
-                    </h3>
-                    <p className="mt-1 text-sm font-bold text-neutral-500">
-                      {m.role}
-                    </p>
-                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700">
-                      {m.text}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {m.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold text-neutral-600"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <MemberCard
+                  index={i}
+                  name={m.name}
+                  role={m.role}
+                  tags={m.tags}
+                  text={m.text}
+                  focal={m.focal}
+                />
               </FadeIn>
             ))}
           </div>
@@ -256,17 +220,12 @@ export default function Home() {
               </FadeIn>
             ))}
           </div>
-          <a
+          <WipeLink
             href="https://www.youtube.com/@KYOUPOKE"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ variant: "default", size: "lg" }),
-              "mt-8 rounded-full bg-black px-6 text-white hover:bg-black/80"
-            )}
+            className="mt-8"
           >
             チャンネルの動画をもっと見る
-          </a>
+          </WipeLink>
         </section>
 
         <FadeIn>
@@ -278,18 +237,9 @@ export default function Home() {
             {/* TODO: Instagram・TikTokの正式なURLが分かったら差し替えてください */}
             <div className="mt-6 flex flex-wrap gap-3">
               {links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    buttonVariants({ variant: "outline", size: "lg" }),
-                    "rounded-full border-neutral-300 bg-white px-6 font-bold text-neutral-800 hover:border-brand hover:text-brand"
-                  )}
-                >
+                <WipeLink key={l.href} href={l.href} wipeColor="bg-brand">
                   {l.label}
-                </a>
+                </WipeLink>
               ))}
             </div>
           </section>

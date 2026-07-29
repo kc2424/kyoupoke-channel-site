@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mochiy_Pop_One, Noto_Sans_JP, Zen_Kaku_Gothic_New, Geist } from "next/font/google";
 import "./globals.css";
+import { IntroLoader } from "@/components/intro-loader";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
 
@@ -46,6 +47,7 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
+        <IntroLoader />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
