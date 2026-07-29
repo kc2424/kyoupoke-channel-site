@@ -43,3 +43,6 @@ next-env.d.ts
 # personal notes
 *memo*.txt
 *.local.md
+
+# 未使用の元画像(実写)
+/image.png

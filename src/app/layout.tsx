@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { Mochiy_Pop_One, Noto_Sans_JP } from "next/font/google";
+import { Mochiy_Pop_One, Noto_Sans_JP, Geist } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const mochiyPopOne = Mochiy_Pop_One({
   variable: "--font-display",
@@ -25,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${mochiyPopOne.variable} ${notoSansJP.variable}`}>
+    <html lang="ja" className={cn(mochiyPopOne.variable, notoSansJP.variable, "font-sans", geist.variable)}>
       <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
         {children}
       </body>

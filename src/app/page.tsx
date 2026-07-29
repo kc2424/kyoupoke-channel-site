@@ -1,3 +1,16 @@
+import Image from "next/image";
+
+import { FadeIn } from "@/components/fade-in";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 const members = [
   {
     name: "バンビー",
@@ -30,53 +43,68 @@ export default function Home() {
       <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4">
         <div className="flex items-center gap-2">
           <span className="font-display text-2xl text-brand">今日ポケ</span>
-          <span className="rounded-full bg-brand px-3 py-1 text-xs font-bold tracking-wide text-white">
-            FAN SITE
-          </span>
+          <Badge className="bg-brand text-white">FAN SITE</Badge>
         </div>
         <a
           href="https://www.youtube.com/@KYOUPOKE"
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full bg-black px-5 py-2 text-sm font-bold text-white transition hover:opacity-80"
+          className={cn(
+            buttonVariants({ variant: "default", size: "lg" }),
+            "rounded-full bg-black px-5 text-white hover:bg-black/80"
+          )}
         >
           YouTubeを見る
         </a>
       </header>
 
-      <section
-        className="relative flex flex-col items-center justify-center gap-4 overflow-hidden px-6 py-20 text-center"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(-45deg, #f4ede4 0 40px, #eee4d6 40px 80px)",
-        }}
-      >
-        <h1 className="font-display text-5xl text-brand drop-shadow-sm sm:text-7xl">
-          今日ポケ
-        </h1>
-        <p className="text-sm text-neutral-500">（旧称：今日の○○ポケチャンネル）</p>
-        <p className="max-w-xl text-neutral-700">
-          世界トップクラスの対戦理論と、笑えるバラエティ企画を届けるポケモン対戦YouTuberグループ。
-        </p>
+      <div className="relative h-[320px] w-full overflow-hidden sm:h-[420px]">
+        <Image
+          src="/hero.png"
+          alt="今日ポケ メンバーイメージ"
+          fill
+          priority
+          className="object-cover object-top"
+        />
+      </div>
+
+      <section className="flex flex-col items-center justify-center gap-4 bg-white px-6 py-16 text-center">
+        <FadeIn>
+          <h1 className="font-display text-5xl text-brand drop-shadow-sm sm:text-7xl">
+            今日ポケ
+          </h1>
+        </FadeIn>
+        <FadeIn delay={0.1}>
+          <p className="text-sm text-neutral-500">（旧称：今日の○○ポケチャンネル）</p>
+        </FadeIn>
+        <FadeIn delay={0.2}>
+          <p className="max-w-xl text-neutral-700">
+            世界トップクラスの対戦理論と、笑えるバラエティ企画を届けるポケモン対戦YouTuberグループ。
+          </p>
+        </FadeIn>
       </section>
 
       <main className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 py-16">
-        <section id="profile">
-          <h2 className="font-display text-3xl text-neutral-900">プロフィール</h2>
-          <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
-            About
-          </p>
-          <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-neutral-200">
-            <p className="leading-relaxed text-neutral-700">
-              「今日ポケ」は2021年8月8日に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする3人組YouTuberグループです。
-              バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
+        <FadeIn>
+          <section id="profile">
+            <h2 className="font-display text-3xl text-neutral-900">プロフィール</h2>
+            <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
+              About
             </p>
-            <p className="mt-4 leading-relaxed text-neutral-700">
-              2022年にはチャンネル登録者数10万人を達成し、YouTube Creator Awardsの銀の盾を受賞。
-              現在はチャンネル登録者数 約58万人、総再生回数は10億回を超える規模まで成長しています。
-            </p>
-          </div>
-        </section>
+            <Card className="mt-6 p-6 shadow-sm">
+              <CardContent className="px-0">
+                <p className="leading-relaxed text-neutral-700">
+                  「今日ポケ」は2021年8月8日に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする3人組YouTuberグループです。
+                  バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
+                </p>
+                <p className="mt-4 leading-relaxed text-neutral-700">
+                  2022年にはチャンネル登録者数10万人を達成し、YouTube Creator Awardsの銀の盾を受賞。
+                  現在はチャンネル登録者数 約58万人、総再生回数は10億回を超える規模まで成長しています。
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+        </FadeIn>
 
         <section id="members">
           <h2 className="font-display text-3xl text-neutral-900">メンバー紹介</h2>
@@ -84,15 +112,22 @@ export default function Home() {
             Members
           </p>
           <div className="mt-6 grid gap-6 sm:grid-cols-3">
-            {members.map((m) => (
-              <div
-                key={m.name}
-                className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-neutral-200"
-              >
-                <h3 className="font-display text-xl text-brand">{m.name}</h3>
-                <p className="mt-1 text-sm font-bold text-neutral-500">{m.role}</p>
-                <p className="mt-3 text-sm leading-relaxed text-neutral-700">{m.text}</p>
-              </div>
+            {members.map((m, i) => (
+              <FadeIn key={m.name} delay={i * 0.1}>
+                <Card className="h-full p-6 shadow-sm transition-transform hover:-translate-y-1">
+                  <CardHeader className="px-0">
+                    <CardTitle className="font-display text-xl text-brand">
+                      {m.name}
+                    </CardTitle>
+                    <p className="text-sm font-bold text-neutral-500">{m.role}</p>
+                  </CardHeader>
+                  <CardContent className="px-0">
+                    <p className="text-sm leading-relaxed text-neutral-700">
+                      {m.text}
+                    </p>
+                  </CardContent>
+                </Card>
+              </FadeIn>
             ))}
           </div>
         </section>
@@ -104,56 +139,65 @@ export default function Home() {
           </p>
           {/* TODO: 動画IDを実際のおすすめ動画のIDに差し替えてください */}
           <div className="mt-6 grid gap-6 sm:grid-cols-3">
-            {videos.map((n) => (
-              <div
-                key={n}
-                className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200"
-              >
-                <div className="aspect-video">
-                  <iframe
-                    className="h-full w-full"
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                    title={`おすすめ動画${n}`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-                <p className="p-3 text-sm text-neutral-500">
-                  おすすめ動画{n}（TODO: タイトルを書き換えてください）
-                </p>
-              </div>
+            {videos.map((n, i) => (
+              <FadeIn key={n} delay={i * 0.1}>
+                <Card className="overflow-hidden p-0 shadow-sm transition-transform hover:-translate-y-1">
+                  <div className="aspect-video">
+                    <iframe
+                      className="h-full w-full"
+                      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                      title={`おすすめ動画${n}`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                  <CardContent className="px-3 py-3">
+                    <p className="text-sm text-neutral-500">
+                      おすすめ動画{n}（TODO: タイトルを書き換えてください）
+                    </p>
+                  </CardContent>
+                </Card>
+              </FadeIn>
             ))}
           </div>
           <a
             href="https://www.youtube.com/@KYOUPOKE"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-block rounded-full bg-black px-6 py-3 text-sm font-bold text-white transition hover:opacity-80"
+            className={cn(
+              buttonVariants({ variant: "default", size: "lg" }),
+              "mt-8 rounded-full bg-black px-6 text-white hover:bg-black/80"
+            )}
           >
             チャンネルの動画をもっと見る
           </a>
         </section>
 
-        <section id="links">
-          <h2 className="font-display text-3xl text-neutral-900">リンク</h2>
-          <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
-            Links
-          </p>
-          {/* TODO: Instagram・TikTokの正式なURLが分かったら差し替えてください */}
-          <div className="mt-6 flex flex-wrap gap-3">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-bold text-neutral-800 transition hover:border-brand hover:text-brand"
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-        </section>
+        <FadeIn>
+          <section id="links">
+            <h2 className="font-display text-3xl text-neutral-900">リンク</h2>
+            <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase">
+              Links
+            </p>
+            {/* TODO: Instagram・TikTokの正式なURLが分かったら差し替えてください */}
+            <div className="mt-6 flex flex-wrap gap-3">
+              {links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "lg" }),
+                    "rounded-full border-neutral-300 bg-white px-6 font-bold text-neutral-800 hover:border-brand hover:text-brand"
+                  )}
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
+          </section>
+        </FadeIn>
       </main>
 
       <footer className="border-t border-neutral-200 bg-white py-8 text-center text-sm text-neutral-500">
