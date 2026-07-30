@@ -1,3 +1,4 @@
+import { BlueprintCorners } from "@/components/blueprint-corners";
 import { ChapterMark } from "@/components/chapter-mark";
 import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
@@ -175,13 +176,16 @@ export default function Home() {
             <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
           </div>
           <CurtainReveal className="mt-6 rounded-2xl" flapColor="#ffffff">
-            <ParallaxImage
-              wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
-              src="/hero-mascots.png"
-              alt="今日ポケ マスコットイラスト"
-              fill
-              priority
-            />
+            <div className="relative">
+              <ParallaxImage
+                wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
+                src="/hero-mascots.png"
+                alt="今日ポケ マスコットイラスト"
+                fill
+                priority
+              />
+              <BlueprintCorners tone="light" label="FIG.01 — MASCOTS" />
+            </div>
           </CurtainReveal>
         </section>
       </FadeIn>

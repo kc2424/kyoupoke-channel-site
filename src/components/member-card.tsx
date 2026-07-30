@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import { BlueprintCorners } from "@/components/blueprint-corners";
 import { LiveGlowFrame } from "@/components/live-glow-frame";
 import { LogoMark } from "@/components/logo-mark";
 
@@ -72,13 +73,14 @@ export function MemberCard({
               className="opacity-0 [stroke-dasharray:1] [stroke-dashoffset:1] transition-[stroke-dashoffset,opacity] delay-[600ms] duration-500 ease-out group-hover:[stroke-dashoffset:0] group-hover:opacity-90"
             />
           </svg>
+          <BlueprintCorners tone="light" label={`NO.${String(index + 1).padStart(2, "0")}`} />
         </div>
       </LiveGlowFrame>
       <div className="flex-1">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-              {String(index + 1).padStart(2, "0")}
+            <p className="font-mono text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+              NO.{String(index + 1).padStart(2, "0")}
             </p>
             <h3 className="font-display mt-1 text-2xl text-brand sm:text-3xl lg:text-5xl">
               {name}
