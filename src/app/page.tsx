@@ -8,6 +8,7 @@ import { MonoReveal } from "@/components/mono-reveal";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
 import { SnapReveal } from "@/components/snap-reveal";
+import { SparkTap } from "@/components/spark-tap";
 import { StatCounter } from "@/components/stat-counter";
 import { StickerBadge } from "@/components/sticker-badge";
 import { TiltCard } from "@/components/tilt-card";
@@ -220,10 +221,10 @@ export default function Home() {
             </div>
             <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
               {achievements.map((a) => (
-                <div
+                <SparkTap
                   key={a.label}
                   className={cn(
-                    "flex aspect-[4/3] cursor-default flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
+                    "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
                     a.tone === "brand" && "bg-brand text-white",
                     a.tone === "black" && "bg-white/10 text-white"
                   )}
@@ -232,7 +233,7 @@ export default function Home() {
                     {a.label}
                   </p>
                   <p className="mt-1 text-xs font-bold opacity-70 lg:text-sm">{a.sub}</p>
-                </div>
+                </SparkTap>
               ))}
             </SnapReveal>
           </div>
