@@ -7,8 +7,10 @@ import { useRef, useState } from "react";
 export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
+  const [label, setLabel] = useState<string | null>(null);
 
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) {
@@ -17,12 +19,15 @@ export function CustomCursor() {
 
     const ring = ringRef.current;
     const dot = dotRef.current;
-    if (!ring || !dot) return;
+    const labelEl = labelRef.current;
+    if (!ring || !dot || !labelEl) return;
 
     const ringX = gsap.quickTo(ring, "x", { duration: 0.45, ease: "power3.out" });
     const ringY = gsap.quickTo(ring, "y", { duration: 0.45, ease: "power3.out" });
     const dotX = gsap.quickTo(dot, "x", { duration: 0.12, ease: "power3.out" });
     const dotY = gsap.quickTo(dot, "y", { duration: 0.12, ease: "power3.out" });
+    const labelX = gsap.quickTo(labelEl, "x", { duration: 0.45, ease: "power3.out" });
+    const labelY = gsap.quickTo(labelEl, "y", { duration: 0.45, ease: "power3.out" });
 
     const handleMove = (e: MouseEvent) => {
       if (!active) setActive(true);
@@ -30,9 +35,14 @@ export function CustomCursor() {
       ringY(e.clientY);
       dotX(e.clientX);
       dotY(e.clientY);
+      labelX(e.clientX);
+      labelY(e.clientY);
 
       const target = (e.target as HTMLElement)?.closest?.("a, button, [role='button']");
       setHovering(Boolean(target));
+
+      const labelTarget = (e.target as HTMLElement)?.closest?.("[data-cursor-label]") as HTMLElement | null;
+      setLabel(labelTarget?.dataset.cursorLabel ?? null);
     };
 
     const handleLeave = () => setActive(false);
@@ -67,6 +77,14 @@ export function CustomCursor() {
           backgroundColor: hovering ? "rgba(255, 255, 255, 0.15)" : "transparent",
         }}
       />
+      <span
+        ref={labelRef}
+        aria-hidden
+        className="font-display pointer-events-none fixed top-0 left-0 z-[999] ml-8 -translate-x-1/2 -translate-y-1/2 text-lg font-bold tracking-wide text-white uppercase mix-blend-difference transition-opacity duration-200"
+        style={{ opacity: active && label ? 1 : 0 }}
+      >
+        {label}
+      </span>
     </>
   );
 }

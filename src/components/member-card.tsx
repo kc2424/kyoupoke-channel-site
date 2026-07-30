@@ -26,6 +26,7 @@ export function MemberCard({
     <button
       type="button"
       onClick={() => setOpen((v) => !v)}
+      data-cursor-label={open ? "CLOSE" : "MORE"}
       className="group flex w-full flex-col gap-6 border-b border-neutral-200 py-8 text-left sm:flex-row sm:items-center lg:gap-10 lg:py-10"
     >
       <div className="relative h-[220px] w-full shrink-0 overflow-hidden rounded-xl bg-[#df5330] sm:h-[200px] sm:w-[280px] lg:h-[260px] lg:w-[360px]">

@@ -93,6 +93,7 @@ export default function Home() {
         <div className="flex items-center gap-3 lg:gap-4">
           <WipeLink
             href="https://www.youtube.com/@KYOUPOKE"
+            cursorLabel="OPEN"
             className="hidden sm:inline-flex lg:px-8 lg:py-4 lg:text-base"
           >
             YouTubeを見る
@@ -283,7 +284,7 @@ export default function Home() {
             {videos.map((n, i) => (
               <FadeIn key={n} delay={i * 0.1}>
                 <TiltCard>
-                  <Card className="group/mono overflow-hidden p-0 shadow-sm">
+                  <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="見る">
                     <MonoReveal className="aspect-video">
                       <iframe
                         className="h-full w-full"
@@ -309,6 +310,7 @@ export default function Home() {
           <Magnetic>
             <WipeLink
               href="https://www.youtube.com/@KYOUPOKE"
+              cursorLabel="OPEN"
               className="mt-8 lg:px-8 lg:py-4 lg:text-base"
             >
               チャンネルの動画をもっと見る
@@ -336,6 +338,7 @@ export default function Home() {
                   <WipeLink
                     href={l.href}
                     wipeColor="bg-black"
+                    cursorLabel="OPEN"
                     className="border-white text-white lg:px-8 lg:py-4 lg:text-base"
                   >
                     {l.label}
