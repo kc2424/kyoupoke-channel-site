@@ -2,11 +2,18 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-export function LogoMark({ className }: { className?: string }) {
+export function LogoMark({
+  className,
+  animated = false,
+}: {
+  className?: string;
+  animated?: boolean;
+}) {
   return (
     <span
       className={cn(
         "relative inline-block shrink-0 overflow-hidden rounded-full",
+        animated && "animate-logo-wiggle",
         className ?? "h-9 w-9"
       )}
     >

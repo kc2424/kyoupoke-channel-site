@@ -97,7 +97,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col bg-neutral-100">
       <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 lg:px-10 lg:py-6">
         <div className="flex items-center gap-3 lg:gap-4">
-          <LogoMark className="h-12 w-12 lg:h-16 lg:w-16" />
+          <LogoMark animated className="h-12 w-12 lg:h-16 lg:w-16" />
           <span className="font-wordmark text-2xl text-brand lg:text-4xl">KYOU POKE</span>
           <Badge className="bg-brand text-white lg:px-4 lg:py-1.5 lg:text-sm">FAN SITE</Badge>
         </div>
