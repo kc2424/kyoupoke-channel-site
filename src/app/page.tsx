@@ -1,3 +1,4 @@
+import { ChapterMark } from "@/components/chapter-mark";
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
@@ -175,6 +176,7 @@ export default function Home() {
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <FadeIn>
           <section id="profile" className="scroll-mt-24">
+            <ChapterMark index={1} total={5} className="mb-2" />
             <RevealText
               as="h2"
               text="プロフィール"
@@ -203,6 +205,7 @@ export default function Home() {
         </FadeIn>
 
         <section id="members">
+          <ChapterMark index={2} total={5} className="mb-2" />
           <RevealText
             as="h2"
             text="メンバー紹介"
@@ -239,6 +242,7 @@ export default function Home() {
         >
           <OpArtRings className="top-1/2 right-0 h-[280px] w-[280px] -translate-y-1/2 translate-x-1/3 sm:h-[420px] sm:w-[420px] lg:h-[560px] lg:w-[560px]" />
           <div className="relative z-10 mx-auto max-w-[1600px]">
+            <ChapterMark index={3} total={5} tone="dark" className="mb-2" />
             <RevealText
               as="h2"
               text="実績・出演"
@@ -282,6 +286,7 @@ export default function Home() {
 
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <section id="videos">
+          <ChapterMark index={4} total={5} className="mb-2" />
           <RevealText
             as="h2"
             text="おすすめ動画"
@@ -334,6 +339,7 @@ export default function Home() {
       <FadeIn>
         <section id="links" className="scroll-mt-24 bg-brand px-6 py-16 sm:px-10">
           <div className="mx-auto max-w-[1600px]">
+            <ChapterMark index={5} total={5} tone="brand" className="mb-2" />
             <RevealText
               as="h2"
               text="リンク"
