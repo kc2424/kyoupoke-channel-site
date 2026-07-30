@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { scrollToHash } from "@/lib/lenis";
 import { cn } from "@/lib/utils";
+import { ScrambleText } from "@/components/scramble-text";
 
 const navItems = [
   { label: "プロフィール", href: "#profile" },
@@ -77,7 +78,7 @@ export function FullscreenMenu() {
                   opacity: open ? 1 : 0,
                 }}
               >
-                {item.label}
+                <ScrambleText text={item.label} active={hovered === item.href} />
                 <span
                   className="text-brand text-3xl transition-opacity duration-200 sm:text-5xl"
                   style={{ opacity: hovered === item.href ? 1 : 0 }}
