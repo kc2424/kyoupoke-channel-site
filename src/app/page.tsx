@@ -11,7 +11,6 @@ import { RevealText } from "@/components/reveal-text";
 import { SnapReveal } from "@/components/snap-reveal";
 import { SparkTap } from "@/components/spark-tap";
 import { StatCounter } from "@/components/stat-counter";
-import { StickerBadge } from "@/components/sticker-badge";
 import { TiltCard } from "@/components/tilt-card";
 import { UnderlineLink } from "@/components/underline-link";
 import { Badge } from "@/components/ui/badge";
@@ -342,15 +341,6 @@ export default function Home() {
               ))}
             </div>
           ))}
-        </div>
-
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <StickerBadge className="pointer-events-auto">
-            <span className="font-display text-base sm:text-lg lg:text-2xl">
-              一緒に応援しよう
-            </span>
-            <span className="text-xs opacity-80 sm:text-sm lg:text-base">Say hello 👋</span>
-          </StickerBadge>
         </div>
 
         <p className="relative mt-12 px-6 text-center text-sm text-white/60 sm:px-10 lg:text-base">
