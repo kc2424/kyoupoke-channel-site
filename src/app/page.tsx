@@ -1,6 +1,7 @@
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
+import { GrowthTimeline } from "@/components/growth-timeline";
 import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
@@ -64,6 +65,12 @@ const achievements = [
   { label: "PJCS2025 / WCS2025", sub: "いろは選手が出場権獲得", tone: "brand" },
   { label: "今日ポケ杯", sub: "ニコニコ生放送と連携開催", tone: "black" },
   { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "brand" },
+];
+
+const growthMilestones = [
+  { date: "2021.08.08", label: "活動開始" },
+  { date: "2022", label: "登録者10万人・銀の盾" },
+  { date: "NOW", label: "登録者58万人+ / 再生10億回+" },
 ];
 
 const videos = [1, 2, 3];
@@ -186,6 +193,10 @@ export default function Home() {
                   2022年にはチャンネル登録者数10万人を達成し、YouTube Creator Awardsの銀の盾を受賞。
                   現在はチャンネル登録者数 約58万人、総再生回数は10億回を超える規模まで成長しています。
                 </p>
+                <GrowthTimeline
+                  milestones={growthMilestones}
+                  className="mt-10 lg:mt-14"
+                />
               </CardContent>
             </Card>
           </section>
