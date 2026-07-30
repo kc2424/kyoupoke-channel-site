@@ -8,6 +8,7 @@ import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
 import { SnapReveal } from "@/components/snap-reveal";
 import { StickerBadge } from "@/components/sticker-badge";
+import { TiltCard } from "@/components/tilt-card";
 import { UnderlineLink } from "@/components/underline-link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -232,25 +233,27 @@ export default function Home() {
           <div className="mt-6 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {videos.map((n, i) => (
               <FadeIn key={n} delay={i * 0.1}>
-                <Card className="overflow-hidden p-0 shadow-sm transition-transform hover:-translate-y-1">
-                  <div className="aspect-video">
-                    <iframe
-                      className="h-full w-full"
-                      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                      title={`おすすめ動画${n}`}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                  <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
-                    <span className="font-display text-lg text-brand lg:text-xl">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p className="text-sm text-neutral-500 lg:text-base">
-                      おすすめ動画{n}（TODO: タイトルを書き換えてください）
-                    </p>
-                  </CardContent>
-                </Card>
+                <TiltCard>
+                  <Card className="overflow-hidden p-0 shadow-sm">
+                    <div className="aspect-video">
+                      <iframe
+                        className="h-full w-full"
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        title={`おすすめ動画${n}`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                    <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
+                      <span className="font-display text-lg text-brand lg:text-xl">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <p className="text-sm text-neutral-500 lg:text-base">
+                        おすすめ動画{n}（TODO: タイトルを書き換えてください）
+                      </p>
+                    </CardContent>
+                  </Card>
+                </TiltCard>
               </FadeIn>
             ))}
           </div>
