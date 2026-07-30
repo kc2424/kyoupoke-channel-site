@@ -10,6 +10,7 @@ import { MonoReveal } from "@/components/mono-reveal";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
+import { SectionBlend } from "@/components/section-blend";
 import { SnapReveal } from "@/components/snap-reveal";
 import { SoundToggle } from "@/components/sound-toggle";
 import { SparkTap } from "@/components/spark-tap";
@@ -235,6 +236,8 @@ export default function Home() {
 
       </main>
 
+      <SectionBlend from="#f5f5f5" to="#000000" />
+
       <FadeIn>
         <section
           id="achievements"
@@ -283,6 +286,8 @@ export default function Home() {
           </div>
         </section>
       </FadeIn>
+
+      <SectionBlend from="#000000" to="#f5f5f5" />
 
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <section id="videos">
@@ -336,6 +341,8 @@ export default function Home() {
 
       </main>
 
+      <SectionBlend from="#f5f5f5" to="#d9552e" />
+
       <FadeIn>
         <section id="links" className="scroll-mt-24 bg-brand px-6 py-16 sm:px-10">
           <div className="mx-auto max-w-[1600px]">
@@ -367,7 +374,9 @@ export default function Home() {
         </section>
       </FadeIn>
 
-      <footer className="relative overflow-hidden border-t border-neutral-200 bg-black py-16">
+      <SectionBlend from="#d9552e" to="#000000" />
+
+      <footer className="relative overflow-hidden bg-black py-16">
         <div className="flex select-none whitespace-nowrap">
           {[0, 1].map((row) => (
             <div
