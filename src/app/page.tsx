@@ -1,11 +1,10 @@
-import Image from "next/image";
-
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
 import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
+import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
 import { StickerBadge } from "@/components/sticker-badge";
 import { UnderlineLink } from "@/components/underline-link";
@@ -120,15 +119,13 @@ export default function Home() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
             <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
           </div>
-          <div className="relative mt-6 h-[220px] w-full overflow-hidden rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]">
-            <Image
-              src="/hero-mascots.png"
-              alt="今日ポケ マスコットイラスト"
-              fill
-              priority
-              className="object-contain"
-            />
-          </div>
+          <ParallaxImage
+            wrapperClassName="mt-6 h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
+            src="/hero-mascots.png"
+            alt="今日ポケ マスコットイラスト"
+            fill
+            priority
+          />
         </section>
       </FadeIn>
 
