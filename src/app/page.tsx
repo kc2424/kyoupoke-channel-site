@@ -18,10 +18,12 @@ import { SparkTap } from "@/components/spark-tap";
 import { StatCounter } from "@/components/stat-counter";
 import { TiltCard } from "@/components/tilt-card";
 import { UnderlineLink } from "@/components/underline-link";
+import { VideoModal } from "@/components/video-modal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WipeLink } from "@/components/wipe-link";
+import Image from "next/image";
 
 const navItems = [
   { label: "プロフィール", href: "#profile" },
@@ -76,7 +78,12 @@ const growthMilestones = [
   { date: "NOW", label: "登録者58万人+ / 再生10億回+" },
 ];
 
-const videos = [1, 2, 3];
+// TODO: 実際のおすすめ動画のIDに差し替えてください
+const videos = [
+  { id: 1, videoId: "dQw4w9WgXcQ" },
+  { id: 2, videoId: "dQw4w9WgXcQ" },
+  { id: 3, videoId: "dQw4w9WgXcQ" },
+];
 
 const links = [
   { label: "YouTubeチャンネル", href: "https://www.youtube.com/@KYOUPOKE" },
@@ -303,27 +310,38 @@ export default function Home() {
           <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
             Videos
           </p>
-          {/* TODO: 動画IDを実際のおすすめ動画のIDに差し替えてください */}
           <div className="mt-6 grid gap-6 sm:grid-cols-3 lg:gap-8">
-            {videos.map((n, i) => (
-              <FadeIn key={n} delay={i * 0.1}>
+            {videos.map((v, i) => (
+              <FadeIn key={v.id} delay={i * 0.1}>
                 <TiltCard>
                   <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="見る">
-                    <MonoReveal className="aspect-video">
-                      <iframe
-                        className="h-full w-full"
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                        title={`おすすめ動画${n}`}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </MonoReveal>
+                    <VideoModal videoId={v.videoId} title={`おすすめ動画${v.id}`}>
+                      <MonoReveal className="relative aspect-video">
+                        <Image
+                          src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`}
+                          alt={`おすすめ動画${v.id}のサムネイル`}
+                          fill
+                          className="object-cover"
+                        />
+                        <span className="absolute inset-0 flex items-center justify-center">
+                          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-brand shadow-lg transition-transform duration-300 group-hover/mono:scale-110 lg:h-20 lg:w-20">
+                            <svg
+                              viewBox="0 0 24 24"
+                              className="ml-1 h-6 w-6 fill-current lg:h-8 lg:w-8"
+                              aria-hidden="true"
+                            >
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </span>
+                        </span>
+                      </MonoReveal>
+                    </VideoModal>
                     <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
                       <span className="font-display text-lg text-brand lg:text-xl">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <p className="text-sm text-neutral-500 lg:text-base">
-                        おすすめ動画{n}（TODO: タイトルを書き換えてください）
+                        おすすめ動画{v.id}（TODO: タイトルを書き換えてください）
                       </p>
                     </CardContent>
                   </Card>
