@@ -93,6 +93,11 @@ body {
   font-family: var(--font-body), sans-serif;
 }
 
+html.cursor-none,
+html.cursor-none * {
+  cursor: none !important;
+}
+
 .font-display {
   font-family: var(--font-display), sans-serif;
   font-weight: 900;
