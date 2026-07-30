@@ -4,6 +4,7 @@ import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
 import { GrowthTimeline } from "@/components/growth-timeline";
+import { HeroStickers } from "@/components/hero-stickers";
 import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
@@ -121,6 +122,7 @@ export default function Home() {
       </header>
 
       <section className="relative overflow-hidden bg-white px-6 pt-24 pb-10 sm:px-10">
+        <HeroStickers />
         <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block lg:text-sm">
           Unofficial Fan Site
         </span>
