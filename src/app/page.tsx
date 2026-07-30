@@ -4,6 +4,7 @@ import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
 import { LogoMark } from "@/components/logo-mark";
+import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
 import { RevealText } from "@/components/reveal-text";
 import { StickerBadge } from "@/components/sticker-badge";
@@ -255,12 +256,14 @@ export default function Home() {
               </FadeIn>
             ))}
           </div>
-          <WipeLink
-            href="https://www.youtube.com/@KYOUPOKE"
-            className="mt-8 lg:px-8 lg:py-4 lg:text-base"
-          >
-            チャンネルの動画をもっと見る
-          </WipeLink>
+          <Magnetic>
+            <WipeLink
+              href="https://www.youtube.com/@KYOUPOKE"
+              className="mt-8 lg:px-8 lg:py-4 lg:text-base"
+            >
+              チャンネルの動画をもっと見る
+            </WipeLink>
+          </Magnetic>
         </section>
 
       </main>
@@ -279,14 +282,15 @@ export default function Home() {
             {/* TODO: Instagram・TikTokの正式なURLが分かったら差し替えてください */}
             <div className="mt-6 flex flex-wrap gap-3">
               {links.map((l) => (
-                <WipeLink
-                  key={l.href}
-                  href={l.href}
-                  wipeColor="bg-black"
-                  className="border-white text-white lg:px-8 lg:py-4 lg:text-base"
-                >
-                  {l.label}
-                </WipeLink>
+                <Magnetic key={l.href}>
+                  <WipeLink
+                    href={l.href}
+                    wipeColor="bg-black"
+                    className="border-white text-white lg:px-8 lg:py-4 lg:text-base"
+                  >
+                    {l.label}
+                  </WipeLink>
+                </Magnetic>
               ))}
             </div>
           </div>
