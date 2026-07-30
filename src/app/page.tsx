@@ -1,4 +1,5 @@
 import { ChapterMark } from "@/components/chapter-mark";
+import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
@@ -164,13 +165,15 @@ export default function Home() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
             <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
           </div>
-          <ParallaxImage
-            wrapperClassName="mt-6 h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
-            src="/hero-mascots.png"
-            alt="今日ポケ マスコットイラスト"
-            fill
-            priority
-          />
+          <CurtainReveal className="mt-6 rounded-2xl" flapColor="#ffffff">
+            <ParallaxImage
+              wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
+              src="/hero-mascots.png"
+              alt="今日ポケ マスコットイラスト"
+              fill
+              priority
+            />
+          </CurtainReveal>
         </section>
       </FadeIn>
 
