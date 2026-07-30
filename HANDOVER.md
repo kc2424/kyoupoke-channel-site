@@ -1,6 +1,6 @@
 # 今日ポケ ファンサイト 引き継ぎ書
 
-最終更新: 2026-07-30（自動ブラッシュアップルーティンにより、マグネティックボタンのインタラクション追加まで）
+最終更新: 2026-07-30（自動ブラッシュアップルーティンにより、実績グリッドのスナップリビール追加まで）
 
 ## 1. プロジェクト概要
 
@@ -121,3 +121,4 @@ gsap.ticker.lagSmoothing(0);
 - **2026-07-29夜**: 「全体的に文字が小さい」への対応（キャプション・タグ・ボタンにlg:サイズ追加）
 - **2026-07-30**: Awwwards SOTD「Artem Shcherbakov Portfolio」を参考に、`src/components/magnetic.tsx`（マグネティックボタン。GSAP `quickTo`でカーソル追従→離れると弾性で戻る）を追加し、動画セクションの「もっと見る」ボタンとLinksセクションのSNSボタンに適用。詳細はgit logのコミットメッセージ参照
 - **2026-07-30（2回目）**: Awwwards SOTD「Crazy About Eggs」（Tubik / Superhero Cheesecake制作、卵ブランドサイト）を参考に、`src/components/parallax-image.tsx`（GSAP ScrollTrigger + scrubでスクロール量に応じて画像だけがゆっくり上下する視差効果。`prefers-reduced-motion`対応）を追加し、「Meet the Members」のマスコットイラストバナーに適用。詳細はgit logのコミットメッセージ参照
+- **2026-07-30（3回目）**: Awwwards SOTD「Bucks Sauce」（Buzzworthy制作、BBQソースブランドサイト）を参考に、`src/components/snap-reveal.tsx`（GSAP ScrollTrigger.batchで要素をわずかに傾けた状態から`back.out`イージングでスナップイン、stagger付き。`prefers-reduced-motion`対応）を追加し、「実績・出演」グリッドに適用。詳細はgit logのコミットメッセージ参照

@@ -6,6 +6,7 @@ import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
+import { SnapReveal } from "@/components/snap-reveal";
 import { StickerBadge } from "@/components/sticker-badge";
 import { UnderlineLink } from "@/components/underline-link";
 import { Badge } from "@/components/ui/badge";
@@ -196,7 +197,7 @@ export default function Home() {
             <p className="mt-2 text-xs font-bold tracking-widest text-white/40 uppercase lg:text-sm">
               Recognition
             </p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:gap-5">
+            <SnapReveal className="mt-6 grid gap-3 sm:grid-cols-3 lg:gap-5">
               {achievements.map((a) => (
                 <div
                   key={a.label}
@@ -212,7 +213,7 @@ export default function Home() {
                   <p className="mt-1 text-xs font-bold opacity-70 lg:text-sm">{a.sub}</p>
                 </div>
               ))}
-            </div>
+            </SnapReveal>
           </div>
         </section>
       </FadeIn>
