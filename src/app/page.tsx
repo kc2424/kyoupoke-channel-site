@@ -126,6 +126,28 @@ export default function Home() {
       </section>
 
       <FadeIn>
+        <section className="border-y border-neutral-200 bg-white px-6 py-14 sm:px-10 lg:py-24">
+          <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-1 lg:gap-2">
+            <RevealText
+              as="p"
+              text="絶対的エース。"
+              className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:text-8xl"
+            />
+            <RevealText
+              as="p"
+              text="論理の体現者。"
+              className="font-display text-4xl leading-[1.05] text-brand sm:text-6xl lg:self-center lg:text-8xl"
+            />
+            <RevealText
+              as="p"
+              text="悟りの天才。"
+              className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:self-end lg:text-8xl"
+            />
+          </div>
+        </section>
+      </FadeIn>
+
+      <FadeIn>
         <section className="bg-white px-6 pb-16 sm:px-10 lg:px-10">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
             <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
