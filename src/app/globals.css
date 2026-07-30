@@ -125,6 +125,22 @@ html.cursor-none * {
   animation: marquee 22s linear infinite;
 }
 
+@keyframes glow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-glow-spin {
+  animation: glow-spin 7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow-spin {
+    animation: none;
+  }
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);

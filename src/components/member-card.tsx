@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import { LiveGlowFrame } from "@/components/live-glow-frame";
 import { LogoMark } from "@/components/logo-mark";
 
 export function MemberCard({
@@ -29,45 +30,50 @@ export function MemberCard({
       data-cursor-label={open ? "CLOSE" : "MORE"}
       className="group flex w-full flex-col gap-6 border-b border-neutral-200 py-8 text-left sm:flex-row sm:items-center lg:gap-10 lg:py-10"
     >
-      <div className="relative h-[220px] w-full shrink-0 overflow-hidden rounded-xl bg-[#df5330] sm:h-[200px] sm:w-[280px] lg:h-[260px] lg:w-[360px]">
-        {focal ? (
-          <Image
-            src="/hero-mascots.png"
-            alt={name}
-            fill
-            className="object-cover"
-            style={{ transform: "scale(3.2)", transformOrigin: focal }}
-          />
-        ) : (
-          <div className="bg-brand/10 flex h-full w-full items-center justify-center">
-            <LogoMark className="h-20 w-20" />
-          </div>
-        )}
-        <svg
-          viewBox="0 0 100 100"
-          className="pointer-events-none absolute inset-0 h-full w-full"
-        >
-          <path
-            d="M 50 12 C 72 10, 90 26, 88 50 C 90 74, 70 90, 48 88 C 24 90, 10 72, 12 48 C 8 26, 28 8, 50 12 Z"
-            fill="none"
-            stroke="white"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            pathLength={1}
-            className="opacity-0 [stroke-dasharray:1] [stroke-dashoffset:1] transition-[stroke-dashoffset,opacity] duration-[1200ms] ease-out group-hover:[stroke-dashoffset:0] group-hover:opacity-90"
-          />
-          <path
-            d="M 38 52 L 47 62 L 66 40"
-            fill="none"
-            stroke="white"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            pathLength={1}
-            className="opacity-0 [stroke-dasharray:1] [stroke-dashoffset:1] transition-[stroke-dashoffset,opacity] delay-[600ms] duration-500 ease-out group-hover:[stroke-dashoffset:0] group-hover:opacity-90"
-          />
-        </svg>
-      </div>
+      <LiveGlowFrame
+        rounded="rounded-xl"
+        className="h-[220px] w-full shrink-0 sm:h-[200px] sm:w-[280px] lg:h-[260px] lg:w-[360px]"
+      >
+        <div className="relative h-full w-full bg-[#df5330]">
+          {focal ? (
+            <Image
+              src="/hero-mascots.png"
+              alt={name}
+              fill
+              className="object-cover"
+              style={{ transform: "scale(3.2)", transformOrigin: focal }}
+            />
+          ) : (
+            <div className="bg-brand/10 flex h-full w-full items-center justify-center">
+              <LogoMark className="h-20 w-20" />
+            </div>
+          )}
+          <svg
+            viewBox="0 0 100 100"
+            className="pointer-events-none absolute inset-0 h-full w-full"
+          >
+            <path
+              d="M 50 12 C 72 10, 90 26, 88 50 C 90 74, 70 90, 48 88 C 24 90, 10 72, 12 48 C 8 26, 28 8, 50 12 Z"
+              fill="none"
+              stroke="white"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              pathLength={1}
+              className="opacity-0 [stroke-dasharray:1] [stroke-dashoffset:1] transition-[stroke-dashoffset,opacity] duration-[1200ms] ease-out group-hover:[stroke-dashoffset:0] group-hover:opacity-90"
+            />
+            <path
+              d="M 38 52 L 47 62 L 66 40"
+              fill="none"
+              stroke="white"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              pathLength={1}
+              className="opacity-0 [stroke-dasharray:1] [stroke-dashoffset:1] transition-[stroke-dashoffset,opacity] delay-[600ms] duration-500 ease-out group-hover:[stroke-dashoffset:0] group-hover:opacity-90"
+            />
+          </svg>
+        </div>
+      </LiveGlowFrame>
       <div className="flex-1">
         <div className="flex items-start justify-between gap-4">
           <div>
