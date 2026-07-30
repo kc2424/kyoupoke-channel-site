@@ -1,6 +1,6 @@
 # 今日ポケ ファンサイト 引き継ぎ書
 
-最終更新: 2026-07-30（自動ブラッシュアップルーティンにより、実績グリッドのスナップリビール追加まで）
+最終更新: 2026-07-30（自動ブラッシュアップルーティンにより、動画サムネイルのグレースケール→カラー ホバー演出追加まで）
 
 ## 1. プロジェクト概要
 
@@ -125,3 +125,4 @@ gsap.ticker.lagSmoothing(0);
 - **2026-07-30（4回目）**: Awwwards/FWA Site of the Day「Der Baukasten」（Tubik制作、モジュール式トイのコンセプトサイト）を参考に、`src/components/custom-cursor.tsx`（ドット+リングの2層カスタムカーソル。GSAP `quickTo`でカーソル追従、リンク/ボタンにホバーすると拡大。`prefers-reduced-motion`・タッチデバイスでは無効化）を追加し、`src/app/layout.tsx`でグローバル適用。詳細はgit logのコミットメッセージ参照
 - **2026-07-30（5回目）**: Awwwards Site of the Day「Obys® Experiment Space」（Obys制作、実験的インタラクションのアーカイブサイト。Design 8.03/Usability 7.44/Creativity 8.02/Content 7.83でSOTD受賞）を参考に、`src/components/tilt-card.tsx`（マウス位置に応じてカードがCSS perspective + GSAP `quickTo`でrotateX/rotateYに傾き、中央からグレアが追従する軽量3Dチルトカード。Three.js/WebGLは使わず翻訳。`prefers-reduced-motion`・タッチデバイスでは無効化）を追加し、おすすめ動画グリッドに適用。詳細はgit logのコミットメッセージ参照
 - **2026-07-30（6回目）**: Awwwards Site of the Day「Hildén & Kaira」（Studio Debuut制作、Figma+Webflow、GSAP+ScrollTrigger。No-code Honors 2026年5月、SOTD 2026年7月5日）を参考に、`src/components/stat-counter.tsx`（スクロールで画面内に入ると0から目標値まで`power2.out`でカウントアップする数字コンポーネント。`prefers-reduced-motion`時は即座に最終値を表示）を追加し、実績セクションに「チャンネル登録者数58万人+」「総再生回数10億回+」「銀の盾10万人（2022年）」のスタッツ帯を新設。**注記: 今回はWebFetchツールがこの実行環境で全面的に403を返す不具合があり（example.comですら取得不可）、実サイトの直接確認はできず、WebSearchのスニペット（Communication Arts等の紹介記事）から評価点を分析した**。Hildén & Kairaの「クロム×イエローの緊張感のある配色」「ロゴのマテリアル統一」は今日ポケのオレンジ/黒/白3色ルールに合わないため採用せず、「実績の数字を主役に据えるエディトリアルな見せ方」と「GSAP+ScrollTriggerのスクロール連動」のみを抽出して独自実装した。詳細はgit logのコミットメッセージ参照
+- **2026-07-30（7回目）**: Awwwards Site of the Day「Partizan」（Beaucoup制作、映像プロダクション会社のサイト。スコア7.18でSOTD、Developer Award受賞。WebGL/GSAP/Three.js使用）を参考に、`src/components/mono-reveal.tsx`（既定はグレースケールで沈め、カードホバー時だけ色を解禁するCSSフィルター切り替えコンポーネント）を追加し、「おすすめ動画」グリッドのサムネイルに適用。**注記: 今回もWebFetch（awwwards.com、landing.love、partizanproduction.com）は全て403で直接確認できず、WebSearchのスニペットから評価点を分析した**。Partizanの核心は「UIを白黒2色に絞り、コンテンツ自体の色だけを主役にする」ミニマルな配色哲学（映像プロダクション会社なので、リールの映像だけが色を持つ）。今日ポケのブランドカラー（オレンジ/黒/白）とは配色そのものを合わせるのではなく、その哲学だけを抽出し「サムネイルは既定でグレースケールに沈め、ホバーで一気に色が戻る」インタラクションとして翻訳・実装した。WebGL/Three.jsは今回は見送り（CSS filterのみで十分な効果が出るため）。詳細はgit logのコミットメッセージ参照

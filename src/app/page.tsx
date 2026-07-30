@@ -4,6 +4,7 @@ import { GiantTitle } from "@/components/giant-title";
 import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
+import { MonoReveal } from "@/components/mono-reveal";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
 import { SnapReveal } from "@/components/snap-reveal";
@@ -253,8 +254,8 @@ export default function Home() {
             {videos.map((n, i) => (
               <FadeIn key={n} delay={i * 0.1}>
                 <TiltCard>
-                  <Card className="overflow-hidden p-0 shadow-sm">
-                    <div className="aspect-video">
+                  <Card className="group/mono overflow-hidden p-0 shadow-sm">
+                    <MonoReveal className="aspect-video">
                       <iframe
                         className="h-full w-full"
                         src="https://www.youtube.com/embed/dQw4w9WgXcQ"
@@ -262,7 +263,7 @@ export default function Home() {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                       />
-                    </div>
+                    </MonoReveal>
                     <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
                       <span className="font-display text-lg text-brand lg:text-xl">
                         {String(i + 1).padStart(2, "0")}
