@@ -9,6 +9,7 @@ import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
 import { SnapReveal } from "@/components/snap-reveal";
+import { SoundToggle } from "@/components/sound-toggle";
 import { SparkTap } from "@/components/spark-tap";
 import { StatCounter } from "@/components/stat-counter";
 import { TiltCard } from "@/components/tilt-card";
@@ -96,6 +97,7 @@ export default function Home() {
           >
             YouTubeを見る
           </WipeLink>
+          <SoundToggle />
           <FullscreenMenu />
         </div>
       </header>
