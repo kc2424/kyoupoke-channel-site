@@ -5,6 +5,7 @@ import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
 import { MonoReveal } from "@/components/mono-reveal";
+import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
 import { SnapReveal } from "@/components/snap-reveal";
@@ -197,8 +198,12 @@ export default function Home() {
       </main>
 
       <FadeIn>
-        <section id="achievements" className="scroll-mt-24 bg-black px-6 py-16 sm:px-10">
-          <div className="mx-auto max-w-[1600px]">
+        <section
+          id="achievements"
+          className="relative scroll-mt-24 overflow-hidden bg-black px-6 py-16 sm:px-10"
+        >
+          <OpArtRings className="top-1/2 right-0 h-[280px] w-[280px] -translate-y-1/2 translate-x-1/3 sm:h-[420px] sm:w-[420px] lg:h-[560px] lg:w-[560px]" />
+          <div className="relative z-10 mx-auto max-w-[1600px]">
             <RevealText
               as="h2"
               text="実績・出演"
