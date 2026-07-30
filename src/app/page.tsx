@@ -7,6 +7,7 @@ import { MemberCard } from "@/components/member-card";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
 import { SnapReveal } from "@/components/snap-reveal";
+import { StatCounter } from "@/components/stat-counter";
 import { StickerBadge } from "@/components/sticker-badge";
 import { TiltCard } from "@/components/tilt-card";
 import { UnderlineLink } from "@/components/underline-link";
@@ -45,6 +46,12 @@ const members = [
     text: "1999年5月28日生まれ、神奈川県出身。通算世界1位14回以上を誇る圧倒的な対戦理論の持ち主で、剣盾時代には「サック氏」と並び称された二大巨頭の一角。感情を排した「悟り」のロジックで対戦を組み立てながら、動画内では謙虚な後輩キャラを貫くギャップが魅力。",
     focal: "38% 38%",
   },
+];
+
+const stats = [
+  { value: 58, suffix: "万人+", label: "チャンネル登録者数" },
+  { value: 10, suffix: "億回+", label: "総再生回数" },
+  { value: 10, suffix: "万人", label: "銀の盾を達成（2022年）" },
 ];
 
 const achievements = [
@@ -198,7 +205,19 @@ export default function Home() {
             <p className="mt-2 text-xs font-bold tracking-widest text-white/40 uppercase lg:text-sm">
               Recognition
             </p>
-            <SnapReveal className="mt-6 grid gap-3 sm:grid-cols-3 lg:gap-5">
+            <div className="mt-10 grid gap-8 border-y border-white/10 py-8 sm:grid-cols-3 lg:gap-10 lg:py-10">
+              {stats.map((s) => (
+                <div key={s.label}>
+                  <p className="font-display text-4xl text-brand tabular-nums sm:text-5xl lg:text-7xl">
+                    <StatCounter value={s.value} suffix={s.suffix} />
+                  </p>
+                  <p className="mt-2 text-xs font-bold tracking-widest text-white/50 uppercase lg:text-sm">
+                    {s.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
               {achievements.map((a) => (
                 <div
                   key={a.label}
