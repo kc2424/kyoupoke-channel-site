@@ -4,6 +4,7 @@ import "./globals.css";
 import { CustomCursor } from "@/components/custom-cursor";
 import { GrainOverlay } from "@/components/grain-overlay";
 import { IntroLoader } from "@/components/intro-loader";
+import { NavTransition } from "@/components/nav-transition";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
 
@@ -59,6 +60,7 @@ export default function RootLayout({
         <IntroLoader />
         <CustomCursor />
         <GrainOverlay />
+        <NavTransition />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

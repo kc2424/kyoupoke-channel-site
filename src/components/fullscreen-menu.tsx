@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { scrollToHash } from "@/lib/lenis";
+import { playNavTransition } from "@/lib/nav-transition";
 import { cn } from "@/lib/utils";
 import { ScrambleText } from "@/components/scramble-text";
 
@@ -66,6 +67,7 @@ export function FullscreenMenu() {
                 href={item.href}
                 onClick={(e) => {
                   e.preventDefault();
+                  playNavTransition();
                   setOpen(false);
                   setTimeout(() => scrollToHash(item.href), 300);
                 }}
