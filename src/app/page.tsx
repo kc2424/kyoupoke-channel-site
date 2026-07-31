@@ -17,7 +17,7 @@ import { SectionBlend } from "@/components/section-blend";
 import { SnapReveal } from "@/components/snap-reveal";
 import { SoundToggle } from "@/components/sound-toggle";
 import { SparkTap } from "@/components/spark-tap";
-import { StatCounter } from "@/components/stat-counter";
+import { StatSpotlight } from "@/components/stat-spotlight";
 import { TiltCard } from "@/components/tilt-card";
 import { UnderlineLink } from "@/components/underline-link";
 import { VideoModal } from "@/components/video-modal";
@@ -270,18 +270,10 @@ export default function Home() {
             <p className="mt-2 text-xs font-bold tracking-widest text-white/40 uppercase lg:text-sm">
               Recognition
             </p>
-            <div className="mt-10 grid gap-8 border-y border-white/10 py-8 sm:grid-cols-3 lg:gap-10 lg:py-10">
-              {stats.map((s) => (
-                <div key={s.label}>
-                  <p className="font-display text-4xl text-brand tabular-nums sm:text-5xl lg:text-7xl">
-                    <StatCounter value={s.value} suffix={s.suffix} />
-                  </p>
-                  <p className="mt-2 text-xs font-bold tracking-widest text-white/50 uppercase lg:text-sm">
-                    {s.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <StatSpotlight
+              stats={stats}
+              className="mt-10 border-y border-white/10 py-8 lg:py-10"
+            />
             <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
               {achievements.map((a) => (
                 <SparkTap
