@@ -3,13 +3,40 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function GiantTitle({ children }: { children: string }) {
   const containerRef = useRef<HTMLHeadingElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
   const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const [scale, setScale] = useState(1);
+
+  // 端末幅に応じて実測でスケールを合わせる。
+  // vw指定だけだとブレークポイント間（例: 390〜639px）で文字が
+  // コンテナ幅を超えて左右が切れてしまうため、実際のレンダリング幅を
+  // 測って必ず収まるようスケールする。
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    const row = rowRef.current;
+    if (!container || !row) return;
+
+    const fit = () => {
+      row.style.transform = "scale(1)";
+      const available = container.clientWidth;
+      const natural = row.scrollWidth;
+      if (!available || !natural) return;
+      // 端の見切れを避けるため 2% の余白を確保
+      const next = natural > available ? (available / natural) * 0.98 : 1;
+      setScale(next);
+    };
+
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(container);
+    return () => ro.disconnect();
+  }, [children]);
 
   useGSAP(
     () => {
@@ -81,20 +108,30 @@ export function GiantTitle({ children }: { children: string }) {
   return (
     <h1
       ref={containerRef}
-      className="font-wordmark text-brand flex w-full justify-center overflow-visible text-[20vw] leading-[0.85] sm:text-[13.5vw]"
-      style={{ letterSpacing: "-0.02em", wordSpacing: "-0.35em" }}
+      className="font-wordmark text-brand flex w-full justify-center overflow-hidden text-[20vw] leading-[0.85] sm:text-[13.5vw]"
     >
-      {children.split("").map((char, i) => (
-        <span
-          key={i}
-          ref={(el) => {
-            charRefs.current[i] = el;
-          }}
-          className="inline-block will-change-transform"
-        >
-          {char === " " ? " " : char}
-        </span>
-      ))}
+      <div
+        ref={rowRef}
+        style={{
+          letterSpacing: "-0.02em",
+          wordSpacing: "-0.35em",
+          transform: `scale(${scale})`,
+          transformOrigin: "center",
+        }}
+        className="inline-flex"
+      >
+        {children.split("").map((char, i) => (
+          <span
+            key={i}
+            ref={(el) => {
+              charRefs.current[i] = el;
+            }}
+            className="inline-block will-change-transform"
+          >
+            {char === " " ? " " : char}
+          </span>
+        ))}
+      </div>
     </h1>
   );
 }

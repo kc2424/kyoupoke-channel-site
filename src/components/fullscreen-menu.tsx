@@ -60,7 +60,7 @@ export function FullscreenMenu() {
             </button>
           </div>
 
-          <nav className="flex flex-col gap-2">
+          <nav className="flex min-h-0 flex-1 flex-col justify-center gap-1 overflow-y-auto py-4 sm:flex-none sm:gap-2 sm:py-0">
             {navItems.map((item, i) => (
               <a
                 key={item.href}
@@ -73,7 +73,7 @@ export function FullscreenMenu() {
                 }}
                 onMouseEnter={() => setHovered(item.href)}
                 onMouseLeave={() => setHovered(null)}
-                className="font-display flex items-center gap-4 text-[13vw] leading-[1.05] text-white transition-transform duration-300 sm:text-6xl"
+                className="font-display flex items-center gap-2 text-[11vw] leading-[1.1] text-white transition-transform duration-300 sm:gap-4 sm:text-6xl"
                 style={{
                   transitionDelay: open ? `${i * 60}ms` : "0ms",
                   transform: open ? "translateX(0)" : "translateX(-40px)",
@@ -82,7 +82,7 @@ export function FullscreenMenu() {
               >
                 <ScrambleText text={item.label} active={hovered === item.href} />
                 <span
-                  className="text-brand text-3xl transition-opacity duration-200 sm:text-5xl"
+                  className="text-brand hidden text-3xl transition-opacity duration-200 sm:inline sm:text-5xl"
                   style={{ opacity: hovered === item.href ? 1 : 0 }}
                 >
                   →
