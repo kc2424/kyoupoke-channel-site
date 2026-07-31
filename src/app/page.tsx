@@ -122,11 +122,10 @@ const growthMilestones = [
   { date: "NOW", label: "登録者67万人+ / 再生12億回+" },
 ];
 
-// TODO: 実際のおすすめ動画のIDに差し替えてください
 const videos = [
-  { id: 1, videoId: "dQw4w9WgXcQ" },
-  { id: 2, videoId: "dQw4w9WgXcQ" },
-  { id: 3, videoId: "dQw4w9WgXcQ" },
+  { id: 1, videoId: "8BfcRA0mPfg", title: "【旅パで本気バトル】ポケモンSVをはじめから遊んで60分後に即対戦！" },
+  { id: 2, videoId: "c31keuiRd7E", title: "【最終日合宿】「最終1位チャレンジしてきます。」ポケモン対戦に本気で挑む大人達のリアルに密着" },
+  { id: 3, videoId: "V3svBZv4ykk", title: "【4世代vs5世代vs9世代】ポ ケ モ ン 最 強 世 代 決 定 戦 -グランドファイナル-" },
 ];
 
 const links = [
@@ -394,7 +393,7 @@ export default function Home() {
                       <MonoReveal className="relative aspect-video">
                         <Image
                           src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`}
-                          alt={`おすすめ動画${v.id}のサムネイル`}
+                          alt={v.title}
                           fill
                           className="object-cover"
                         />
@@ -415,8 +414,8 @@ export default function Home() {
                       <span className="font-display text-lg text-brand lg:text-xl">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <p className="text-sm text-neutral-500 lg:text-base">
-                        おすすめ動画{v.id}（TODO: タイトルを書き換えてください）
+                      <p className="line-clamp-2 text-sm text-neutral-500 lg:text-base">
+                        {v.title}
                       </p>
                     </CardContent>
                   </Card>
