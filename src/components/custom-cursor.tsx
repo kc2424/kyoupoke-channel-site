@@ -63,20 +63,24 @@ export function CustomCursor() {
       <div
         ref={dotRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[999] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference transition-opacity duration-200"
+        className="pointer-events-none fixed top-0 left-0 z-[999] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference transition-opacity duration-200"
         style={{ opacity: active ? 1 : 0 }}
       />
       <div
         ref={ringRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[999] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white mix-blend-difference transition-[width,height,opacity,background-color] duration-200 ease-out"
+        className="pointer-events-none fixed top-0 left-0 z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-difference transition-[width,height,opacity] duration-200 ease-out"
         style={{
-          opacity: active ? 1 : 0,
-          width: hovering ? 56 : 32,
-          height: hovering ? 56 : 32,
-          backgroundColor: hovering ? "rgba(255, 255, 255, 0.15)" : "transparent",
+          opacity: active && hovering ? 1 : 0,
+          width: hovering ? 40 : 32,
+          height: hovering ? 40 : 32,
         }}
-      />
+      >
+        <span className="absolute top-0 left-0 h-2.5 w-2.5 border-t-2 border-l-2 border-white" />
+        <span className="absolute top-0 right-0 h-2.5 w-2.5 border-t-2 border-r-2 border-white" />
+        <span className="absolute bottom-0 left-0 h-2.5 w-2.5 border-b-2 border-l-2 border-white" />
+        <span className="absolute right-0 bottom-0 h-2.5 w-2.5 border-r-2 border-b-2 border-white" />
+      </div>
       <span
         ref={labelRef}
         aria-hidden
