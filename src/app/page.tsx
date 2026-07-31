@@ -15,7 +15,6 @@ import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
 import { SectionBlend } from "@/components/section-blend";
 import { SnapReveal } from "@/components/snap-reveal";
-import { SoundToggle } from "@/components/sound-toggle";
 import { SparkTap } from "@/components/spark-tap";
 import { StatSpotlight } from "@/components/stat-spotlight";
 import { TiltCard } from "@/components/tilt-card";
@@ -117,7 +116,6 @@ export default function Home() {
           >
             YouTubeを見る
           </WipeLink>
-          <SoundToggle className="h-8 w-8 sm:h-9 sm:w-9 lg:h-11 lg:w-11" />
           <FullscreenMenu />
         </div>
       </header>

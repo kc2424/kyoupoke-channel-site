@@ -4,8 +4,6 @@ import gsap from "gsap";
 import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { useRef } from "react";
 
-import { playPop } from "@/lib/sound";
-
 const SPARK_COLORS = ["bg-brand", "bg-white", "bg-black"];
 
 export function SparkTap({
@@ -20,7 +18,6 @@ export function SparkTap({
   const containerRef = useRef<HTMLDivElement>(null);
 
   function burst(originX: number, originY: number) {
-    playPop();
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const container = containerRef.current;
     if (!container) return;

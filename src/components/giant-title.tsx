@@ -17,6 +17,9 @@ export function GiantTitle({ children }: { children: string }) {
   // vw指定だけだとブレークポイント間（例: 390〜639px）で文字が
   // コンテナ幅を超えて左右が切れてしまうため、実際のレンダリング幅を
   // 測って必ず収まるようスケールする。
+  // Webフォント（Titan One）の読み込み完了で文字幅が変わっても
+  // コンテナ自体のサイズは変わらないため、document.fonts.ready と
+  // row要素自体のリサイズも監視して再計測する。
   useLayoutEffect(() => {
     const container = containerRef.current;
     const row = rowRef.current;
@@ -27,15 +30,33 @@ export function GiantTitle({ children }: { children: string }) {
       const available = container.clientWidth;
       const natural = row.scrollWidth;
       if (!available || !natural) return;
-      // 端の見切れを避けるため 2% の余白を確保
-      const next = natural > available ? (available / natural) * 0.98 : 1;
+      // 端の見切れを避けるため 4% の余白を確保
+      const next = natural > available ? (available / natural) * 0.96 : 1;
       setScale(next);
     };
 
     fit();
+
     const ro = new ResizeObserver(fit);
     ro.observe(container);
-    return () => ro.disconnect();
+    ro.observe(row);
+
+    let cancelled = false;
+    if (typeof document !== "undefined" && "fonts" in document) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) fit();
+      });
+    }
+    // フォント読み込みタイミングの取りこぼし対策として、少し遅らせても再計測
+    const t1 = window.setTimeout(fit, 300);
+    const t2 = window.setTimeout(fit, 1000);
+
+    return () => {
+      cancelled = true;
+      ro.disconnect();
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
   }, [children]);
 
   useGSAP(
