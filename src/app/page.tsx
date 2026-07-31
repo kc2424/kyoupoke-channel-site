@@ -13,6 +13,7 @@ import { MonoReveal } from "@/components/mono-reveal";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
+import { ScrollWeight } from "@/components/scroll-weight";
 import { SectionBlend } from "@/components/section-blend";
 import { SnapReveal } from "@/components/snap-reveal";
 import { SoundToggle } from "@/components/sound-toggle";
@@ -150,7 +151,7 @@ export default function Home() {
 
       <FadeIn>
         <section className="border-y border-neutral-200 bg-white px-6 py-14 sm:px-10 lg:py-24">
-          <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-1 lg:gap-2">
+          <ScrollWeight className="mx-auto flex max-w-[1600px] flex-col items-start gap-1 lg:gap-2">
             <RevealText
               as="p"
               text="絶対的エース。"
@@ -166,7 +167,7 @@ export default function Home() {
               text="悟りの天才。"
               className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:self-end lg:text-8xl"
             />
-          </div>
+          </ScrollWeight>
         </section>
       </FadeIn>
 
