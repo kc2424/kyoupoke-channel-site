@@ -13,14 +13,14 @@ export function MemberCard({
   role,
   tags,
   text,
-  focal,
+  photo,
 }: {
   index: number;
   name: string;
   role: string;
   tags: string[];
   text: string;
-  focal?: string;
+  photo?: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -36,43 +36,18 @@ export function MemberCard({
         className="h-[220px] w-full shrink-0 sm:h-[200px] sm:w-[280px] lg:h-[260px] lg:w-[360px]"
       >
         <div className="relative h-full w-full bg-[#df5330]">
-          {focal ? (
+          {photo ? (
             <Image
-              src="/hero-mascots.png"
+              src={photo}
               alt={name}
               fill
-              className="object-cover"
-              style={{ transform: "scale(3.2)", transformOrigin: focal }}
+              className="object-cover object-top"
             />
           ) : (
             <div className="bg-brand/10 flex h-full w-full items-center justify-center">
               <LogoMark className="h-20 w-20" />
             </div>
           )}
-          <svg
-            viewBox="0 0 100 100"
-            className="pointer-events-none absolute inset-0 h-full w-full"
-          >
-            <path
-              d="M 50 12 C 72 10, 90 26, 88 50 C 90 74, 70 90, 48 88 C 24 90, 10 72, 12 48 C 8 26, 28 8, 50 12 Z"
-              fill="none"
-              stroke="white"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              pathLength={1}
-              className="opacity-0 [stroke-dasharray:1] [stroke-dashoffset:1] transition-[stroke-dashoffset,opacity] duration-[1200ms] ease-out group-hover:[stroke-dashoffset:0] group-hover:opacity-90"
-            />
-            <path
-              d="M 38 52 L 47 62 L 66 40"
-              fill="none"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              pathLength={1}
-              className="opacity-0 [stroke-dasharray:1] [stroke-dashoffset:1] transition-[stroke-dashoffset,opacity] delay-[600ms] duration-500 ease-out group-hover:[stroke-dashoffset:0] group-hover:opacity-90"
-            />
-          </svg>
           <BlueprintCorners tone="light" label={`NO.${String(index + 1).padStart(2, "0")}`} />
         </div>
       </LiveGlowFrame>
