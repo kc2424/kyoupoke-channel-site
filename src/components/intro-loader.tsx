@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export function IntroLoader() {
@@ -43,8 +42,13 @@ export function IntroLoader() {
         animate={{ opacity: phase === "reveal" ? 0 : 1 }}
         transition={{ duration: 0.25 }}
       >
-        <span className="relative block h-16 w-16 animate-pulse overflow-hidden rounded-full sm:h-20 sm:w-20">
-          <Image src="/icon.png" alt="今日ポケ" fill priority sizes="80px" className="object-cover" />
+        <span className="relative block h-16 w-16 overflow-hidden rounded-full sm:h-20 sm:w-20">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/icon.png"
+            alt="今日ポケ"
+            className="h-full w-full object-cover"
+          />
         </span>
         <span className="animate-pulse text-xs font-bold tracking-[0.3em] text-[#f4ede4] uppercase">
           KYOU POKE
