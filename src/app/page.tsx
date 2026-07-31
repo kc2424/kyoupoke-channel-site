@@ -143,13 +143,13 @@ const links = [
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-neutral-100">
-      <header className="flex items-center justify-between gap-2 border-b border-neutral-200 bg-white px-4 py-3 sm:px-6 sm:py-4 lg:px-10 lg:py-6">
+      <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-2 bg-transparent px-4 py-3 [text-shadow:0_1px_12px_rgba(255,255,255,0.6)] sm:px-6 sm:py-4 lg:px-10 lg:py-6">
         <div className="flex min-w-0 items-center gap-2 sm:gap-3 lg:gap-4">
-          <LogoMark animated className="h-9 w-9 shrink-0 sm:h-12 sm:w-12 lg:h-16 lg:w-16" />
+          <LogoMark animated className="h-9 w-9 shrink-0 drop-shadow-md sm:h-12 sm:w-12 lg:h-16 lg:w-16" />
           <span className="font-wordmark text-brand truncate text-lg sm:text-2xl lg:text-4xl">KYOU POKE</span>
           <Badge className="bg-brand hidden shrink-0 text-white sm:inline-flex lg:px-4 lg:py-1.5 lg:text-sm">FAN SITE</Badge>
         </div>
-        <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-700 md:flex lg:gap-8 lg:text-base">
+        <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-800 md:flex lg:gap-8 lg:text-base">
           {navItems.map((item) => (
             <UnderlineLink key={item.href} href={item.href}>
               {item.label}
