@@ -78,7 +78,7 @@ export function GrowthTimeline({
         <div className="absolute inset-0 flex items-center justify-between">
           {milestones.map((m, i) => (
             <div
-              key={m.date}
+              key={i}
               ref={(el) => {
                 dotRefs.current[i] = el;
               }}
@@ -90,7 +90,7 @@ export function GrowthTimeline({
       <div className="mt-4 flex justify-between gap-2">
         {milestones.map((m, i) => (
           <div
-            key={m.date}
+            key={i}
             ref={(el) => {
               labelRefs.current[i] = el;
             }}

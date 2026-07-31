@@ -38,29 +38,29 @@ const members = [
   {
     name: "バンビー",
     role: "絶対的エース",
-    tags: ["絶対的エース", "世界1位2回", "SM S5・S6連続1位"],
+    tags: ["絶対的エース", "第7世代2連続最終1位", "歴代最高レート2415"],
     text: "1998年2月10日生まれ、埼玉県出身。番組を牽引する絶対的エースであり、ポケモン世界1位を2度獲得。幼少期の挫折をバネにした不屈の精神と、活動へのフルコミットメントぶりが持ち味。第7世代（SM）で史上初の2期連続最終1位、第9世代（SV）シーズン1で歴代最高レートの最終1位を獲得した実力者。",
     photo: "/members/banbee.png",
   },
   {
     name: "いろは",
     role: "論理の体現者",
-    tags: ["論理の体現者", "構築デザイナー", "PJCS2025出場"],
+    tags: ["論理の体現者", "WCS2025日本代表", "第7世代シングル最終6位"],
     text: "1996年4月28日生まれ、愛知県出身。『ポケットモンスター 赤・緑』発売の年に生まれ、ポケモンと共に育った世代の体現者。社会人経験に裏打ちされた安定感のある解説と、独自のパーティ構築から「構築デザイナー」と呼ばれるセンスが持ち味。2025年にはポケモンジャパンチャンピオンシップス（PJCS2025）・世界大会（WCS2025）出場権を獲得。",
     photo: "/members/iroha.png",
   },
   {
     name: "くろこ",
     role: "悟りの天才",
-    tags: ["悟りの天才", "世界1位14回以上", "剣盾二大巨頭"],
+    tags: ["悟りの天才", "第8世代最終1位9回", "歴代最強トレーナー"],
     text: "1999年5月28日生まれ、神奈川県出身。通算世界1位14回以上を誇る圧倒的な対戦理論の持ち主で、剣盾時代には「サック氏」と並び称された二大巨頭の一角。感情を排した「悟り」のロジックで対戦を組み立てながら、動画内では謙虚な後輩キャラを貫くギャップが魅力。",
     photo: "/members/kuroko.png",
   },
 ];
 
 const stats = [
-  { value: 58, suffix: "万人+", label: "チャンネル登録者数" },
-  { value: 10, suffix: "億回+", label: "総再生回数" },
+  { value: 67.3, decimals: 1, suffix: "万人+", label: "チャンネル登録者数" },
+  { value: 12.5, decimals: 1, suffix: "億回+", label: "総再生回数" },
   { value: 10, suffix: "万人", label: "銀の盾を達成（2022年）" },
 ];
 
@@ -74,9 +74,14 @@ const achievements = [
 ];
 
 const growthMilestones = [
-  { date: "2021.08.08", label: "活動開始" },
-  { date: "2022", label: "登録者10万人・銀の盾" },
-  { date: "NOW", label: "登録者58万人+ / 再生10億回+" },
+  { date: "2021.08", label: "YouTubeチャンネルスタート" },
+  { date: "2021.08", label: "登録者1万人突破" },
+  { date: "2022.12", label: "登録者10万人突破・銀の盾" },
+  { date: "2023.11", label: "登録者20万人突破" },
+  { date: "2024.03", label: "登録者30万人突破" },
+  { date: "2024.12", label: "登録者40万人突破" },
+  { date: "2025.06", label: "登録者50万人突破" },
+  { date: "NOW", label: "登録者67万人+ / 再生12億回+" },
 ];
 
 // TODO: 実際のおすすめ動画のIDに差し替えてください
@@ -89,7 +94,12 @@ const videos = [
 const links = [
   { label: "YouTubeチャンネル", href: "https://www.youtube.com/@KYOUPOKE" },
   { label: "X（旧Twitter）", href: "https://x.com/KYOUPOKEch" },
+  { label: "Instagram", href: "https://www.instagram.com/kyoupokeexpress" },
+  { label: "TikTok", href: "https://www.tiktok.com/@kyoupoke" },
   { label: "今日ポケ SHOP", href: "https://kyoupoke.shop" },
+  { label: "バンビー チャンネル", href: "https://www.youtube.com/channel/UCNOnv5No5KtT3fmvcztSkEg" },
+  { label: "いろは チャンネル", href: "https://www.youtube.com/channel/UCUR5Eg2dU2RFygBWyfkkIEQ" },
+  { label: "くろこ チャンネル", href: "https://www.youtube.com/channel/UC4e7rsaJW-M7vr55lsDMjYQ" },
 ];
 
 export default function Home() {
@@ -208,7 +218,7 @@ export default function Home() {
                 </p>
                 <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
                   2022年にはチャンネル登録者数10万人を達成し、YouTube Creator Awardsの銀の盾を受賞。
-                  現在はチャンネル登録者数 約58万人、総再生回数は10億回を超える規模まで成長しています。
+                  現在はチャンネル登録者数 約67万人、総再生回数は12億回を超える規模まで成長しています。
                 </p>
                 <GrowthTimeline
                   milestones={growthMilestones}
@@ -372,7 +382,6 @@ export default function Home() {
             <p className="mt-2 text-xs font-bold tracking-widest text-white/60 uppercase lg:text-sm">
               Links
             </p>
-            {/* TODO: Instagram・TikTokの正式なURLが分かったら差し替えてください */}
             <div className="mt-6 flex flex-wrap gap-3">
               {links.map((l) => (
                 <Magnetic key={l.href}>

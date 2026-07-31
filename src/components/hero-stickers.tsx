@@ -11,12 +11,12 @@ export function HeroStickers() {
     >
       <div className="pointer-events-auto absolute top-[16%] left-[6%]">
         <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-8} className="bg-brand text-white">
-          登録者58万人+
+          登録者67万人+
         </StickerDrag>
       </div>
       <div className="pointer-events-auto absolute right-[7%] bottom-[24%]">
         <StickerDrag boundsSelector="[data-hero-bounds]" rotate={6} className="bg-black text-white">
-          総再生10億回+
+          総再生12億回+
         </StickerDrag>
       </div>
     </div>
