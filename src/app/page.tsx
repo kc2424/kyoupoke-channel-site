@@ -12,7 +12,6 @@ import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
-import { GrowthTimeline } from "@/components/growth-timeline";
 import { HeroStickers } from "@/components/hero-stickers";
 import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
@@ -116,17 +115,6 @@ const achievements = [
   { label: "PJCS2025 / WCS2025", sub: "いろは選手が出場権獲得", tone: "brand" },
   { label: "今日ポケ杯", sub: "ニコニコ生放送と連携開催", tone: "black" },
   { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "brand" },
-];
-
-const growthMilestones = [
-  { date: "2021.08", label: "YouTubeチャンネルスタート" },
-  { date: "2021.08", label: "登録者1万人突破" },
-  { date: "2022.12", label: "登録者10万人突破・銀の盾" },
-  { date: "2023.11", label: "登録者20万人突破" },
-  { date: "2024.03", label: "登録者30万人突破" },
-  { date: "2024.12", label: "登録者40万人突破" },
-  { date: "2025.06", label: "登録者50万人突破" },
-  { date: "NOW", label: "登録者67万人+ / 再生12億回+" },
 ];
 
 const videos = [
@@ -278,10 +266,6 @@ export default function Home() {
                     2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
                     現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
                   </p>
-                  <GrowthTimeline
-                    milestones={growthMilestones}
-                    className="mt-10 lg:mt-14"
-                  />
                 </CardContent>
               </Card>
 

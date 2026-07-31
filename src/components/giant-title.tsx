@@ -36,8 +36,8 @@ export function GiantTitle({ children }: { children: string }) {
       const natural = row.scrollWidth;
       if (!available || !natural) return;
       lastNatural = natural;
-      // 端の見切れを避けるため 8% の余白を確保
-      const next = natural > available ? (available / natural) * 0.92 : 1;
+      // 端の見切れを避けるため 15% の余白を確保
+      const next = natural > available ? (available / natural) * 0.85 : 1;
       setScale(next);
     };
 
@@ -59,6 +59,10 @@ export function GiantTitle({ children }: { children: string }) {
       document.fonts.addEventListener("loadingdone", safeFit);
     }
     window.addEventListener("load", safeFit);
+    // 画面回転やブラウザのUI表示変化（アドレスバーの伸縮など）でも
+    // 確実に再計算されるよう、window resizeも直接監視する
+    window.addEventListener("resize", safeFit);
+    window.addEventListener("orientationchange", safeFit);
 
     // イベントの取りこぼし対策として、マウント後しばらく短い間隔で
     // 実際の幅（scrollWidth）が変化していないか確認し続ける
@@ -83,6 +87,8 @@ export function GiantTitle({ children }: { children: string }) {
       ro.disconnect();
       window.clearInterval(poll);
       window.removeEventListener("load", safeFit);
+      window.removeEventListener("resize", safeFit);
+      window.removeEventListener("orientationchange", safeFit);
       if (typeof document !== "undefined" && "fonts" in document) {
         document.fonts.removeEventListener("loadingdone", safeFit);
       }
@@ -159,7 +165,7 @@ export function GiantTitle({ children }: { children: string }) {
   return (
     <h1
       ref={containerRef}
-      className="font-wordmark text-brand flex w-full justify-center overflow-hidden text-[20vw] leading-[0.85] sm:text-[13.5vw]"
+      className="font-wordmark text-brand flex w-full justify-center overflow-hidden text-[17vw] leading-[0.85] sm:text-[13.5vw]"
     >
       <div
         ref={rowRef}
