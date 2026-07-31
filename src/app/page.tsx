@@ -105,7 +105,6 @@ const stats = [
 const achievements = [
   { label: "YouTube Creator Awards", sub: "銀の盾（登録者10万人）", tone: "brand" },
   { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演", tone: "black" },
-  { label: "ポケモン竜王戦2024", sub: "ゲーム部門出場", tone: "black" },
   { label: "PJCS2025 / WCS2025", sub: "いろは選手が出場権獲得", tone: "brand" },
   { label: "今日ポケ杯", sub: "ニコニコ生放送と連携開催", tone: "black" },
   { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "brand" },
