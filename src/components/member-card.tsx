@@ -25,12 +25,13 @@ export function MemberCard({
   milestones?: { period: string; text: string }[];
 }) {
   const [open, setOpen] = useState(false);
+  const hasMilestones = Boolean(milestones && milestones.length > 0);
 
   return (
     <button
       type="button"
-      onClick={() => setOpen((v) => !v)}
-      data-cursor-label={open ? "CLOSE" : "MORE"}
+      onClick={() => hasMilestones && setOpen((v) => !v)}
+      data-cursor-label={hasMilestones ? (open ? "CLOSE" : "MORE") : undefined}
       className="group flex w-full flex-col gap-6 border-b border-neutral-200 py-8 text-left sm:flex-row sm:items-center lg:gap-10 lg:py-10"
     >
       <LiveGlowFrame
@@ -64,32 +65,34 @@ export function MemberCard({
             </h3>
             <p className="mt-1 text-sm font-bold text-neutral-500 lg:text-lg">{role}</p>
           </div>
-          <span
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-neutral-300 transition-transform duration-300"
-            style={{ transform: open ? "rotate(-90deg)" : "rotate(0deg)" }}
-          >
-            ↓
-          </span>
+          {milestones && milestones.length > 0 && (
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-neutral-300 transition-transform duration-300"
+              style={{ transform: open ? "rotate(-90deg)" : "rotate(0deg)" }}
+            >
+              ↓
+            </span>
+          )}
         </div>
-        <div
-          className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.785,0.135,0.15,0.86)]"
-          style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
-        >
-          <div className="overflow-hidden">
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700 lg:text-lg">
-              {text}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold text-neutral-600 lg:px-4 lg:py-1.5 lg:text-base"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            {milestones && milestones.length > 0 && (
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700 lg:text-lg">
+          {text}
+        </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold text-neutral-600 lg:px-4 lg:py-1.5 lg:text-base"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        {milestones && milestones.length > 0 && (
+          <div
+            className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.785,0.135,0.15,0.86)]"
+            style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+          >
+            <div className="overflow-hidden">
               <ol className="mt-6 max-w-2xl border-l-2 border-neutral-200 pl-5">
                 {milestones.map((m, i) => (
                   <li key={i} className="relative pb-4 last:pb-0">
@@ -103,9 +106,9 @@ export function MemberCard({
                   </li>
                 ))}
               </ol>
-            )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </button>
   );

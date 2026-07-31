@@ -77,6 +77,25 @@ const members = [
   },
 ];
 
+// TODO: 自己紹介文・役割が分かり次第、正式な内容に差し替えてください
+const staffMembers = [
+  {
+    name: "あしゅ",
+    role: "天の声・司会",
+    text: "今日ポケの企画進行や実況を支える「天の声」。詳しいプロフィールは準備中です。",
+  },
+  {
+    name: "ふらとら",
+    role: "編集・企画",
+    text: "動画の編集・企画で活躍するメンバー。詳しいプロフィールは準備中です。",
+  },
+  {
+    name: "サイヨーマ",
+    role: "編集・企画",
+    text: "動画の編集・企画で活躍するメンバー。詳しいプロフィールは準備中です。",
+  },
+];
+
 const stats = [
   { value: 67.3, decimals: 1, suffix: "万人+", label: "チャンネル登録者数" },
   { value: 12.5, decimals: 1, suffix: "億回+", label: "総再生回数" },
@@ -272,6 +291,28 @@ export default function Home() {
                   text={m.text}
                   photo={m.photo}
                   milestones={m.milestones}
+                />
+              </FadeIn>
+            ))}
+          </div>
+
+          <p className="mt-14 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+            Staff
+          </p>
+          <RevealText
+            as="h3"
+            text="裏方メンバー"
+            className="font-display mt-1 text-2xl text-neutral-900 lg:text-4xl"
+          />
+          <div className="mt-6 border-t border-neutral-200">
+            {staffMembers.map((m, i) => (
+              <FadeIn key={m.name} x={-60} y={0} delay={i * 0.1}>
+                <MemberCard
+                  index={i}
+                  name={m.name}
+                  role={m.role}
+                  tags={[]}
+                  text={m.text}
                 />
               </FadeIn>
             ))}
