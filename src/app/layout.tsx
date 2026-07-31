@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Mochiy_Pop_One, Noto_Sans_JP, Titan_One, Zen_Kaku_Gothic_New, Geist } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/custom-cursor";
+import { GrainOverlay } from "@/components/grain-overlay";
 import { IntroLoader } from "@/components/intro-loader";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
@@ -57,6 +58,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
         <IntroLoader />
         <CustomCursor />
+        <GrainOverlay />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
