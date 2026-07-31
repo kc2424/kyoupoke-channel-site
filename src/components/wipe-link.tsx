@@ -7,17 +7,20 @@ export function WipeLink({
   children,
   className,
   wipeColor = "bg-black",
+  cursorLabel,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
   wipeColor?: string;
+  cursorLabel?: string;
 }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      data-cursor-label={cursorLabel}
       className={cn(
         "group relative inline-flex items-center justify-center overflow-hidden rounded-full border-2 border-black px-6 py-3 text-sm font-bold text-black",
         className

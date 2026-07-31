@@ -29,7 +29,9 @@ export function UnderlineLink({
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
       className={cn("group relative inline-block pb-1", className)}
     >
-      {children}
+      <span className="inline-block font-bold transition-[font-weight] duration-300 ease-out group-hover:font-black">
+        {children}
+      </span>
       <span className="pointer-events-none absolute inset-x-0 bottom-0 h-[1.5px] origin-left scale-x-0 bg-current transition-transform duration-500 ease-out group-hover:scale-x-100" />
     </a>
   );

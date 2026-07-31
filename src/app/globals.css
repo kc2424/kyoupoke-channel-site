@@ -125,6 +125,52 @@ html.cursor-none * {
   animation: marquee 22s linear infinite;
 }
 
+@keyframes glow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-glow-spin {
+  animation: glow-spin 7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow-spin {
+    animation: none;
+  }
+}
+
+@keyframes logo-wiggle {
+  0%,
+  76%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  80% {
+    transform: rotate(-12deg) scale(1.08);
+  }
+  85% {
+    transform: rotate(10deg) scale(1.08);
+  }
+  90% {
+    transform: rotate(-6deg) scale(1.03);
+  }
+  95% {
+    transform: rotate(3deg) scale(1.01);
+  }
+}
+
+.animate-logo-wiggle {
+  animation: logo-wiggle 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo-wiggle {
+    animation: none;
+  }
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);

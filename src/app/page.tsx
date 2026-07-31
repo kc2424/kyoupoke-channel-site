@@ -1,6 +1,11 @@
+import { BlueprintCorners } from "@/components/blueprint-corners";
+import { ChapterMark } from "@/components/chapter-mark";
+import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
+import { GrowthTimeline } from "@/components/growth-timeline";
+import { HeroStickers } from "@/components/hero-stickers";
 import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
@@ -8,15 +13,19 @@ import { MonoReveal } from "@/components/mono-reveal";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
+import { SectionBlend } from "@/components/section-blend";
 import { SnapReveal } from "@/components/snap-reveal";
+import { SoundToggle } from "@/components/sound-toggle";
 import { SparkTap } from "@/components/spark-tap";
-import { StatCounter } from "@/components/stat-counter";
+import { StatSpotlight } from "@/components/stat-spotlight";
 import { TiltCard } from "@/components/tilt-card";
 import { UnderlineLink } from "@/components/underline-link";
+import { VideoModal } from "@/components/video-modal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WipeLink } from "@/components/wipe-link";
+import Image from "next/image";
 
 const navItems = [
   { label: "プロフィール", href: "#profile" },
@@ -65,7 +74,18 @@ const achievements = [
   { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "brand" },
 ];
 
-const videos = [1, 2, 3];
+const growthMilestones = [
+  { date: "2021.08.08", label: "活動開始" },
+  { date: "2022", label: "登録者10万人・銀の盾" },
+  { date: "NOW", label: "登録者58万人+ / 再生10億回+" },
+];
+
+// TODO: 実際のおすすめ動画のIDに差し替えてください
+const videos = [
+  { id: 1, videoId: "dQw4w9WgXcQ" },
+  { id: 2, videoId: "dQw4w9WgXcQ" },
+  { id: 3, videoId: "dQw4w9WgXcQ" },
+];
 
 const links = [
   { label: "YouTubeチャンネル", href: "https://www.youtube.com/@KYOUPOKE" },
@@ -78,7 +98,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col bg-neutral-100">
       <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 lg:px-10 lg:py-6">
         <div className="flex items-center gap-3 lg:gap-4">
-          <LogoMark className="h-12 w-12 lg:h-16 lg:w-16" />
+          <LogoMark animated className="h-12 w-12 lg:h-16 lg:w-16" />
           <span className="font-wordmark text-2xl text-brand lg:text-4xl">KYOU POKE</span>
           <Badge className="bg-brand text-white lg:px-4 lg:py-1.5 lg:text-sm">FAN SITE</Badge>
         </div>
@@ -92,15 +112,18 @@ export default function Home() {
         <div className="flex items-center gap-3 lg:gap-4">
           <WipeLink
             href="https://www.youtube.com/@KYOUPOKE"
+            cursorLabel="OPEN"
             className="hidden sm:inline-flex lg:px-8 lg:py-4 lg:text-base"
           >
             YouTubeを見る
           </WipeLink>
+          <SoundToggle />
           <FullscreenMenu />
         </div>
       </header>
 
       <section className="relative overflow-hidden bg-white px-6 pt-24 pb-10 sm:px-10">
+        <HeroStickers />
         <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block lg:text-sm">
           Unofficial Fan Site
         </span>
@@ -126,23 +149,51 @@ export default function Home() {
       </section>
 
       <FadeIn>
+        <section className="border-y border-neutral-200 bg-white px-6 py-14 sm:px-10 lg:py-24">
+          <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-1 lg:gap-2">
+            <RevealText
+              as="p"
+              text="絶対的エース。"
+              className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:text-8xl"
+            />
+            <RevealText
+              as="p"
+              text="論理の体現者。"
+              className="font-display text-4xl leading-[1.05] text-brand sm:text-6xl lg:self-center lg:text-8xl"
+            />
+            <RevealText
+              as="p"
+              text="悟りの天才。"
+              className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:self-end lg:text-8xl"
+            />
+          </div>
+        </section>
+      </FadeIn>
+
+      <FadeIn>
         <section className="bg-white px-6 pb-16 sm:px-10 lg:px-10">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
             <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
           </div>
-          <ParallaxImage
-            wrapperClassName="mt-6 h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
-            src="/hero-mascots.png"
-            alt="今日ポケ マスコットイラスト"
-            fill
-            priority
-          />
+          <CurtainReveal className="mt-6 rounded-2xl" flapColor="#ffffff">
+            <div className="relative">
+              <ParallaxImage
+                wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
+                src="/hero-mascots.png"
+                alt="今日ポケ マスコットイラスト"
+                fill
+                priority
+              />
+              <BlueprintCorners tone="light" label="FIG.01 — MASCOTS" />
+            </div>
+          </CurtainReveal>
         </section>
       </FadeIn>
 
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <FadeIn>
           <section id="profile" className="scroll-mt-24">
+            <ChapterMark index={1} total={5} className="mb-2" />
             <RevealText
               as="h2"
               text="プロフィール"
@@ -161,12 +212,17 @@ export default function Home() {
                   2022年にはチャンネル登録者数10万人を達成し、YouTube Creator Awardsの銀の盾を受賞。
                   現在はチャンネル登録者数 約58万人、総再生回数は10億回を超える規模まで成長しています。
                 </p>
+                <GrowthTimeline
+                  milestones={growthMilestones}
+                  className="mt-10 lg:mt-14"
+                />
               </CardContent>
             </Card>
           </section>
         </FadeIn>
 
         <section id="members">
+          <ChapterMark index={2} total={5} className="mb-2" />
           <RevealText
             as="h2"
             text="メンバー紹介"
@@ -196,6 +252,8 @@ export default function Home() {
 
       </main>
 
+      <SectionBlend from="#f5f5f5" to="#000000" />
+
       <FadeIn>
         <section
           id="achievements"
@@ -203,6 +261,7 @@ export default function Home() {
         >
           <OpArtRings className="top-1/2 right-0 h-[280px] w-[280px] -translate-y-1/2 translate-x-1/3 sm:h-[420px] sm:w-[420px] lg:h-[560px] lg:w-[560px]" />
           <div className="relative z-10 mx-auto max-w-[1600px]">
+            <ChapterMark index={3} total={5} tone="dark" className="mb-2" />
             <RevealText
               as="h2"
               text="実績・出演"
@@ -211,18 +270,10 @@ export default function Home() {
             <p className="mt-2 text-xs font-bold tracking-widest text-white/40 uppercase lg:text-sm">
               Recognition
             </p>
-            <div className="mt-10 grid gap-8 border-y border-white/10 py-8 sm:grid-cols-3 lg:gap-10 lg:py-10">
-              {stats.map((s) => (
-                <div key={s.label}>
-                  <p className="font-display text-4xl text-brand tabular-nums sm:text-5xl lg:text-7xl">
-                    <StatCounter value={s.value} suffix={s.suffix} />
-                  </p>
-                  <p className="mt-2 text-xs font-bold tracking-widest text-white/50 uppercase lg:text-sm">
-                    {s.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <StatSpotlight
+              stats={stats}
+              className="mt-10 border-y border-white/10 py-8 lg:py-10"
+            />
             <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
               {achievements.map((a) => (
                 <SparkTap
@@ -244,8 +295,11 @@ export default function Home() {
         </section>
       </FadeIn>
 
+      <SectionBlend from="#000000" to="#f5f5f5" />
+
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <section id="videos">
+          <ChapterMark index={4} total={5} className="mb-2" />
           <RevealText
             as="h2"
             text="おすすめ動画"
@@ -254,27 +308,38 @@ export default function Home() {
           <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
             Videos
           </p>
-          {/* TODO: 動画IDを実際のおすすめ動画のIDに差し替えてください */}
           <div className="mt-6 grid gap-6 sm:grid-cols-3 lg:gap-8">
-            {videos.map((n, i) => (
-              <FadeIn key={n} delay={i * 0.1}>
+            {videos.map((v, i) => (
+              <FadeIn key={v.id} delay={i * 0.1}>
                 <TiltCard>
-                  <Card className="group/mono overflow-hidden p-0 shadow-sm">
-                    <MonoReveal className="aspect-video">
-                      <iframe
-                        className="h-full w-full"
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                        title={`おすすめ動画${n}`}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </MonoReveal>
+                  <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="見る">
+                    <VideoModal videoId={v.videoId} title={`おすすめ動画${v.id}`}>
+                      <MonoReveal className="relative aspect-video">
+                        <Image
+                          src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`}
+                          alt={`おすすめ動画${v.id}のサムネイル`}
+                          fill
+                          className="object-cover"
+                        />
+                        <span className="absolute inset-0 flex items-center justify-center">
+                          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-brand shadow-lg transition-transform duration-300 group-hover/mono:scale-110 lg:h-20 lg:w-20">
+                            <svg
+                              viewBox="0 0 24 24"
+                              className="ml-1 h-6 w-6 fill-current lg:h-8 lg:w-8"
+                              aria-hidden="true"
+                            >
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </span>
+                        </span>
+                      </MonoReveal>
+                    </VideoModal>
                     <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
                       <span className="font-display text-lg text-brand lg:text-xl">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <p className="text-sm text-neutral-500 lg:text-base">
-                        おすすめ動画{n}（TODO: タイトルを書き換えてください）
+                        おすすめ動画{v.id}（TODO: タイトルを書き換えてください）
                       </p>
                     </CardContent>
                   </Card>
@@ -285,6 +350,7 @@ export default function Home() {
           <Magnetic>
             <WipeLink
               href="https://www.youtube.com/@KYOUPOKE"
+              cursorLabel="OPEN"
               className="mt-8 lg:px-8 lg:py-4 lg:text-base"
             >
               チャンネルの動画をもっと見る
@@ -294,9 +360,12 @@ export default function Home() {
 
       </main>
 
+      <SectionBlend from="#f5f5f5" to="#d9552e" />
+
       <FadeIn>
         <section id="links" className="scroll-mt-24 bg-brand px-6 py-16 sm:px-10">
           <div className="mx-auto max-w-[1600px]">
+            <ChapterMark index={5} total={5} tone="brand" className="mb-2" />
             <RevealText
               as="h2"
               text="リンク"
@@ -312,6 +381,7 @@ export default function Home() {
                   <WipeLink
                     href={l.href}
                     wipeColor="bg-black"
+                    cursorLabel="OPEN"
                     className="border-white text-white lg:px-8 lg:py-4 lg:text-base"
                   >
                     {l.label}
@@ -323,7 +393,9 @@ export default function Home() {
         </section>
       </FadeIn>
 
-      <footer className="relative overflow-hidden border-t border-neutral-200 bg-black py-16">
+      <SectionBlend from="#d9552e" to="#000000" />
+
+      <footer className="relative overflow-hidden bg-black py-16">
         <div className="flex select-none whitespace-nowrap">
           {[0, 1].map((row) => (
             <div
