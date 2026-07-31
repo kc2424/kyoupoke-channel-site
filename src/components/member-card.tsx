@@ -14,6 +14,7 @@ export function MemberCard({
   tags,
   text,
   photo,
+  milestones,
 }: {
   index: number;
   name: string;
@@ -21,6 +22,7 @@ export function MemberCard({
   tags: string[];
   text: string;
   photo?: string;
+  milestones?: { period: string; text: string }[];
 }) {
   const [open, setOpen] = useState(false);
 
@@ -87,6 +89,21 @@ export function MemberCard({
                 </span>
               ))}
             </div>
+            {milestones && milestones.length > 0 && (
+              <ol className="mt-6 max-w-2xl border-l-2 border-neutral-200 pl-5">
+                {milestones.map((m, i) => (
+                  <li key={i} className="relative pb-4 last:pb-0">
+                    <span className="bg-brand absolute top-1.5 -left-[26px] h-2.5 w-2.5 rounded-full" />
+                    <p className="font-mono text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+                      {m.period}
+                    </p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-neutral-700 lg:text-base">
+                      {m.text}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            )}
           </div>
         </div>
       </div>
