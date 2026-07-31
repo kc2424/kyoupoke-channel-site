@@ -1,4 +1,12 @@
 import { BlueprintCorners } from "@/components/blueprint-corners";
+import {
+  InstagramIcon,
+  ShopIcon,
+  TikTokIcon,
+  UserIcon,
+  XIcon,
+  YouTubeIcon,
+} from "@/components/brand-icons";
 import { ChapterMark } from "@/components/chapter-mark";
 import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
@@ -127,15 +135,18 @@ const videos = [
   { id: 3, videoId: "V3svBZv4ykk", title: "【4世代vs5世代vs9世代】ポ ケ モ ン 最 強 世 代 決 定 戦 -グランドファイナル-" },
 ];
 
-const links = [
-  { label: "YouTubeチャンネル", href: "https://www.youtube.com/@KYOUPOKE" },
-  { label: "X（旧Twitter）", href: "https://x.com/KYOUPOKEch" },
-  { label: "Instagram", href: "https://www.instagram.com/kyoupokeexpress" },
-  { label: "TikTok", href: "https://www.tiktok.com/@kyoupoke" },
-  { label: "今日ポケ SHOP", href: "https://kyoupoke.shop" },
-  { label: "バンビー チャンネル", href: "https://www.youtube.com/channel/UCNOnv5No5KtT3fmvcztSkEg" },
-  { label: "いろは チャンネル", href: "https://www.youtube.com/channel/UCUR5Eg2dU2RFygBWyfkkIEQ" },
-  { label: "くろこ チャンネル", href: "https://www.youtube.com/channel/UC4e7rsaJW-M7vr55lsDMjYQ" },
+const mainLinks = [
+  { label: "YouTube", sub: "本チャンネル", href: "https://www.youtube.com/@KYOUPOKE", icon: YouTubeIcon },
+  { label: "X（旧Twitter）", sub: "@KYOUPOKEch", href: "https://x.com/KYOUPOKEch", icon: XIcon },
+  { label: "Instagram", sub: "@kyoupokeexpress", href: "https://www.instagram.com/kyoupokeexpress", icon: InstagramIcon },
+  { label: "TikTok", sub: "@kyoupoke", href: "https://www.tiktok.com/@kyoupoke", icon: TikTokIcon },
+  { label: "今日ポケ SHOP", sub: "オンラインストア", href: "https://kyoupoke.shop", icon: ShopIcon },
+];
+
+const memberLinks = [
+  { label: "バンビー", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UCNOnv5No5KtT3fmvcztSkEg", icon: UserIcon },
+  { label: "いろは", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UCUR5Eg2dU2RFygBWyfkkIEQ", icon: UserIcon },
+  { label: "くろこ", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UC4e7rsaJW-M7vr55lsDMjYQ", icon: UserIcon },
 ];
 
 export default function Home() {
@@ -254,22 +265,54 @@ export default function Home() {
             <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
               About
             </p>
-            <Card className="mt-6 p-6 shadow-sm lg:p-10">
-              <CardContent className="px-0">
-                <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  「今日ポケ」は2021年8月8日に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする3人組YouTuberグループです。
-                  バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
-                </p>
-                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  2022年にはチャンネル登録者数10万人を達成し、YouTube Creator Awardsの銀の盾を受賞。
-                  現在はチャンネル登録者数 約67万人、総再生回数は12億回を超える規模まで成長しています。
-                </p>
-                <GrowthTimeline
-                  milestones={growthMilestones}
-                  className="mt-10 lg:mt-14"
-                />
-              </CardContent>
-            </Card>
+            <div className="mt-6 grid gap-4 lg:grid-cols-3 lg:gap-6">
+              <Card className="relative overflow-hidden p-6 shadow-sm lg:col-span-2 lg:p-10">
+                <BlueprintCorners tone="dark" label="About" />
+                <CardContent className="px-0">
+                  <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                    「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
+                    <span className="text-brand font-bold">3人組</span>YouTuberグループです。
+                    バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
+                  </p>
+                  <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                    2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
+                    現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
+                  </p>
+                  <GrowthTimeline
+                    milestones={growthMilestones}
+                    className="mt-10 lg:mt-14"
+                  />
+                </CardContent>
+              </Card>
+
+              <div className="flex flex-col gap-4">
+                <Card className="bg-brand relative overflow-hidden p-6 text-white lg:p-7">
+                  <BlueprintCorners tone="light" label="Since" />
+                  <p className="text-xs font-bold tracking-widest text-white/70 uppercase">
+                    活動開始
+                  </p>
+                  <p className="font-display mt-1 text-3xl lg:text-4xl">2021.08.08</p>
+                </Card>
+                <Card className="relative overflow-hidden p-6 lg:p-7">
+                  <BlueprintCorners tone="dark" label="Members" />
+                  <p className="text-xs font-bold tracking-widest text-neutral-400 uppercase">
+                    メンバー
+                  </p>
+                  <p className="font-display mt-1 text-2xl text-neutral-900 lg:text-3xl">
+                    バンビー・いろは・くろこ
+                  </p>
+                </Card>
+                <Card className="relative overflow-hidden p-6 lg:p-7">
+                  <BlueprintCorners tone="dark" label="Genre" />
+                  <p className="text-xs font-bold tracking-widest text-neutral-400 uppercase">
+                    ジャンル
+                  </p>
+                  <p className="font-display mt-1 text-2xl text-neutral-900 lg:text-3xl">
+                    ポケモン対戦 × バラエティ
+                  </p>
+                </Card>
+              </div>
+            </div>
           </section>
         </FadeIn>
 
@@ -449,19 +492,53 @@ export default function Home() {
             <p className="mt-2 text-xs font-bold tracking-widest text-white/60 uppercase lg:text-sm">
               Links
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {links.map((l) => (
-                <Magnetic key={l.href}>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {mainLinks.map((l) => {
+                const Icon = l.icon;
+                return (
                   <WipeLink
+                    key={l.href}
                     href={l.href}
                     wipeColor="bg-black"
                     cursorLabel="OPEN"
-                    className="border-white text-white lg:px-8 lg:py-4 lg:text-base"
+                    className="w-full justify-start gap-4 rounded-2xl border-white/30 px-5 py-4 text-left text-white transition-transform duration-300 hover:-translate-y-1 lg:px-6 lg:py-5"
                   >
-                    {l.label}
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 lg:h-12 lg:w-12">
+                      <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="font-bold lg:text-lg">{l.label}</span>
+                      <span className="text-xs text-white/60 lg:text-sm">{l.sub}</span>
+                    </span>
                   </WipeLink>
-                </Magnetic>
-              ))}
+                );
+              })}
+            </div>
+
+            <p className="mt-10 text-xs font-bold tracking-widest text-white/60 uppercase lg:text-sm">
+              Member Channels
+            </p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              {memberLinks.map((l) => {
+                const Icon = l.icon;
+                return (
+                  <WipeLink
+                    key={l.href}
+                    href={l.href}
+                    wipeColor="bg-black"
+                    cursorLabel="OPEN"
+                    className="w-full justify-start gap-4 rounded-2xl border-white/30 px-5 py-4 text-left text-white transition-transform duration-300 hover:-translate-y-1 lg:px-6 lg:py-5"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 lg:h-12 lg:w-12">
+                      <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="font-bold lg:text-lg">{l.label}</span>
+                      <span className="text-xs text-white/60 lg:text-sm">{l.sub}</span>
+                    </span>
+                  </WipeLink>
+                );
+              })}
             </div>
           </div>
         </section>
