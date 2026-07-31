@@ -17,21 +17,27 @@ export function GiantTitle({ children }: { children: string }) {
   // vw指定だけだとブレークポイント間（例: 390〜639px）で文字が
   // コンテナ幅を超えて左右が切れてしまうため、実際のレンダリング幅を
   // 測って必ず収まるようスケールする。
-  // Webフォント（Titan One）の読み込み完了で文字幅が変わっても
-  // コンテナ自体のサイズは変わらないため、document.fonts.ready と
-  // row要素自体のリサイズも監視して再計測する。
+  // Webフォント（Titan One）はfont-display: swapのため、
+  // document.fonts.ready が解決するタイミングと実際にグリフが
+  // 描画されるタイミングがずれることがある（特にモバイルSafari）。
+  // そのため fonts.ready / loadingdone イベントに加えて、
+  // マウント後しばらくの間ポーリングして幅の変化を追い、
+  // 安全マージンも大きめに確保する。
   useLayoutEffect(() => {
     const container = containerRef.current;
     const row = rowRef.current;
     if (!container || !row) return;
+
+    let lastNatural = -1;
 
     const fit = () => {
       row.style.transform = "scale(1)";
       const available = container.clientWidth;
       const natural = row.scrollWidth;
       if (!available || !natural) return;
-      // 端の見切れを避けるため 4% の余白を確保
-      const next = natural > available ? (available / natural) * 0.96 : 1;
+      lastNatural = natural;
+      // 端の見切れを避けるため 8% の余白を確保
+      const next = natural > available ? (available / natural) * 0.92 : 1;
       setScale(next);
     };
 
@@ -42,20 +48,44 @@ export function GiantTitle({ children }: { children: string }) {
     ro.observe(row);
 
     let cancelled = false;
+    const safeFit = () => {
+      if (!cancelled) fit();
+    };
+
     if (typeof document !== "undefined" && "fonts" in document) {
-      document.fonts.ready.then(() => {
-        if (!cancelled) fit();
-      });
+      document.fonts.ready.then(safeFit);
+      // fonts.ready より前に個別フォントの読み込みが完了することもあるため、
+      // loadingdone イベントでも都度再計測する
+      document.fonts.addEventListener("loadingdone", safeFit);
     }
-    // フォント読み込みタイミングの取りこぼし対策として、少し遅らせても再計測
-    const t1 = window.setTimeout(fit, 300);
-    const t2 = window.setTimeout(fit, 1000);
+    window.addEventListener("load", safeFit);
+
+    // イベントの取りこぼし対策として、マウント後しばらく短い間隔で
+    // 実際の幅（scrollWidth）が変化していないか確認し続ける
+    let checks = 0;
+    const poll = window.setInterval(() => {
+      checks += 1;
+      const currentNatural = (() => {
+        const prevTransform = row.style.transform;
+        row.style.transform = "scale(1)";
+        const w = row.scrollWidth;
+        row.style.transform = prevTransform;
+        return w;
+      })();
+      if (currentNatural !== lastNatural) {
+        fit();
+      }
+      if (checks >= 20) window.clearInterval(poll);
+    }, 150);
 
     return () => {
       cancelled = true;
       ro.disconnect();
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
+      window.clearInterval(poll);
+      window.removeEventListener("load", safeFit);
+      if (typeof document !== "undefined" && "fonts" in document) {
+        document.fonts.removeEventListener("loadingdone", safeFit);
+      }
     };
   }, [children]);
 
