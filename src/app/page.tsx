@@ -168,7 +168,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="relative overflow-hidden bg-white px-6 pt-24 pb-10 sm:px-10">
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-white px-6 sm:px-10">
         <HeroStickers />
         <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block lg:text-sm">
           Unofficial Fan Site
@@ -183,16 +183,24 @@ export default function Home() {
 
         <GiantTitle>KYOU POKE</GiantTitle>
 
-        <FadeIn delay={0.3}>
-          <p className="mx-auto mt-6 max-w-xl text-center text-neutral-600 lg:max-w-2xl lg:text-xl">
-            世界トップクラスの対戦理論と、笑えるバラエティ企画を届けるポケモン対戦YouTuberグループ。
-          </p>
-        </FadeIn>
-
-        <div className="mt-12 border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-          Featured
+        <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-neutral-400">
+          <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
+            Scroll
+          </span>
+          <span className="h-8 w-px animate-pulse bg-neutral-300" />
         </div>
       </section>
+
+      <FadeIn>
+        <section className="bg-white px-6 pt-16 pb-10 sm:px-10">
+          <p className="mx-auto max-w-xl text-center text-neutral-600 lg:max-w-2xl lg:text-xl">
+            世界トップクラスの対戦理論と、笑えるバラエティ企画を届けるポケモン対戦YouTuberグループ。
+          </p>
+          <div className="mt-12 border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+            Featured
+          </div>
+        </section>
+      </FadeIn>
 
       <FadeIn>
         <section className="border-y border-neutral-200 bg-white px-6 py-14 sm:px-10 lg:py-24">
