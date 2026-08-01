@@ -16,7 +16,6 @@ import { HeroStickers } from "@/components/hero-stickers";
 import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
-import { MonoReveal } from "@/components/mono-reveal";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
@@ -31,7 +30,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WipeLink } from "@/components/wipe-link";
+import { fetchPublishedMembers } from "@/lib/notion";
 import Image from "next/image";
+
+// Notion側の「メンバー・コンテンツ」DBを一定間隔で再取得する。
+export const revalidate = 300;
 
 const navItems = [
   { label: "プロフィール", href: "#profile" },
@@ -41,7 +44,8 @@ const navItems = [
   { label: "リンク", href: "#links" },
 ];
 
-const members = [
+// Notion未接続時、またはNotion側にメンバーが未登録の場合のフォールバック。
+const fallbackMembers = [
   {
     name: "バンビー",
     role: "絶対的エース",
@@ -137,7 +141,11 @@ const memberLinks = [
   { label: "くろこ", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UC4e7rsaJW-M7vr55lsDMjYQ", icon: UserIcon },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const notionMembers = await fetchPublishedMembers();
+  const members =
+    notionMembers && notionMembers.length > 0 ? notionMembers : fallbackMembers;
+
   return (
     <div className="flex min-h-screen flex-col bg-neutral-100">
       <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-2 bg-transparent px-4 py-3 [text-shadow:0_1px_12px_rgba(255,255,255,0.6)] sm:px-6 sm:py-4 lg:px-10 lg:py-6">
@@ -173,10 +181,6 @@ export default function Home() {
         <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block lg:text-sm">
           YouTube → World
         </span>
-
-        <div className="flex justify-center">
-          <LogoMark className="h-20 w-20 sm:h-24 sm:w-24 lg:h-32 lg:w-32" />
-        </div>
 
         <GiantTitle>KYOU POKE</GiantTitle>
 
@@ -253,49 +257,16 @@ export default function Home() {
             <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
               About
             </p>
-            <div className="mt-6 grid gap-4 lg:grid-cols-3 lg:gap-6">
-              <Card className="relative overflow-hidden p-6 shadow-sm lg:col-span-2 lg:p-10">
-                <BlueprintCorners tone="dark" label="About" />
-                <CardContent className="px-0">
-                  <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+            <div className="mt-6">
+              <p className="leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg lg:leading-relaxed">
                     「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
                     <span className="text-brand font-bold">3人組</span>YouTuberグループです。
                     バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
                   </p>
-                  <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                  <p className="mt-4 leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg lg:leading-relaxed">
                     2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
                     現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
                   </p>
-                </CardContent>
-              </Card>
-
-              <div className="flex flex-col gap-4">
-                <Card className="bg-brand relative overflow-hidden p-6 text-white lg:p-7">
-                  <BlueprintCorners tone="light" label="Since" />
-                  <p className="text-xs font-bold tracking-widest text-white/70 uppercase">
-                    活動開始
-                  </p>
-                  <p className="font-display mt-1 text-3xl lg:text-4xl">2021.08.08</p>
-                </Card>
-                <Card className="relative overflow-hidden p-6 lg:p-7">
-                  <BlueprintCorners tone="dark" label="Members" />
-                  <p className="text-xs font-bold tracking-widest text-neutral-400 uppercase">
-                    メンバー
-                  </p>
-                  <p className="font-display mt-1 text-2xl text-neutral-900 lg:text-3xl">
-                    バンビー・いろは・くろこ
-                  </p>
-                </Card>
-                <Card className="relative overflow-hidden p-6 lg:p-7">
-                  <BlueprintCorners tone="dark" label="Genre" />
-                  <p className="text-xs font-bold tracking-widest text-neutral-400 uppercase">
-                    ジャンル
-                  </p>
-                  <p className="font-display mt-1 text-2xl text-neutral-900 lg:text-3xl">
-                    ポケモン対戦 × バラエティ
-                  </p>
-                </Card>
-              </div>
             </div>
           </section>
         </FadeIn>
@@ -414,9 +385,9 @@ export default function Home() {
             {videos.map((v, i) => (
               <FadeIn key={v.id} delay={i * 0.1}>
                 <TiltCard>
-                  <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="見る">
+                  <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="WATCH">
                     <VideoModal videoId={v.videoId} title={`おすすめ動画${v.id}`}>
-                      <MonoReveal className="relative aspect-video">
+                      <div className="relative aspect-video">
                         <Image
                           src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`}
                           alt={v.title}
@@ -434,7 +405,7 @@ export default function Home() {
                             </svg>
                           </span>
                         </span>
-                      </MonoReveal>
+                      </div>
                     </VideoModal>
                     <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
                       <span className="font-display text-lg text-brand lg:text-xl">

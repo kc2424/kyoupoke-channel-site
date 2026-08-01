@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mochiy_Pop_One, Noto_Sans_JP, Titan_One, Zen_Kaku_Gothic_New, Geist } from "next/font/google";
+import { Mochiy_Pop_One, Modak, Noto_Sans_JP, Zen_Kaku_Gothic_New, Geist } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/custom-cursor";
 import { GrainOverlay } from "@/components/grain-overlay";
@@ -16,7 +16,7 @@ const mochiyPopOne = Mochiy_Pop_One({
   subsets: ["latin"],
 });
 
-const titanOne = Titan_One({
+const modak = Modak({
   variable: "--font-wordmark",
   weight: "400",
   subsets: ["latin"],
@@ -49,7 +49,7 @@ export default function RootLayout({
       lang="ja"
       className={cn(
         mochiyPopOne.variable,
-        titanOne.variable,
+        modak.variable,
         zenKakuGothicNew.variable,
         notoSansJP.variable,
         "font-sans",
