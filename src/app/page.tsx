@@ -310,41 +310,37 @@ export default async function Home() {
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <FadeIn>
           <section id="profile" className="scroll-mt-24">
-            <div className="lg:grid lg:grid-cols-[minmax(0,320px)_1fr] lg:items-start lg:gap-16">
-              <div>
-                <ChapterMark index={1} total={5} className="mb-2" />
-                <RevealText
-                  as="h2"
-                  text="プロフィール"
-                  className="font-display text-3xl text-neutral-900 lg:text-5xl"
-                />
-                <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-                  About
+            <div className="lg:mx-auto lg:max-w-3xl lg:text-center">
+              <ChapterMark index={1} total={5} className="mb-2 lg:justify-center" />
+              <RevealText
+                as="h2"
+                text="プロフィール"
+                className="font-display text-3xl text-neutral-900 lg:text-5xl"
+              />
+              <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+                About
+              </p>
+              {notionTexts?.about_paragraph1 ? (
+                <p className="mt-6 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                  {texts.about_paragraph1}
                 </p>
-              </div>
-              <div className="mt-6 lg:mt-0 lg:mx-auto lg:max-w-3xl">
-                {notionTexts?.about_paragraph1 ? (
-                  <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                    {texts.about_paragraph1}
-                  </p>
-                ) : (
-                  <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                    「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
-                    <span className="text-brand font-bold">3人組</span>YouTuberグループです。
-                    バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
-                  </p>
-                )}
-                {notionTexts?.about_paragraph2 ? (
-                  <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                    {texts.about_paragraph2}
-                  </p>
-                ) : (
-                  <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                    2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
-                    現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
-                  </p>
-                )}
-              </div>
+              ) : (
+                <p className="mt-6 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                  「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
+                  <span className="text-brand font-bold">3人組</span>YouTuberグループです。
+                  バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
+                </p>
+              )}
+              {notionTexts?.about_paragraph2 ? (
+                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                  {texts.about_paragraph2}
+                </p>
+              ) : (
+                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                  2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
+                  現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
+                </p>
+              )}
             </div>
 
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-5">

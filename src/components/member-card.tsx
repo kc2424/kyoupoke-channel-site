@@ -54,7 +54,7 @@ export function MemberCard({
           <BlueprintCorners tone="light" label={`NO.${String(index + 1).padStart(2, "0")}`} />
         </div>
       </LiveGlowFrame>
-      <div className="flex-1 lg:mx-auto lg:max-w-3xl">
+      <div className="flex-1">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="font-mono text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
@@ -74,10 +74,10 @@ export function MemberCard({
             </span>
           )}
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg">
+        <p className="mt-3 text-sm leading-relaxed text-neutral-700 lg:mx-auto lg:max-w-2xl lg:text-center lg:text-lg">
           {text}
         </p>
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2 lg:justify-center">
           {tags.map((tag) => (
             <span
               key={tag}
@@ -93,7 +93,7 @@ export function MemberCard({
             style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
           >
             <div className="overflow-hidden">
-              <ol className="mt-6 max-w-4xl border-l-2 border-neutral-200 pl-5">
+              <ol className="mt-6 border-l-2 border-neutral-200 pl-5 text-left lg:mx-auto lg:max-w-2xl">
                 {milestones.map((m, i) => (
                   <li key={i} className="relative pb-4 last:pb-0">
                     <span className="bg-brand absolute top-1.5 -left-[26px] h-2.5 w-2.5 rounded-full" />
