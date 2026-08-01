@@ -30,8 +30,25 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WipeLink } from "@/components/wipe-link";
-import { fetchPublishedMembers } from "@/lib/notion";
+import {
+  fetchAchievements,
+  fetchLinks,
+  fetchPublishedMembers,
+  fetchSiteTexts,
+  fetchStats,
+  fetchVideos,
+  type NotionLinkIcon,
+} from "@/lib/notion";
 import Image from "next/image";
+
+const linkIconMap: Record<NotionLinkIcon, typeof YouTubeIcon> = {
+  YouTube: YouTubeIcon,
+  X: XIcon,
+  Instagram: InstagramIcon,
+  TikTok: TikTokIcon,
+  Shop: ShopIcon,
+  User: UserIcon,
+};
 
 // Notion側の「メンバー・コンテンツ」DBを一定間隔で再取得する。
 export const revalidate = 300;
@@ -107,44 +124,85 @@ const staffMembers = [
   },
 ];
 
-const stats = [
+const fallbackStats = [
   { value: 67.3, decimals: 1, suffix: "万人+", label: "チャンネル登録者数" },
   { value: 12.5, decimals: 1, suffix: "億回+", label: "総再生回数" },
-  { value: 10, suffix: "万人", label: "銀の盾を達成（2022年）" },
+  { value: 10, decimals: 0, suffix: "万人", label: "銀の盾を達成（2022年）" },
 ];
 
-const achievements = [
-  { label: "YouTube Creator Awards", sub: "銀の盾（登録者10万人）", tone: "brand" },
-  { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演", tone: "black" },
-  { label: "PJCS2025 / WCS2025", sub: "いろは選手が出場権獲得", tone: "brand" },
-  { label: "今日ポケ杯", sub: "ニコニコ生放送と連携開催", tone: "black" },
-  { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "brand" },
+const fallbackAchievements = [
+  { label: "YouTube Creator Awards", sub: "銀の盾（登録者10万人）", tone: "brand" as const },
+  { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演", tone: "black" as const },
+  { label: "PJCS2025 / WCS2025", sub: "いろは選手が出場権獲得", tone: "brand" as const },
+  { label: "今日ポケ杯", sub: "ニコニコ生放送と連携開催", tone: "black" as const },
+  { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "brand" as const },
 ];
 
-const videos = [
+const fallbackVideos = [
   { id: 1, videoId: "8BfcRA0mPfg", title: "【旅パで本気バトル】ポケモンSVをはじめから遊んで60分後に即対戦！" },
   { id: 2, videoId: "c31keuiRd7E", title: "【最終日合宿】「最終1位チャレンジしてきます。」ポケモン対戦に本気で挑む大人達のリアルに密着" },
   { id: 3, videoId: "V3svBZv4ykk", title: "【4世代vs5世代vs9世代】ポ ケ モ ン 最 強 世 代 決 定 戦 -グランドファイナル-" },
 ];
 
-const mainLinks = [
-  { label: "YouTube", sub: "本チャンネル", href: "https://www.youtube.com/@KYOUPOKE", icon: YouTubeIcon },
-  { label: "X（旧Twitter）", sub: "@KYOUPOKEch", href: "https://x.com/KYOUPOKEch", icon: XIcon },
-  { label: "Instagram", sub: "@kyoupokeexpress", href: "https://www.instagram.com/kyoupokeexpress", icon: InstagramIcon },
-  { label: "TikTok", sub: "@kyoupoke", href: "https://www.tiktok.com/@kyoupoke", icon: TikTokIcon },
-  { label: "今日ポケ SHOP", sub: "オンラインストア", href: "https://kyoupoke.shop", icon: ShopIcon },
+const fallbackMainLinks = [
+  { label: "YouTube", sub: "本チャンネル", href: "https://www.youtube.com/@KYOUPOKE", icon: "YouTube" as const },
+  { label: "X（旧Twitter）", sub: "@KYOUPOKEch", href: "https://x.com/KYOUPOKEch", icon: "X" as const },
+  { label: "Instagram", sub: "@kyoupokeexpress", href: "https://www.instagram.com/kyoupokeexpress", icon: "Instagram" as const },
+  { label: "TikTok", sub: "@kyoupoke", href: "https://www.tiktok.com/@kyoupoke", icon: "TikTok" as const },
+  { label: "今日ポケ SHOP", sub: "オンラインストア", href: "https://kyoupoke.shop", icon: "Shop" as const },
 ];
 
-const memberLinks = [
-  { label: "バンビー", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UCNOnv5No5KtT3fmvcztSkEg", icon: UserIcon },
-  { label: "いろは", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UCUR5Eg2dU2RFygBWyfkkIEQ", icon: UserIcon },
-  { label: "くろこ", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UC4e7rsaJW-M7vr55lsDMjYQ", icon: UserIcon },
+const fallbackMemberLinks = [
+  { label: "バンビー", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UCNOnv5No5KtT3fmvcztSkEg", icon: "User" as const },
+  { label: "いろは", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UCUR5Eg2dU2RFygBWyfkkIEQ", icon: "User" as const },
+  { label: "くろこ", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UC4e7rsaJW-M7vr55lsDMjYQ", icon: "User" as const },
 ];
+
+const fallbackTexts = {
+  hero_tagline: "世界トップクラスの対戦理論と、笑えるバラエティ企画を届けるポケモン対戦YouTuberグループ。",
+  catchcopy_line1: "絶対的エース。",
+  catchcopy_line2: "論理の体現者。",
+  catchcopy_line3: "悟りの天才。",
+  about_paragraph1:
+    "「今日ポケ」は2021年8月8日に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする3人組YouTuberグループです。バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。",
+  about_paragraph2:
+    "2022年にはチャンネル登録者数10万人を達成し、YouTube Creator Awardsの銀の盾を受賞。現在はチャンネル登録者数 約67万人、総再生回数は12億回を超える規模まで成長しています。",
+};
 
 export default async function Home() {
-  const notionMembers = await fetchPublishedMembers();
+  const [
+    notionMembers,
+    notionStats,
+    notionAchievements,
+    notionVideos,
+    notionLinks,
+    notionTexts,
+  ] = await Promise.all([
+    fetchPublishedMembers(),
+    fetchStats(),
+    fetchAchievements(),
+    fetchVideos(),
+    fetchLinks(),
+    fetchSiteTexts(),
+  ]);
+
   const members =
     notionMembers && notionMembers.length > 0 ? notionMembers : fallbackMembers;
+  const stats = notionStats && notionStats.length > 0 ? notionStats : fallbackStats;
+  const achievements =
+    notionAchievements && notionAchievements.length > 0
+      ? notionAchievements
+      : fallbackAchievements;
+  const videos = notionVideos && notionVideos.length > 0 ? notionVideos : fallbackVideos;
+  const mainLinks =
+    notionLinks && notionLinks.mainLinks.length > 0
+      ? notionLinks.mainLinks
+      : fallbackMainLinks;
+  const memberLinks =
+    notionLinks && notionLinks.memberLinks.length > 0
+      ? notionLinks.memberLinks
+      : fallbackMemberLinks;
+  const texts = { ...fallbackTexts, ...notionTexts };
 
   return (
     <div className="flex min-h-screen flex-col bg-neutral-100">
@@ -195,7 +253,7 @@ export default async function Home() {
       <FadeIn>
         <section className="bg-white px-6 pt-16 pb-10 sm:px-10">
           <p className="mx-auto max-w-xl text-center text-neutral-600 lg:max-w-2xl lg:text-xl">
-            世界トップクラスの対戦理論と、笑えるバラエティ企画を届けるポケモン対戦YouTuberグループ。
+            {texts.hero_tagline}
           </p>
           <div className="mt-12 border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
             Featured
@@ -208,17 +266,17 @@ export default async function Home() {
           <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-1 lg:gap-2">
             <RevealText
               as="p"
-              text="絶対的エース。"
+              text={texts.catchcopy_line1}
               className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:text-8xl"
             />
             <RevealText
               as="p"
-              text="論理の体現者。"
+              text={texts.catchcopy_line2}
               className="font-display text-4xl leading-[1.05] text-brand sm:text-6xl lg:self-center lg:text-8xl"
             />
             <RevealText
               as="p"
-              text="悟りの天才。"
+              text={texts.catchcopy_line3}
               className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:self-end lg:text-8xl"
             />
           </div>
@@ -258,15 +316,27 @@ export default async function Home() {
               About
             </p>
             <div className="mt-6">
-              <p className="leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg lg:leading-relaxed">
-                    「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
-                    <span className="text-brand font-bold">3人組</span>YouTuberグループです。
-                    バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
-                  </p>
-                  <p className="mt-4 leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg lg:leading-relaxed">
-                    2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
-                    現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
-                  </p>
+              {notionTexts?.about_paragraph1 ? (
+                <p className="leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg lg:leading-relaxed">
+                  {texts.about_paragraph1}
+                </p>
+              ) : (
+                <p className="leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg lg:leading-relaxed">
+                      「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
+                      <span className="text-brand font-bold">3人組</span>YouTuberグループです。
+                      バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
+                    </p>
+              )}
+              {notionTexts?.about_paragraph2 ? (
+                <p className="mt-4 leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg lg:leading-relaxed">
+                  {texts.about_paragraph2}
+                </p>
+              ) : (
+                <p className="mt-4 leading-relaxed text-neutral-700 lg:max-w-4xl lg:text-lg lg:leading-relaxed">
+                      2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
+                      現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
+                    </p>
+              )}
             </div>
           </section>
         </FadeIn>
@@ -449,7 +519,7 @@ export default async function Home() {
             </p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {mainLinks.map((l) => {
-                const Icon = l.icon;
+                const Icon = linkIconMap[l.icon];
                 return (
                   <WipeLink
                     key={l.href}
@@ -475,7 +545,7 @@ export default async function Home() {
             </p>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
               {memberLinks.map((l) => {
-                const Icon = l.icon;
+                const Icon = linkIconMap[l.icon];
                 return (
                   <WipeLink
                     key={l.href}
