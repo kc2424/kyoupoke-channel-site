@@ -74,7 +74,7 @@ export function MemberCard({
             </span>
           )}
         </div>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700 lg:text-lg">
+        <p className="mt-3 text-sm leading-relaxed text-neutral-700 lg:text-lg">
           {text}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
@@ -93,7 +93,7 @@ export function MemberCard({
             style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
           >
             <div className="overflow-hidden">
-              <ol className="mt-6 max-w-2xl border-l-2 border-neutral-200 pl-5">
+              <ol className="mt-6 max-w-3xl border-l-2 border-neutral-200 pl-5">
                 {milestones.map((m, i) => (
                   <li key={i} className="relative pb-4 last:pb-0">
                     <span className="bg-brand absolute top-1.5 -left-[26px] h-2.5 w-2.5 rounded-full" />
