@@ -322,7 +322,7 @@ export default async function Home() {
                   About
                 </p>
               </div>
-              <div className="mt-6 lg:mt-0 lg:max-w-2xl">
+              <div className="mt-6 lg:mt-0">
                 {notionTexts?.about_paragraph1 ? (
                   <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
                     {texts.about_paragraph1}
