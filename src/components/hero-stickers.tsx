@@ -31,6 +31,30 @@ export function HeroStickers() {
           総再生12億回+
         </StickerDrag>
       </motion.div>
+      <motion.div
+        className="pointer-events-auto absolute top-[12%] right-[10%]"
+        initial={{ opacity: 0, scale: 0.7, y: -24, rotate: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0, rotate: 10 }}
+        transition={{ type: "spring", stiffness: 260, damping: 17, delay: 0.5 }}
+      >
+        <StickerDrag
+          boundsSelector="[data-hero-bounds]"
+          rotate={10}
+          className="border-brand border-2 bg-white text-brand"
+        >
+          対戦ガチ勢3人組
+        </StickerDrag>
+      </motion.div>
+      <motion.div
+        className="pointer-events-auto absolute bottom-[18%] left-[9%]"
+        initial={{ opacity: 0, scale: 0.7, y: 24, rotate: -14 }}
+        animate={{ opacity: 1, scale: 1, y: 0, rotate: -6 }}
+        transition={{ type: "spring", stiffness: 260, damping: 17, delay: 0.62 }}
+      >
+        <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-6} className="bg-brand text-white">
+          世界トップクラス理論
+        </StickerDrag>
+      </motion.div>
     </div>
   );
 }
