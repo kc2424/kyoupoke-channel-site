@@ -57,13 +57,13 @@ export function MemberCard({
       <div className="flex-1">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="font-mono text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+            <p className="font-mono text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
               NO.{String(index + 1).padStart(2, "0")}
             </p>
             <h3 className="font-display mt-1 text-2xl text-brand sm:text-3xl lg:text-5xl">
               {name}
             </h3>
-            <p className="mt-1 text-sm font-bold text-neutral-500 lg:text-lg">{role}</p>
+            <p className="mt-1 text-sm font-bold text-neutral-600 lg:text-lg">{role}</p>
           </div>
           {milestones && milestones.length > 0 && (
             <span
@@ -74,7 +74,8 @@ export function MemberCard({
             </span>
           )}
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-neutral-700 lg:max-w-2xl lg:text-lg">
+        {/* lg:max-w-2xl = 42rem。18pxで約37字/行に収まり、日本語の適正行長を超えない。 */}
+        <p className="mt-3 text-base leading-relaxed text-neutral-700 lg:max-w-2xl lg:text-lg">
           {text}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
@@ -97,10 +98,10 @@ export function MemberCard({
                 {milestones.map((m, i) => (
                   <li key={i} className="relative pb-4 last:pb-0">
                     <span className="bg-brand absolute top-1.5 -left-[26px] h-2.5 w-2.5 rounded-full" />
-                    <p className="font-mono text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+                    <p className="font-mono text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
                       {m.period}
                     </p>
-                    <p className="mt-0.5 text-sm leading-relaxed text-neutral-700 lg:text-base">
+                    <p className="mt-0.5 text-[15px] leading-relaxed text-neutral-700 lg:text-base">
                       {m.text}
                     </p>
                   </li>

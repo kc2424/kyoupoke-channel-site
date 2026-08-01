@@ -7,9 +7,7 @@ import {
   XIcon,
   YouTubeIcon,
 } from "@/components/brand-icons";
-import { ChapterMark } from "@/components/chapter-mark";
 import { FadeIn } from "@/components/fade-in";
-import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
 import { HeroStickers } from "@/components/hero-stickers";
 import { LogoMark } from "@/components/logo-mark";
@@ -20,13 +18,13 @@ import { ParallaxImage } from "@/components/parallax-image";
 import { PopReveal } from "@/components/pop-reveal";
 import { RevealText } from "@/components/reveal-text";
 import { SectionBlend } from "@/components/section-blend";
+import { SectionHeading } from "@/components/section-heading";
+import { SiteHeader } from "@/components/site-header";
 import { SnapReveal } from "@/components/snap-reveal";
 import { SparkTap } from "@/components/spark-tap";
 import { StatSpotlight } from "@/components/stat-spotlight";
 import { TiltCard } from "@/components/tilt-card";
-import { UnderlineLink } from "@/components/underline-link";
 import { VideoModal } from "@/components/video-modal";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WipeLink } from "@/components/wipe-link";
@@ -52,6 +50,10 @@ const linkIconMap: Record<NotionLinkIcon, typeof YouTubeIcon> = {
 
 // Notion側の「メンバー・コンテンツ」DBを一定間隔で再取得する。
 export const revalidate = 300;
+
+// ページ全体で共有する横方向のグリッド。
+// ヘッダーからフッターまで左端が1本の線で揃うよう、余白は必ずここに一本化する。
+const CONTAINER = "mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16";
 
 const navItems = [
   { label: "プロフィール", href: "#profile" },
@@ -209,65 +211,48 @@ export default async function Home() {
   const texts = { ...fallbackTexts, ...notionTexts };
 
   return (
-    <div className="flex min-h-screen flex-col bg-neutral-100">
-      <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-2 bg-transparent px-4 py-3 [text-shadow:0_1px_12px_rgba(255,255,255,0.6)] sm:px-6 sm:py-4 lg:px-10 lg:py-6">
-        <div className="flex min-w-0 items-center gap-2 sm:gap-3 lg:gap-4">
-          <LogoMark animated className="h-9 w-9 shrink-0 drop-shadow-md sm:h-12 sm:w-12 lg:h-16 lg:w-16" />
-          <span className="font-wordmark text-brand truncate text-lg sm:text-2xl lg:text-4xl">KYOU POKE</span>
-          <Badge className="bg-brand hidden shrink-0 text-white sm:inline-flex lg:px-4 lg:py-1.5 lg:text-sm">FAN SITE</Badge>
-        </div>
-        <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-800 md:flex lg:gap-8 lg:text-base">
-          {navItems.map((item) => (
-            <UnderlineLink key={item.href} href={item.href}>
-              {item.label}
-            </UnderlineLink>
-          ))}
-        </nav>
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3 lg:gap-4">
-          <WipeLink
-            href="https://www.youtube.com/@KYOUPOKE"
-            cursorLabel="OPEN"
-            className="hidden sm:inline-flex lg:px-8 lg:py-4 lg:text-base"
-          >
-            YouTubeを見る
-          </WipeLink>
-          <FullscreenMenu />
-        </div>
-      </header>
+    // overflow-x-clip: LiveGlowFrame の回転するグロー枠が回転位相によって
+    // 数px はみ出し、モバイルで横スクロールが出るのを止める。
+    // clip は hidden と違いスクロールコンテナを作らないので sticky は効いたまま。
+    <div className="flex min-h-screen flex-col overflow-x-clip bg-white">
+      <SiteHeader navItems={navItems} />
 
-      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-white px-6 sm:px-10">
+      <main>
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-white px-6 sm:px-10 lg:px-16">
         <HeroStickers />
-        <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block lg:text-sm">
+        <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
           Unofficial Fan Site
         </span>
-        <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 text-xs font-bold tracking-widest text-neutral-400 uppercase sm:block lg:text-sm">
+        <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
           YouTube → World
         </span>
 
         <GiantTitle>KYOU POKE</GiantTitle>
 
-        <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-neutral-400">
+        <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-neutral-600">
           <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
             Scroll
           </span>
-          <span className="h-8 w-px animate-pulse bg-neutral-300" />
+          <span className="h-8 w-px animate-pulse bg-neutral-400" />
         </div>
       </section>
 
       <FadeIn>
-        <section className="bg-white px-6 pt-16 pb-10 sm:px-10">
-          <p className="mx-auto max-w-xl text-center text-neutral-600 lg:max-w-2xl lg:text-xl">
-            {texts.hero_tagline}
-          </p>
-          <div className="mt-12 border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-            Featured
+        <section className="bg-white pt-24 pb-10 lg:pt-32">
+          <div className={CONTAINER}>
+            <p className="mx-auto max-w-xl text-center text-neutral-700 lg:max-w-2xl lg:text-xl">
+              {texts.hero_tagline}
+            </p>
+            <div className="mt-12 border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
+              Featured
+            </div>
           </div>
         </section>
       </FadeIn>
 
       <FadeIn>
-        <section className="border-y border-neutral-200 bg-white px-6 py-14 sm:px-10 lg:py-24">
-          <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-1 lg:gap-2">
+        <section className="border-y border-neutral-200 bg-white py-24 lg:py-32">
+          <div className={cn(CONTAINER, "flex flex-col items-start gap-1 lg:gap-2")}>
             <RevealText
               as="p"
               text={texts.catchcopy_line1}
@@ -288,165 +273,150 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section className="bg-white px-6 pb-16 sm:px-10 lg:px-10">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
-            <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
-          </div>
-          <PopReveal className="mt-6 rounded-2xl">
-            <div className="relative">
-              <ParallaxImage
-                wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
-                src="/hero-mascots.png"
-                alt="今日ポケ マスコットイラスト"
-                fill
-                priority
-              />
-              <BlueprintCorners tone="light" label="FIG.01 — MASCOTS" />
+        <section className="bg-white pb-24 lg:pb-32">
+          <div className={CONTAINER}>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
+              <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
             </div>
-          </PopReveal>
+            <PopReveal className="mt-6 rounded-2xl">
+              <div className="relative">
+                <ParallaxImage
+                  wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
+                  src="/hero-mascots.png"
+                  alt="今日ポケ マスコットイラスト"
+                  fill
+                  priority
+                />
+                <BlueprintCorners tone="light" label="FIG.01 — MASCOTS" />
+              </div>
+            </PopReveal>
+          </div>
         </section>
       </FadeIn>
 
-      <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <FadeIn>
-          <section id="profile" className="scroll-mt-24">
-            <div>
-              <ChapterMark index={1} total={5} className="mb-2" />
-              <RevealText
-                as="h2"
-                text="プロフィール"
-                className="font-display text-3xl text-neutral-900 lg:text-5xl"
-              />
-              <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-                About
-              </p>
-              {notionTexts?.about_paragraph1 ? (
-                <p className="mt-6 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  {texts.about_paragraph1}
-                </p>
-              ) : (
-                <p className="mt-6 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
-                  <span className="text-brand font-bold">3人組</span>YouTuberグループです。
-                  バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
-                </p>
-              )}
-              {notionTexts?.about_paragraph2 ? (
-                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  {texts.about_paragraph2}
-                </p>
-              ) : (
-                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
-                  現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
-                </p>
-              )}
-            </div>
-
-            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-5">
-              {[
-                { href: "#members", label: "メンバー紹介", desc: "バンビー・いろは・くろこ、3人それぞれの実績と人柄。" },
-                { href: "#achievements", label: "実績・出演", desc: "登録者数や再生回数、受賞歴をまとめて紹介。" },
-                { href: "#videos", label: "おすすめ動画", desc: "まずはここから見てほしいおすすめの3本。" },
-                { href: "#links", label: "リンク", desc: "SNSやショップ、メンバー個人チャンネルへ。" },
-              ].map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  data-cursor-label="VIEW"
-                  className="group flex flex-col justify-between gap-6 rounded-2xl border border-neutral-200 p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand hover:shadow-lg lg:p-6"
-                >
-                  <div>
-                    <p className="font-display text-lg text-neutral-900 group-hover:text-brand lg:text-xl">
-                      {item.label}
+          <section id="profile" className="scroll-mt-24 pb-24 lg:pb-32">
+            <div className={CONTAINER}>
+              {/* 見出しを左列に固定し、本文は右列で最大42rem。18pxで約39字/行に収まる。 */}
+              <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_minmax(0,42rem)] lg:gap-16">
+                <SectionHeading
+                  index={1}
+                  label="About"
+                  heading="プロフィール"
+                  className="lg:sticky lg:top-32 lg:self-start"
+                />
+                <div className="mt-6 lg:mt-0">
+                  {notionTexts?.about_paragraph1 ? (
+                    <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                      {texts.about_paragraph1}
                     </p>
-                    <p className="mt-2 text-sm text-neutral-500 lg:text-base">{item.desc}</p>
-                  </div>
-                  <span className="text-xs font-bold tracking-widest text-neutral-400 uppercase transition-colors group-hover:text-brand">
-                    View →
-                  </span>
-                </a>
-              ))}
+                  ) : (
+                    <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                      「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
+                      <span className="text-brand font-bold">3人組</span>YouTuberグループです。
+                      バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
+                    </p>
+                  )}
+                  {notionTexts?.about_paragraph2 ? (
+                    <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                      {texts.about_paragraph2}
+                    </p>
+                  ) : (
+                    <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                      2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
+                      現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+                {[
+                  { href: "#members", label: "メンバー紹介", desc: "バンビー・いろは・くろこ、3人それぞれの実績と人柄。" },
+                  { href: "#achievements", label: "実績・出演", desc: "登録者数や再生回数、受賞歴をまとめて紹介。" },
+                  { href: "#videos", label: "おすすめ動画", desc: "まずはここから見てほしいおすすめの3本。" },
+                  { href: "#links", label: "リンク", desc: "SNSやショップ、メンバー個人チャンネルへ。" },
+                ].map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    data-cursor-label="VIEW"
+                    className="group flex flex-col justify-between gap-6 rounded-2xl border border-neutral-200 p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand hover:shadow-lg lg:p-6"
+                  >
+                    <div>
+                      <p className="font-display text-lg text-neutral-900 group-hover:text-brand lg:text-xl">
+                        {item.label}
+                      </p>
+                      <p className="mt-2 text-sm text-neutral-600 lg:text-base">{item.desc}</p>
+                    </div>
+                    <span className="text-xs font-bold tracking-widest text-neutral-600 uppercase transition-colors group-hover:text-brand">
+                      View →
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
           </section>
         </FadeIn>
 
-        <section id="members">
-          <div className="lg:flex lg:items-end lg:justify-between lg:gap-8">
-            <div>
-              <ChapterMark index={2} total={5} className="mb-2" />
-              <RevealText
-                as="h2"
-                text="メンバー紹介"
-                className="font-display text-3xl text-neutral-900 lg:text-5xl"
-              />
-              <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-                Members
-              </p>
+        <section id="members" className="scroll-mt-24 pb-24 lg:pb-32">
+          <div className={CONTAINER}>
+            <SectionHeading
+              index={2}
+              label="Members"
+              heading="メンバー紹介"
+              note="カードをタップすると詳細が開きます"
+            />
+            <div className="mt-10 border-t border-neutral-200">
+              {members.map((m, i) => (
+                <FadeIn key={m.name} x={-60} y={0} delay={i * 0.15}>
+                  <MemberCard
+                    index={i}
+                    name={m.name}
+                    role={m.role}
+                    tags={m.tags}
+                    text={m.text}
+                    photo={m.photo}
+                    milestones={m.milestones}
+                  />
+                </FadeIn>
+              ))}
             </div>
-            <p className="mt-2 text-xs text-neutral-400 lg:mt-0 lg:text-right lg:text-sm">
-              カードをタップすると詳細が開きます
-            </p>
-          </div>
-          <div className="mt-6 border-t border-neutral-200">
-            {members.map((m, i) => (
-              <FadeIn key={m.name} x={-60} y={0} delay={i * 0.15}>
-                <MemberCard
-                  index={i}
-                  name={m.name}
-                  role={m.role}
-                  tags={m.tags}
-                  text={m.text}
-                  photo={m.photo}
-                  milestones={m.milestones}
-                />
-              </FadeIn>
-            ))}
-          </div>
 
-          <p className="mt-14 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-            Staff
-          </p>
-          <RevealText
-            as="h3"
-            text="裏方メンバー"
-            className="font-display mt-1 text-2xl text-neutral-900 lg:text-4xl"
-          />
-          <div className="mt-6 border-t border-neutral-200">
-            {staff.map((m, i) => (
-              <FadeIn key={m.name} x={-60} y={0} delay={i * 0.1}>
-                <MemberCard
-                  index={i}
-                  name={m.name}
-                  role={m.role}
-                  tags={[]}
-                  text={m.text}
-                />
-              </FadeIn>
-            ))}
+            <p className="mt-16 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
+              Staff
+            </p>
+            <RevealText
+              as="h3"
+              text="裏方メンバー"
+              className="font-display mt-1 text-2xl text-neutral-900 lg:text-4xl"
+            />
+            <div className="mt-6 border-t border-neutral-200">
+              {staff.map((m, i) => (
+                <FadeIn key={m.name} x={-60} y={0} delay={i * 0.1}>
+                  <MemberCard
+                    index={i}
+                    name={m.name}
+                    role={m.role}
+                    tags={[]}
+                    text={m.text}
+                  />
+                </FadeIn>
+              ))}
+            </div>
           </div>
         </section>
 
-      </main>
-
-      <SectionBlend from="#f5f5f5" to="#000000" />
+      <SectionBlend from="#ffffff" to="#000000" />
 
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden bg-black px-6 py-16 sm:px-10"
+          className="relative scroll-mt-24 overflow-hidden bg-black py-24 lg:py-32"
         >
           <OpArtRings className="top-1/2 right-0 h-[280px] w-[280px] -translate-y-1/2 translate-x-1/3 sm:h-[420px] sm:w-[420px] lg:h-[560px] lg:w-[560px]" />
-          <div className="relative z-10 mx-auto max-w-[1600px]">
-            <ChapterMark index={3} total={5} tone="dark" className="mb-2" />
-            <RevealText
-              as="h2"
-              text="実績・出演"
-              className="font-display text-3xl text-white lg:text-5xl"
-            />
-            <p className="mt-2 text-xs font-bold tracking-widest text-white/40 uppercase lg:text-sm">
-              Recognition
-            </p>
+          <div className={cn(CONTAINER, "relative z-10")}>
+            <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="dark" />
             <StatSpotlight
               stats={stats}
               className="mt-10 border-y border-white/10 py-8 lg:py-10"
@@ -457,14 +427,16 @@ export default async function Home() {
                   key={a.label}
                   className={cn(
                     "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
-                    a.tone === "brand" && "bg-brand text-white",
+                    // 白文字を載せるオレンジは brand-dark(#b8431f)。brand(#d9552e)だと
+                    // 白文字とのコントラストが3.97しか出ずAA基準(4.5)を満たさない。
+                    a.tone === "brand" && "bg-brand-dark text-white",
                     a.tone === "black" && "bg-white/10 text-white"
                   )}
                 >
                   <p className="font-display text-lg leading-tight sm:text-xl lg:text-2xl">
                     {a.label}
                   </p>
-                  <p className="mt-1 text-xs font-bold opacity-70 lg:text-sm">{a.sub}</p>
+                  <p className="mt-1 text-sm font-bold opacity-90 lg:text-base">{a.sub}</p>
                 </SparkTap>
               ))}
             </SnapReveal>
@@ -472,20 +444,12 @@ export default async function Home() {
         </section>
       </FadeIn>
 
-      <SectionBlend from="#000000" to="#f5f5f5" />
+      <SectionBlend from="#000000" to="#ffffff" />
 
-      <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
-        <section id="videos">
-          <ChapterMark index={4} total={5} className="mb-2" />
-          <RevealText
-            as="h2"
-            text="おすすめ動画"
-            className="font-display text-3xl text-neutral-900 lg:text-5xl"
-          />
-          <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-            Videos
-          </p>
-          <div className="mt-6 grid gap-6 sm:grid-cols-3 lg:gap-8">
+        <section id="videos" className="scroll-mt-24 py-24 lg:py-32">
+          <div className={CONTAINER}>
+          <SectionHeading index={4} label="Videos" heading="おすすめ動画" />
+          <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {videos.map((v, i) => (
               <FadeIn key={v.id} delay={i * 0.1}>
                 <TiltCard>
@@ -515,7 +479,7 @@ export default async function Home() {
                       <span className="font-display text-lg text-brand lg:text-xl">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <p className="line-clamp-2 text-sm text-neutral-500 lg:text-base">
+                      <p className="line-clamp-2 text-sm text-neutral-600 lg:text-base">
                         {v.title}
                       </p>
                     </CardContent>
@@ -528,30 +492,23 @@ export default async function Home() {
             <WipeLink
               href="https://www.youtube.com/@KYOUPOKE"
               cursorLabel="OPEN"
-              className="mt-8 lg:px-8 lg:py-4 lg:text-base"
+              className="mt-10 lg:px-8 lg:py-4 lg:text-base"
             >
               チャンネルの動画をもっと見る
             </WipeLink>
           </Magnetic>
+          </div>
         </section>
 
-      </main>
-
-      <SectionBlend from="#f5f5f5" to="#d9552e" />
+      <SectionBlend from="#ffffff" to="#b8431f" />
 
       <FadeIn>
-        <section id="links" className="scroll-mt-24 bg-brand px-6 py-16 sm:px-10">
-          <div className="mx-auto max-w-[1600px]">
-            <ChapterMark index={5} total={5} tone="brand" className="mb-2" />
-            <RevealText
-              as="h2"
-              text="リンク"
-              className="font-display text-3xl text-white lg:text-5xl"
-            />
-            <p className="mt-2 text-xs font-bold tracking-widest text-white/60 uppercase lg:text-sm">
-              Links
-            </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {/* 白文字を載せるためオレンジは brand-dark(#b8431f)。brand(#d9552e)では
+            白文字とのコントラストが3.97でAA基準(4.5)に届かない。 */}
+        <section id="links" className="scroll-mt-24 bg-brand-dark py-24 lg:py-32">
+          <div className={CONTAINER}>
+            <SectionHeading index={5} label="Links" heading="リンク" tone="brand" />
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {mainLinks.map((l) => {
                 const Icon = linkIconMap[l.icon];
                 return (
@@ -567,14 +524,14 @@ export default async function Home() {
                     </span>
                     <span className="flex flex-col">
                       <span className="font-bold lg:text-lg">{l.label}</span>
-                      <span className="text-xs text-white/60 lg:text-sm">{l.sub}</span>
+                      <span className="text-xs text-white/90 lg:text-sm">{l.sub}</span>
                     </span>
                   </WipeLink>
                 );
               })}
             </div>
 
-            <p className="mt-10 text-xs font-bold tracking-widest text-white/60 uppercase lg:text-sm">
+            <p className="mt-10 text-xs font-bold tracking-widest text-white uppercase lg:text-sm">
               Member Channels
             </p>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -593,7 +550,7 @@ export default async function Home() {
                     </span>
                     <span className="flex flex-col">
                       <span className="font-bold lg:text-lg">{l.label}</span>
-                      <span className="text-xs text-white/60 lg:text-sm">{l.sub}</span>
+                      <span className="text-xs text-white/90 lg:text-sm">{l.sub}</span>
                     </span>
                   </WipeLink>
                 );
@@ -602,10 +559,11 @@ export default async function Home() {
           </div>
         </section>
       </FadeIn>
+      </main>
 
-      <SectionBlend from="#d9552e" to="#000000" />
+      <SectionBlend from="#b8431f" to="#000000" />
 
-      <footer className="relative overflow-hidden bg-black py-16">
+      <footer className="relative overflow-hidden bg-black py-24">
         <div className="flex select-none whitespace-nowrap">
           {[0, 1].map((row) => (
             <div
@@ -625,7 +583,7 @@ export default async function Home() {
           ))}
         </div>
 
-        <p className="relative mt-12 px-6 text-center text-sm text-white/60 sm:px-10 lg:text-base">
+        <p className={cn(CONTAINER, "relative mt-12 text-center text-sm text-white/70 lg:text-base")}>
           このページは非公式のファンサイトです。今日ポケの活動を応援しています。
         </p>
       </footer>

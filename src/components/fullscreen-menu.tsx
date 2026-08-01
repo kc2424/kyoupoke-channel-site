@@ -93,7 +93,7 @@ export function FullscreenMenu() {
 
           <div className="flex flex-col gap-4 text-sm font-bold sm:flex-row sm:items-end sm:justify-between lg:text-base">
             <div>
-              <p className="text-white/40 uppercase">Links</p>
+              <p className="text-white/70 uppercase">Links</p>
               <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
                 {socialLinks.map((s) => (
                   <a
@@ -108,7 +108,7 @@ export function FullscreenMenu() {
                 ))}
               </div>
             </div>
-            <p className="text-white/40">非公式ファンサイト</p>
+            <p className="text-white/70">非公式ファンサイト</p>
           </div>
         </div>
       </div>

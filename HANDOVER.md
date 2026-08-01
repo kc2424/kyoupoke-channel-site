@@ -1,6 +1,6 @@
 # 今日ポケ ファンサイト 引き継ぎ書
 
-最終更新: 2026-07-31（自動ブラッシュアップルーティンにより、フルスクリーンナビからのセクション移動へオレンジのカーテン演出を追加する対応まで）
+最終更新: 2026-08-02（レイアウトの読みやすさ仕上げ。§10 を参照）
 
 ## 1. プロジェクト概要
 
@@ -15,6 +15,7 @@
 
 ## 2. 技術スタック
 
+- **作業ブランチ（2026-08-02時点）: `landing-glassmorphism-refresh`**。`site-brushup` は `main` にマージ済みで役目を終えている（`git log main..site-brushup` が空）。`main` には PR #1 のマージまでが入っており、Notion CMS化以降の変更はこのブランチに積まれている
 - **Next.js 16**（App Router）+ TypeScript
 - **Tailwind CSS v4**（`tailwind.config.js` は無く、`globals.css` 内の `@theme inline` でテーマ変数を管理）
 - **shadcn/ui**（Button, Card, Badge コンポーネント。`src/components/ui/`）
@@ -146,3 +147,56 @@ gsap.ticker.lagSmoothing(0);
 - **2026-07-31（25回目）**: セッション開始時、`git branch`にsite-brushupがローカルに存在せず（`git fetch origin`後に`origin/site-brushup`から作成）、まずユーザー指摘「全体的に文字が小さい」への対応状況をgit logで確認（`c700422`コミットで対応済み・HANDOVER 7節にも記録済み）したため、通常のブラッシュアップステップへ。Awwwards Site of the Day（直近1ヶ月分）は本HANDOVERで既に全て参考済みだったため、CSS Design Awards Site of the Dayまで対象を広げ「Naiara Odriozola」（Digital Art Director / Interactive Designerによる個人ポートフォリオ`naiaraodriozola.com`。2026年7月28日CSS Design Awards Site of the Day受賞。BMW・Continental・LivePerson等の大手ブランドを横断する15年以上のキャリア。ブルータリズム×ミニマリズムを掛け合わせた探索的レイアウト、スクロリーテリング＋パララックスでブランドの新しいビジュアルアイデンティティを体感させる手法、個々の演出を場当たりで足すのではなく「マイクロアニメーションのデザインシステム」として体系化し開発チームに引き渡す設計思想、UIモーションだけでなくサウンドデザインまで含めた五感のブランディングが評価点として紹介されていた）を参考に分析。**注記: 今回もWebFetch（cssdesignawards.com/sites/portfolio-website/3325、naiaraodriozola.com）は全て403で直接確認できず、WebSearchのスニペット（プロジェクトページの紹介文）から評価点を分析した**。5つの評価ポイント: ①レイアウト＝ブルータリズム×ミニマリズムを掛け合わせた遊び心のある探索的な構成、②モーション・演出＝スクロールに連動したパララックス/スクロリーテリングで新しいビジュアルアイデンティティを段階的に体感させる、③インタラクションの一貫性＝個々のマイクロアニメーションを場当たり的に足すのではなく体系化された「デザインシステム」として設計する思想、④五感を使ったブランディング＝UIモーションとサウンドデザインを組み合わせて世界観を作る、⑤実績の幅と一貫性＝異業種の大手ブランドを横断し15年以上一貫した品質のインタラクティブデザインを提供し続けている継続力。①のブルータリズム的な荒さは今日ポケのポップで元気なブランドに合わないため見送り、④のサウンドデザインは既存の`sound-toggle.tsx`/`spark-tap.tsx`（TRIONN回）で対応済みのため対象外、⑤は今日ポケ自身の実績（実プレイヤーとしての受賞歴）であり演出面の話ではないため対象外とした。②「スクロールに連動して新しいビジュアルアイデンティティを段階的に体感させるスクロリーテリング」を抽出することにした。既存の演出はすべて「要素がビューポートに入ったら反応する」一過性のリビール系（`FadeIn`/`RevealText`/`SnapReveal`等）か、スクロール位置に応じて連続的に値が変化する非pin系（`ParallaxImage`/`SectionBlend`/`GrowthTimeline`）のいずれかで、GSAP ScrollTriggerの`pin: true`（スクロールをその場に留めてコンテンツを順番に主役交代させる、正統派の「スクロールに乗せて物語を読ませる」手法）は今回が初導入。`src/components/stat-spotlight.tsx`（`gsap.matchMedia`でデスクトップ（`min-width: 1024px`）かつ`prefers-reduced-motion: no-preference`の場合のみ、3つの実績数字グリッドをpin+scrubで一箇所に留め、スクロール量に応じて「登録者数→総再生回数→銀の盾」の順に1つずつopacity/scaleで主役交代させる。モバイル・reduced-motion環境では従来通りの静的な3カラムグリッドのままフォールバックする）を新規作成し、`src/app/page.tsx`の「実績・出演」セクションの数字グリッド（既存の`stats`配列、新しい数値は追加していない）を差し替えた。`npm install`後、`next build --webpack`・`next build`（Turbopack）双方でビルド成功・型チェック通過・静的ページ生成まで確認した。さらに`npx playwright`（`/opt/pw-browsers/chromium`）でヘッドレスブラウザから実際にスクロール位置を`window.scrollTo`で段階的に変化させ、pin区間で3つの数字がそれぞれ単独でopacity 1・他2つが0.3に順番に切り替わること、pin区間を抜けた後は通常のページスクロールに正しく復帰することを目視・DOM計測の両方で確認した。詳細はgit logのコミットメッセージ参照
 - **2026-07-31（26回目）**: セッション開始時、`git status`はHEAD detachedかつクリーン、`origin/site-brushup`に前回セッション（25回目）以降の新規コミットが無いことを確認。まずユーザー指摘「全体的に文字が小さい」への対応状況をgit logで確認（`c700422`コミットで対応済み・HANDOVER 7節にも記録済み）したため、通常のブラッシュアップステップへ。node_modulesが未インストールだったため`npm install`を実施してから着手。Awwwards SOTD（7月分は全日程が本HANDOVERで参考済み）・CSS Design Awards WOTD（同様に直近日程が参考済み）を確認した上で、FWA of the Day受賞歴のあるブランディングエージェンシーMotto（wearemotto.com）の自社サイトを参考に分析。**注記: 今回もWebFetch（wearemotto.com、lapa.ninja、cssdesignawards.com/wotd-award-winners、winners.webbyawards.com）は全て403で直接確認できず、WebSearchのスニペット（Motto公式ブログ記事「Motto® wins FWA Site of the Day」、Medium「FWA OF THE DAY — Motto」等）から評価点を分析した**。5つの評価ポイント: ①タイポグラフィ＝PP Neue Montreal×Non Natural Groteskの太さの効いたペアリングで機関としての信頼感を出す、②配色戦略＝シグネチャーだった黒基調のサイトをクールなグレー/白へ反転させ「近寄りやすさ」を開いた大胆なリブランディング、③モーション＝全ページに一貫したマイクロインタラクションを配置し、体験全体を「建築的」に感じさせる、④インタラクション＝ヒーローセクションで文字単位のスプリットテキストアニメーションを使った登場演出、⑤審査軸の一貫性＝FWAが掲げる技術力・創造的革新性・ユーザーエンゲージメントという3軸を横断して評価される完成度。③④は既存の`GiantTitle`（マウス追従スクイーズ＋文字ごとのスクロール登場）・`RevealText`（文字単位のマスク登場）・累積してきた多数のマイクロインタラクション群と本質的に重複するため見送り、①のフォントペアリングも既存ブランドフォント指定（Titan One/Mochiy Pop One/Zen Kaku Gothic New/Noto Sans JP）を変更しない方針のため見送り、②の黒→グレー/白という配色反転もオレンジ/黒/白の3色ルールに反するため直接は採用しなかった。かわりに②の本質（硬質になりがちなデジタル表面に温かみ・近寄りやすさを与える）を、配色そのものではなく「質感」で翻訳することにした。`src/components/grain-overlay.tsx`（`feTurbulence`によるSVGノイズパターンをdata URIとして背景に敷き、`mix-blend-mode: overlay`・`opacity-[0.045]`という極めて薄い設定で全ページに常時重ねる、静的（アニメーションなし）な軽量グレインテクスチャ。`pointer-events-none`・`aria-hidden`で操作性・アクセシビリティに影響なし）を新規作成し、`src/app/layout.tsx`で`CustomCursor`の直後・`SmoothScroll`の外側にグローバル適用した（`z-[15]`で通常コンテンツより上、`FullscreenMenu`(`z-50`)・`VideoModal`(`z-60`)・カスタムカーソル(`z-[999]`)・`IntroLoader`(`z-[9999]`)よりは下に配置し、モーダル等の視認性を妨げないことを確認）。ブランドカラー（オレンジ/黒/白）・フォント・コンテンツ・既存コンポーネントの挙動は一切変更していない。`npm install`後、`next build --webpack`・`next build`（Turbopack）双方でビルド成功・型チェック通過・静的ページ生成まで確認した（このサンドボックス環境では今回はTurbopackビルドもGoogle Fontsの取得に失敗せず成功した）。Playwrightは`node_modules`に未インストールのためヘッドレスブラウザでの目視確認は省略し、かわり`npm run dev`起動後に`curl`でHTMLレスポンスに`grain-overlay`のクラスが実際に出力されていることを確認した。詳細はgit logのコミットメッセージ参照
 - **2026-07-31（27回目）**: セッション開始時、`git status`はHEAD detachedかつクリーン。`git fetch`で`origin/site-brushup`をローカルに再作成し、前回セッション（26回目）以降の新規コミットが無いことを確認。まずユーザー指摘「全体的に文字が小さい」への対応状況をgit logで確認（`c700422`コミットで対応済み・HANDOVER 7節にも記録済み）したため、通常のブラッシュアップステップへ。node_modulesが未インストールだったため`npm install`を実施してから着手。Awwwards/FWA/CSSDAの直近日程は本HANDOVERで既に全て参考済みだったため対象を広げ、パリ拠点のデジタルプロダクションImmersive Garden制作「Montfort」（Awwwards・FWA・CSS Design Awards同時Site of the Day受賞、Awwwards評価7.62/Creativity 7.85/Usability 7.4。深いブルー`#29648e`×オフホワイト`#f4f6f8`の2色パレット、WebGLによる滑らかな3Dトランジション、遊び心のあるマイクロインタラクション、スクロール連動演出。制作会社インタビューでは「Montfort Groupの世界観にクラリティ（明快さ）をもたらし、唯一無二に感じさせることが目標だった」と紹介されていた）を参考に分析。**注記: 今回もWebFetch（awwwards.com/sites/montfort、winners.webbyawards.com）は全て403で直接確認できず、WebSearchのスニペット（Immersive GardenのX/Twitter投稿、Awwwardsの評価スコア掲載記事）から評価点を分析した**。5つの評価ポイント: ①配色＝ブルー×オフホワイトの2色に絞り込んだミニマルなパレット、②3D/WebGLによる滑らかなセクション間トランジション、③マイクロインタラクションの遊び心、④スクロール連動演出、⑤「明快さ（クラリティ）をブランドの世界観にもたらす」という導入目的の一貫性——単なる技術デモではなく、複雑になりがちな企業サイトを「分かりやすく・唯一無二に感じさせる」という一段上の狙いのために演出を設計している点。①のブルー系配色は今日ポケのオレンジ/黒/白3色ルールに反するため見送り、②のWebGL本格3Dトランジションは技術スコープに合わないため見送り、③④はこれまで26回のブラッシュアップで数多くのホバー・スクロール演出（チルト・マグネティック・火花・パララックス等）を積み重ねてきており本質的に重複するため対象外とした。かわりに⑤「セクション間を移動する瞬間に、明快な区切りの体験を与える」という発想を、今日ポケのブランドカラーで軽量に翻訳することにした。従来、`FullscreenMenu`のナビ項目（プロフィール/メンバー/実績/動画/リンク）をクリックすると、メニューがフェードアウトしつつ`scrollToHash`でLenisのスムーズスクロールへ即座に移行していたが、区切りの瞬間を示す視覚的な合図が無かった。`src/lib/nav-transition.ts`（`scrollToHash`と同様の軽量なシングルトン。トリガー関数を登録・呼び出すだけの薄いラッパー）と`src/components/nav-transition.tsx`（画面上下から伸びるブランドオレンジの帯がGSAPで一瞬画面全体を覆い、`power3.inOut`イージングで即座に開いて中身を見せる「カーテン」演出。WebGLの3Dトランジションではなく、CSS `scaleY`+GSAPのみの軽量な2D演出で「明快な区切り」という本質だけを抽出。`prefers-reduced-motion`ではトリガー自体を無効化）を新規作成し、`src/app/layout.tsx`にグローバル1回だけマウント（`z-[65]`でフルスクリーンナビ`z-50`・動画モーダル`z-[60]`より上、カスタムカーソル`z-[999]`・`IntroLoader``z-[9999]`より下）、`fullscreen-menu.tsx`の各ナビリンククリック時に`playNavTransition()`を呼ぶよう連携した。既存の`scrollToHash`・Lenis+GSAP ScrollTriggerの連携（`smooth-scroll.tsx`）や、メニュー自体のフェードアウト挙動は変更していない。`npm install --no-save playwright`で一時的にPlaywrightを導入し（`package.json`は変更していないことを確認済み）、`npx next build --webpack`・`npx next build`（Turbopack）双方でビルド成功・型チェック通過・静的ページ生成まで確認した上で、`npm run dev`起動後にヘッドレスChromium（`/opt/pw-browsers/chromium`）から実際に「Menu」ボタン→「メンバー」リンクをクリックし、カーテンの`transform: scaleY(...)`が0→1→0と遷移すること、遷移後に正しく`#members`セクションまでスクロールされていることをDOM計測で確認した。詳細はgit logのコミットメッセージ参照
+
+## 9. 2026-08-01〜02 セッション: Notion によるCMS化
+
+`src/app/page.tsx` にハードコードしていたコンテンツを、Notion から取得する構成に変更した。
+
+- **仕組み**: `src/lib/notion.ts` が `@notionhq/client` の `dataSources.query()` で Notion の各DBを読み、`fetchPublishedMembers(区分)` / `fetchStats()` / `fetchAchievements()` / `fetchVideos()` / `fetchLinks()` / `fetchSiteTexts()` を公開している。`page.tsx` の `Home()` がこれらを `Promise.all` で並列取得する
+- **フォールバック設計（重要）**: `NOTION_TOKEN` が未設定、または取得結果が空の場合は `page.tsx` 先頭の `fallbackMembers` / `fallbackStats` / `fallbackAchievements` / `fallbackVideos` / `fallbackMainLinks` / `fallbackMemberLinks` / `fallbackTexts` にそのまま切り替わる。**Notion が落ちてもサイトは壊れない**。ローカルで Notion 無しで動かしたい場合も `.env.local` を空にすれば済む
+- **メンバーDBの「区分」プロパティ**: `メインメンバー` / `スタッフ` で分岐し、前者を「メンバー紹介」、後者を「裏方メンバー」に出し分けている
+- **再取得間隔**: `page.tsx` の `export const revalidate = 300`（5分）
+- **設定手順**: https://www.notion.so/my-integrations で Internal Integration Secret を発行 → `.env.local` に `NOTION_TOKEN=` として設定 → Notion 側の「kyoupoke」ページにそのインテグレーションを接続する（`.env.example` に同じ説明あり）
+
+## 10. 2026-08-02 セッション: レイアウトの読みやすさ仕上げ
+
+直前の5コミットが「プロフィール本文の幅と揃え」をめぐる往復（左詰め→中央寄せ→左端揃え→カード列と同幅まで拡大）で終わっていたため、**主観で調整するのをやめ、稼働中の dev サーバーを 1440px / 375px で実測して数値で判断する**方針に切り替えた。
+
+### 10.1 実測で見つかった問題と着地点
+
+| 項目 | 変更前 | 変更後 |
+|---|---|---|
+| プロフィール本文の行長 | **76 全角字/行**（1377px ÷ 18px） | **37字/行** |
+| 左右余白 | header/実績/リンク=40px、main(プロフィール・メンバー・動画)=**24px** で不揃い | 全セクション **64px**（`px-6 sm:px-10 lg:px-16`）に統一 |
+| キャプション類のコントラスト | `text-neutral-400` で **2.37**（AA 4.5未満が23箇所） | `text-neutral-600` で **7.05** |
+| 章番号「/05」 | `text-neutral-300` で **1.36** | `text-neutral-500` で **4.35** |
+| 白文字 on オレンジ | `bg-brand`(#d9552e) で **3.97** | `bg-brand-dark`(#b8431f) で **5.44** |
+| モバイルのメンバーカード本文 | 14px | 16px |
+| モバイルの横スクロール | 位相により最大4px はみ出し | なし（8サンプルすべてで `scrollWidth === clientWidth`） |
+
+### 10.2 判断基準（今後この往復を繰り返さないために）
+
+- **本文の1行は40全角字前後を上限とする**（日本語の適正は35〜45字）。「余白が空いて見えるから本文を広げる」のは逆効果。幅を広げるのではなく、**見出しを左カラムに置く2カラム構成**で余白を埋める
+- **横方向の余白は `CONTAINER` 定数（`src/app/page.tsx` 冒頭）に一本化する**。個別セクションに `px-*` を直接書かない。左端が1本の線で揃っているかは、全セクションの最初のコンテンツの `getBoundingClientRect().left` が一致するかで機械的に確認できる
+- **白文字をオレンジに載せるときは必ず `bg-brand-dark`（#b8431f）を使う**。ブランドの `#d9552e` は白文字とのコントラストが3.97しかなくAA基準(4.5)に届かない。3色ルール（オレンジ/黒/白）は維持したまま、既存トークンの濃い方を使い分ける形で解決している
+
+### 10.3 主な構造変更
+
+- `src/components/site-header.tsx` を新規作成（`"use client"`）。ヘッダーを `page.tsx` から切り出し、`scrollY > 40` で `bg-white/85 + backdrop-blur-md + border-b` を付与するようにした。**黒（実績）・オレンジ（リンク）セクションの上でナビが読めない問題の解消**。以前の白い `text-shadow` グローによる誤魔化しは削除
+- `src/components/section-heading.tsx` を新規作成。「章番号+英字ラベル」を1行にまとめ、その下に日本語見出しを置く2段構成を全5セクションで共通化した（内部で既存の `ChapterMark` / `RevealText` をそのまま使うのでアニメーションは維持）
+- `<main>` がページ内に2つあった構造上の問題を、ヒーロー〜リンクを包む1つの `<main>` に統合して解消
+- 明るいセクションの地色を `#f5f5f5` から白に統一（`SectionBlend` の `from`/`to` も追随）。これにより `bg-neutral-100` のタグピルが背景に埋もれなくなった
+- 縦のリズムを `py-24 lg:py-32`（セクション間）/ `mt-10`（ブロック間）/ `mt-6`（見出し-本文間）の3段階に集約
+- `overflow-x-clip` をページ最外周に付与。`LiveGlowFrame` の回転するグロー枠が回転位相によって数px はみ出すのを止める（`clip` は `hidden` と違いスクロールコンテナを作らないので、プロフィール見出しの `lg:sticky` は効いたまま）
+
+### 10.4 検証方法
+
+ブラウザのコンソールで実行できる計測スクリプトで確認している（同じ検証を再現したい場合の手順）。
+
+1. **行長**: 全 `<p>`/`<li>` について `getBoundingClientRect().width ÷ fontSize` を出し、実際に折り返すもの（本文長 > 1行の字数）が45を超えていないこと
+2. **左端の揃い**: 各セクションの最初のコンテンツの `left` が全て一致すること（1440pxで64px）
+3. **コントラスト**: `oklch`/`lab` 表記や半透明色が混ざるので、canvas に白地・黒地の2回描画して премultiplied色とアルファを逆算し、祖先の背景を下から順に合成してから比を計算する（単純な文字列パースでは誤判定する。実際、最初の計測は `bg-white/10` を白地に合成してしまい誤った結果を出した）
+4. **横スクロール**: `document.documentElement.scrollWidth <= clientWidth` を、回転アニメーションの位相を変えて複数回サンプリング
+5. 残っている「未達」は `BlueprintCorners` の注記（写真の上に直接載る `aria-hidden` の装飾）のみ。背景色に頼れないため `text-shadow` で下地から浮かせる対応にした
+
+**注記**: この環境ではブラウザの `requestAnimationFrame` が強く間引かれる（実測 約4fps）ため、Lenis のスムーズスクロールが一瞬でジャンプしているように見える。実際には動いている（クリック後 1009ms 時点で 2289px → 2606px と中間値を通過することを確認済み）。**この環境でスクロール演出を検証するときは、フレーム数ではなく中間値を通過しているかで判断すること。**

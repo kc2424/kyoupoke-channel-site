@@ -9,10 +9,12 @@ import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// 章番号は装飾だが「薄すぎて見えない」状態にはしない。
+// 背景色ごとにコントラスト比3:1（大きい文字の基準）を満たす濃さに揃えてある。
 const TONE_STYLES = {
-  light: { number: "text-brand", slash: "text-neutral-300" },
-  dark: { number: "text-white", slash: "text-white/30" },
-  brand: { number: "text-black", slash: "text-black/30" },
+  light: { number: "text-brand", slash: "text-neutral-500" },
+  dark: { number: "text-white", slash: "text-white/70" },
+  brand: { number: "text-white", slash: "text-white/70" },
 } as const;
 
 export function ChapterMark({

@@ -17,7 +17,7 @@ export function HeroStickers() {
         animate={{ opacity: 1, scale: 1, y: 0, rotate: -8 }}
         transition={{ type: "spring", stiffness: 260, damping: 17, delay: 0.25 }}
       >
-        <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-8} className="bg-brand text-white">
+        <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-8} className="bg-brand-dark text-white">
           登録者67万人+
         </StickerDrag>
       </motion.div>
@@ -40,7 +40,7 @@ export function HeroStickers() {
         <StickerDrag
           boundsSelector="[data-hero-bounds]"
           rotate={10}
-          className="border-brand border-2 bg-white text-brand"
+          className="border-brand border-2 bg-white text-brand-dark"
         >
           対戦ガチ勢3人組
         </StickerDrag>
@@ -51,7 +51,7 @@ export function HeroStickers() {
         animate={{ opacity: 1, scale: 1, y: 0, rotate: -6 }}
         transition={{ type: "spring", stiffness: 260, damping: 17, delay: 0.62 }}
       >
-        <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-6} className="bg-brand text-white">
+        <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-6} className="bg-brand-dark text-white">
           世界トップクラス理論
         </StickerDrag>
       </motion.div>
