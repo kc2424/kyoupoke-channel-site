@@ -310,8 +310,8 @@ export default async function Home() {
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <FadeIn>
           <section id="profile" className="scroll-mt-24">
-            <div className="lg:mx-auto lg:max-w-3xl lg:text-center">
-              <ChapterMark index={1} total={5} className="mb-2 lg:justify-center" />
+            <div>
+              <ChapterMark index={1} total={5} className="mb-2" />
               <RevealText
                 as="h2"
                 text="プロフィール"
@@ -321,22 +321,22 @@ export default async function Home() {
                 About
               </p>
               {notionTexts?.about_paragraph1 ? (
-                <p className="mt-6 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                <p className="mt-6 leading-relaxed text-neutral-700 lg:max-w-3xl lg:text-lg lg:leading-relaxed">
                   {texts.about_paragraph1}
                 </p>
               ) : (
-                <p className="mt-6 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                <p className="mt-6 leading-relaxed text-neutral-700 lg:max-w-3xl lg:text-lg lg:leading-relaxed">
                   「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
                   <span className="text-brand font-bold">3人組</span>YouTuberグループです。
                   バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
                 </p>
               )}
               {notionTexts?.about_paragraph2 ? (
-                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                <p className="mt-4 leading-relaxed text-neutral-700 lg:max-w-3xl lg:text-lg lg:leading-relaxed">
                   {texts.about_paragraph2}
                 </p>
               ) : (
-                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                <p className="mt-4 leading-relaxed text-neutral-700 lg:max-w-3xl lg:text-lg lg:leading-relaxed">
                   2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
                   現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
                 </p>
