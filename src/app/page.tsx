@@ -172,13 +172,15 @@ const fallbackTexts = {
 export default async function Home() {
   const [
     notionMembers,
+    notionStaff,
     notionStats,
     notionAchievements,
     notionVideos,
     notionLinks,
     notionTexts,
   ] = await Promise.all([
-    fetchPublishedMembers(),
+    fetchPublishedMembers("メインメンバー"),
+    fetchPublishedMembers("スタッフ"),
     fetchStats(),
     fetchAchievements(),
     fetchVideos(),
@@ -188,6 +190,8 @@ export default async function Home() {
 
   const members =
     notionMembers && notionMembers.length > 0 ? notionMembers : fallbackMembers;
+  const staff =
+    notionStaff && notionStaff.length > 0 ? notionStaff : staffMembers;
   const stats = notionStats && notionStats.length > 0 ? notionStats : fallbackStats;
   const achievements =
     notionAchievements && notionAchievements.length > 0
@@ -379,7 +383,7 @@ export default async function Home() {
             className="font-display mt-1 text-2xl text-neutral-900 lg:text-4xl"
           />
           <div className="mt-6 border-t border-neutral-200">
-            {staffMembers.map((m, i) => (
+            {staff.map((m, i) => (
               <FadeIn key={m.name} x={-60} y={0} delay={i * 0.1}>
                 <MemberCard
                   index={i}

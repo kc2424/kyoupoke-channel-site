@@ -105,16 +105,21 @@ function getClient(): Client | null {
 }
 
 // ステータスが「公開中」のメンバーのみ、サイト表示用の形式で返す。
+// category で「メインメンバー」「スタッフ」を絞り込む。
 // Notion未接続（トークン未設定）の場合は null を返し、呼び出し側でフォールバックさせる。
-export async function fetchPublishedMembers(): Promise<NotionMember[] | null> {
+export async function fetchPublishedMembers(
+  category: "メインメンバー" | "スタッフ"
+): Promise<NotionMember[] | null> {
   const notion = getClient();
   if (!notion) return null;
 
   const response = await notion.dataSources.query({
     data_source_id: MEMBERS_DATA_SOURCE_ID,
     filter: {
-      property: "ステータス",
-      select: { equals: "公開中" },
+      and: [
+        { property: "ステータス", select: { equals: "公開中" } },
+        { property: "区分", select: { equals: category } },
+      ],
     },
     sorts: [{ property: "表示順", direction: "ascending" }],
   });
