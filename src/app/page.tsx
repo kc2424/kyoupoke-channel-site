@@ -8,7 +8,6 @@ import {
   YouTubeIcon,
 } from "@/components/brand-icons";
 import { ChapterMark } from "@/components/chapter-mark";
-import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GiantTitle } from "@/components/giant-title";
@@ -18,6 +17,7 @@ import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
+import { PopReveal } from "@/components/pop-reveal";
 import { RevealText } from "@/components/reveal-text";
 import { SectionBlend } from "@/components/section-blend";
 import { SnapReveal } from "@/components/snap-reveal";
@@ -292,7 +292,7 @@ export default async function Home() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
             <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
           </div>
-          <CurtainReveal className="mt-6 rounded-2xl" flapColor="#ffffff">
+          <PopReveal className="mt-6 rounded-2xl">
             <div className="relative">
               <ParallaxImage
                 wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
@@ -303,61 +303,95 @@ export default async function Home() {
               />
               <BlueprintCorners tone="light" label="FIG.01 — MASCOTS" />
             </div>
-          </CurtainReveal>
+          </PopReveal>
         </section>
       </FadeIn>
 
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <FadeIn>
           <section id="profile" className="scroll-mt-24">
-            <ChapterMark index={1} total={5} className="mb-2" />
-            <RevealText
-              as="h2"
-              text="プロフィール"
-              className="font-display text-3xl text-neutral-900 lg:text-5xl"
-            />
-            <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-              About
-            </p>
-            <div className="mt-6 lg:mx-auto lg:max-w-4xl">
-              {notionTexts?.about_paragraph1 ? (
-                <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  {texts.about_paragraph1}
+            <div className="lg:grid lg:grid-cols-[minmax(0,320px)_1fr] lg:items-start lg:gap-16">
+              <div>
+                <ChapterMark index={1} total={5} className="mb-2" />
+                <RevealText
+                  as="h2"
+                  text="プロフィール"
+                  className="font-display text-3xl text-neutral-900 lg:text-5xl"
+                />
+                <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+                  About
                 </p>
-              ) : (
-                <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
-                  <span className="text-brand font-bold">3人組</span>YouTuberグループです。
-                  バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
-                </p>
-              )}
-              {notionTexts?.about_paragraph2 ? (
-                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  {texts.about_paragraph2}
-                </p>
-              ) : (
-                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                  2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
-                  現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
-                </p>
-              )}
+              </div>
+              <div className="mt-6 lg:mt-0 lg:max-w-2xl">
+                {notionTexts?.about_paragraph1 ? (
+                  <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                    {texts.about_paragraph1}
+                  </p>
+                ) : (
+                  <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                    「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
+                    <span className="text-brand font-bold">3人組</span>YouTuberグループです。
+                    バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
+                  </p>
+                )}
+                {notionTexts?.about_paragraph2 ? (
+                  <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                    {texts.about_paragraph2}
+                  </p>
+                ) : (
+                  <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
+                    2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
+                    現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-5">
+              {[
+                { href: "#members", label: "メンバー紹介", desc: "バンビー・いろは・くろこ、3人それぞれの実績と人柄。" },
+                { href: "#achievements", label: "実績・出演", desc: "登録者数や再生回数、受賞歴をまとめて紹介。" },
+                { href: "#videos", label: "おすすめ動画", desc: "まずはここから見てほしいおすすめの3本。" },
+                { href: "#links", label: "リンク", desc: "SNSやショップ、メンバー個人チャンネルへ。" },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  data-cursor-label="VIEW"
+                  className="group flex flex-col justify-between gap-6 rounded-2xl border border-neutral-200 p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand hover:shadow-lg lg:p-6"
+                >
+                  <div>
+                    <p className="font-display text-lg text-neutral-900 group-hover:text-brand lg:text-xl">
+                      {item.label}
+                    </p>
+                    <p className="mt-2 text-sm text-neutral-500 lg:text-base">{item.desc}</p>
+                  </div>
+                  <span className="text-xs font-bold tracking-widest text-neutral-400 uppercase transition-colors group-hover:text-brand">
+                    View →
+                  </span>
+                </a>
+              ))}
             </div>
           </section>
         </FadeIn>
 
         <section id="members">
-          <ChapterMark index={2} total={5} className="mb-2" />
-          <RevealText
-            as="h2"
-            text="メンバー紹介"
-            className="font-display text-3xl text-neutral-900 lg:text-5xl"
-          />
-          <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
-            Members
-          </p>
-          <p className="mt-2 text-xs text-neutral-400 lg:text-sm">
-            カードをタップすると詳細が開きます
-          </p>
+          <div className="lg:flex lg:items-end lg:justify-between lg:gap-8">
+            <div>
+              <ChapterMark index={2} total={5} className="mb-2" />
+              <RevealText
+                as="h2"
+                text="メンバー紹介"
+                className="font-display text-3xl text-neutral-900 lg:text-5xl"
+              />
+              <p className="mt-2 text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
+                Members
+              </p>
+            </div>
+            <p className="mt-2 text-xs text-neutral-400 lg:mt-0 lg:text-right lg:text-sm">
+              カードをタップすると詳細が開きます
+            </p>
+          </div>
           <div className="mt-6 border-t border-neutral-200">
             {members.map((m, i) => (
               <FadeIn key={m.name} x={-60} y={0} delay={i * 0.15}>
