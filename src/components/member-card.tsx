@@ -54,7 +54,7 @@ export function MemberCard({
           <BlueprintCorners tone="light" label={`NO.${String(index + 1).padStart(2, "0")}`} />
         </div>
       </LiveGlowFrame>
-      <div className="flex-1">
+      <div className="flex-1 lg:mx-auto lg:max-w-4xl">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="font-mono text-xs font-bold tracking-widest text-neutral-400 uppercase lg:text-sm">
