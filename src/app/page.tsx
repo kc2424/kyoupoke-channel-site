@@ -30,7 +30,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WipeLink } from "@/components/wipe-link";
+import { fetchPublishedMembers } from "@/lib/notion";
 import Image from "next/image";
+
+// Notion側の「メンバー・コンテンツ」DBを一定間隔で再取得する。
+export const revalidate = 300;
 
 const navItems = [
   { label: "プロフィール", href: "#profile" },
@@ -40,7 +44,8 @@ const navItems = [
   { label: "リンク", href: "#links" },
 ];
 
-const members = [
+// Notion未接続時、またはNotion側にメンバーが未登録の場合のフォールバック。
+const fallbackMembers = [
   {
     name: "バンビー",
     role: "絶対的エース",
@@ -136,7 +141,11 @@ const memberLinks = [
   { label: "くろこ", sub: "個人チャンネル", href: "https://www.youtube.com/channel/UC4e7rsaJW-M7vr55lsDMjYQ", icon: UserIcon },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const notionMembers = await fetchPublishedMembers();
+  const members =
+    notionMembers && notionMembers.length > 0 ? notionMembers : fallbackMembers;
+
   return (
     <div className="flex min-h-screen flex-col bg-neutral-100">
       <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-2 bg-transparent px-4 py-3 [text-shadow:0_1px_12px_rgba(255,255,255,0.6)] sm:px-6 sm:py-4 lg:px-10 lg:py-6">
