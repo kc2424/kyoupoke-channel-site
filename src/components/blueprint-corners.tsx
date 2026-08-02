@@ -26,8 +26,12 @@ export function BlueprintCorners({
       {label ? (
         <span
           className={cn(
+            // 写真やイラストの上に直接載る注記なので、背景色に頼らず
+            // 影で下地から浮かせて可読性を確保する。
             "absolute bottom-1 left-6 font-mono text-[10px] tracking-widest uppercase lg:text-xs",
-            tone === "light" ? "text-white/80" : "text-black/60"
+            tone === "light"
+              ? "text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.7)]"
+              : "text-black/80 [text-shadow:0_1px_3px_rgba(255,255,255,0.7)]"
           )}
         >
           {label}
