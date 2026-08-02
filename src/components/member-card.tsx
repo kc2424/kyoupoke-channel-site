@@ -107,7 +107,7 @@ export function MemberCard({
                   {detail}
                 </p>
               )}
-              {hasMilestones && (
+              {milestones && milestones.length > 0 && (
               <ol className="mt-6 max-w-2xl border-l-2 border-neutral-200 pl-5">
                 {milestones.map((m, i) => (
                   <li key={i} className="relative pb-4 last:pb-0">
