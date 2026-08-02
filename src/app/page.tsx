@@ -11,7 +11,6 @@ import { FadeIn } from "@/components/fade-in";
 import { GiantTitle } from "@/components/giant-title";
 import { HeroStickers } from "@/components/hero-stickers";
 import { LogoMark } from "@/components/logo-mark";
-import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
@@ -136,10 +135,17 @@ const fallbackStats = [
 const fallbackAchievements = [
   { label: "YouTube Creator Awards", sub: "銀の盾（登録者10万人）", tone: "brand" as const },
   { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演", tone: "black" as const },
-  { label: "PJCS2025 / WCS2025", sub: "いろは選手が出場権獲得", tone: "brand" as const },
-  { label: "今日ポケ杯", sub: "ニコニコ生放送と連携開催", tone: "black" as const },
-  { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "brand" as const },
+  { label: "PJCS / WCS 2年連続出場", sub: "いろは選手が出場権獲得", tone: "brand" as const },
+  { label: "KYOUPOKE GYM", sub: "対戦イベントを開催", tone: "brand" as const },
 ];
+
+// 実績の見出しに一致する場合、カード背景に写真を敷く。
+const achievementImages: Record<string, string> = {
+  "YouTube Creator Awards": "/achievements/youtube-award.jpg",
+  "テレビ東京「バトオフ」": "/achievements/tv-tokyo-battle-of.jpg",
+  "PJCS / WCS 2年連続出場": "/achievements/wcs-logo.png",
+  "KYOUPOKE GYM": "/achievements/kyoupoke-gym.jpg",
+};
 
 const fallbackVideos = [
   { id: 1, videoId: "8BfcRA0mPfg", title: "【旅パで本気バトル】ポケモンSVをはじめから遊んで60分後に即対戦！" },
@@ -459,23 +465,45 @@ export default async function Home() {
               className="mt-10 border-y border-white/10 py-8 lg:py-10"
             />
             <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
-              {achievements.map((a) => (
-                <SparkTap
-                  key={a.label}
-                  className={cn(
-                    "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
-                    // 白文字を載せるオレンジは brand-dark(#b8431f)。brand(#d9552e)だと
-                    // 白文字とのコントラストが3.97しか出ずAA基準(4.5)を満たさない。
-                    a.tone === "brand" && "bg-brand-dark text-white",
-                    a.tone === "black" && "bg-white/10 text-white"
-                  )}
-                >
-                  <p className="font-display text-lg leading-tight sm:text-xl lg:text-2xl">
-                    {a.label}
-                  </p>
-                  <p className="mt-1 text-sm font-bold opacity-90 lg:text-base">{a.sub}</p>
-                </SparkTap>
-              ))}
+              {achievements.map((a) => {
+                const image = achievementImages[a.label];
+                return (
+                  <SparkTap
+                    key={a.label}
+                    className={cn(
+                      "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
+                      // 白文字を載せるオレンジは brand-dark(#b8431f)。brand(#d9552e)だと
+                      // 白文字とのコントラストが3.97しか出ずAA基準(4.5)を満たさない。
+                      a.tone === "brand" && "bg-brand-dark text-white",
+                      a.tone === "black" && "bg-white/10 text-white"
+                    )}
+                  >
+                    {image && (
+                      <>
+                        <Image
+                          src={image}
+                          alt={a.label}
+                          fill
+                          className="object-cover object-center grayscale"
+                        />
+                        <div
+                          className={cn(
+                            "absolute inset-0",
+                            a.tone === "brand" ? "bg-brand-dark/30" : "bg-black/30"
+                          )}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                      </>
+                    )}
+                    <p className="font-display relative text-lg leading-tight sm:text-xl lg:text-2xl">
+                      {a.label}
+                    </p>
+                    <p className="relative mt-1 text-sm font-bold opacity-90 lg:text-base">
+                      {a.sub}
+                    </p>
+                  </SparkTap>
+                );
+              })}
             </SnapReveal>
           </div>
         </section>
@@ -510,15 +538,13 @@ export default async function Home() {
             </>
           )}
 
-          <Magnetic>
-            <WipeLink
-              href="https://www.youtube.com/@KYOUPOKE"
-              cursorLabel="OPEN"
-              className="mt-10 lg:px-8 lg:py-4 lg:text-base"
-            >
-              チャンネルの動画をもっと見る
-            </WipeLink>
-          </Magnetic>
+          <WipeLink
+            href="https://www.youtube.com/@KYOUPOKE"
+            cursorLabel="OPEN"
+            className="mt-10 lg:px-8 lg:py-4 lg:text-base"
+          >
+            チャンネルの動画をもっと見る
+          </WipeLink>
           </div>
         </section>
 
