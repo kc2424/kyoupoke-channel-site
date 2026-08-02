@@ -8,7 +8,7 @@ export function HeroStickers() {
   return (
     <div
       data-hero-bounds
-      className="pointer-events-none absolute inset-0 z-10 hidden lg:block"
+      className="pointer-events-none absolute inset-0 z-10"
       aria-hidden="true"
     >
       <motion.div
@@ -52,7 +52,7 @@ export function HeroStickers() {
         transition={{ type: "spring", stiffness: 260, damping: 17, delay: 0.62 }}
       >
         <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-6} className="bg-brand-dark text-white">
-          世界トップクラス理論
+          最終1位14回
         </StickerDrag>
       </motion.div>
     </div>

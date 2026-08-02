@@ -40,7 +40,7 @@ export function MemberCard({
       type="button"
       onClick={() => canToggle && setOpen((v) => !v)}
       data-cursor-label={canToggle ? (open ? "CLOSE" : "MORE") : undefined}
-      className="group flex w-full flex-col gap-6 border-b border-neutral-200 py-8 text-left sm:flex-row sm:items-center lg:gap-10 lg:py-10"
+      className="group mx-auto flex w-full max-w-6xl flex-col gap-6 border-b border-neutral-200 py-8 text-left sm:flex-row sm:items-center lg:max-w-7xl lg:gap-10 lg:py-10"
     >
       <LiveGlowFrame
         rounded="rounded-xl"

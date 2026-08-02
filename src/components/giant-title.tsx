@@ -118,7 +118,10 @@ export function GiantTitle({ children }: { children: string }) {
         },
       });
 
-      // マウス位置に応じたふにゃふにゃスクイーズ
+      // マウス位置に応じたふにゃふにゃスクイーズ（タッチ端末は mousemove だけ合成発火して
+      // mouseleave が来ないため歪んだまま戻らなくなる。マウス操作可能な端末に限定する）
+      if (!window.matchMedia("(pointer: fine)").matches) return;
+
       const squishers = chars.map((el) => ({
         el,
         scaleX: gsap.quickTo(el, "scaleX", { duration: 0.6, ease: "elastic.out(1, 0.35)" }),

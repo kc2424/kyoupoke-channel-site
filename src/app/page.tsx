@@ -37,6 +37,7 @@ import {
   fetchVideos,
   type NotionLinkIcon,
 } from "@/lib/notion";
+import { fetchLatestVideos } from "@/lib/youtube";
 import Image from "next/image";
 
 const linkIconMap: Record<NotionLinkIcon, typeof YouTubeIcon> = {
@@ -69,7 +70,7 @@ const fallbackMembers = [
     name: "バンビー",
     role: "絶対的エース",
     tags: ["絶対的エース", "第7世代2連続最終1位", "歴代最高レート2415"],
-    text: "1998年2月10日生まれ、埼玉県出身。番組を牽引する絶対的エースであり、ポケモン世界1位を2度獲得。幼少期の挫折をバネにした不屈の精神と、活動へのフルコミットメントぶりが持ち味。第7世代（SM）で史上初の2期連続最終1位、第9世代（SV）シーズン1で歴代最高レートの最終1位を獲得した実力者。今日ポケch.の開設を提案した発起人でもある。",
+    text: "1998年2月10日生まれ、埼玉県出身。番組を牽引する絶対的エースであり、ポケモン最終1位を2度獲得。幼少期の挫折をバネにした不屈の精神と、活動へのフルコミットメントぶりが持ち味。第7世代（SM）で史上初の2期連続最終1位、第9世代（SV）シーズン1で歴代最高レートの最終1位を獲得した実力者。今日ポケch.の開設を提案した発起人でもある。",
     photo: "/members/banbee.png",
     milestones: [
       { period: "中高時代", text: "対戦実況者の配信をきっかけにポケモン対戦を始め、本格参戦した初シーズンでいきなりレート2000を達成。" },
@@ -171,6 +172,39 @@ const fallbackTexts = {
     "2022年にはチャンネル登録者数10万人を達成し、YouTube Creator Awardsの銀の盾を受賞。現在はチャンネル登録者数 約67万人、総再生回数は12億回を超える規模まで成長しています。",
 };
 
+// おすすめ動画・最新動画で共通のカード表示。
+function VideoCard({ video, index, labelPrefix }: { video: { videoId: string; title: string }; index: number; labelPrefix: string }) {
+  return (
+    <TiltCard>
+      <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="WATCH">
+        <VideoModal videoId={video.videoId} title={`${labelPrefix}${index + 1}`}>
+          <div className="relative aspect-video">
+            <Image
+              src={`https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`}
+              alt={video.title}
+              fill
+              className="object-cover"
+            />
+            <span className="absolute inset-0 flex items-center justify-center">
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-brand shadow-lg transition-transform duration-300 group-hover/mono:scale-110 lg:h-20 lg:w-20">
+                <svg viewBox="0 0 24 24" className="ml-1 h-6 w-6 fill-current lg:h-8 lg:w-8" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+            </span>
+          </div>
+        </VideoModal>
+        <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
+          <span className="font-display text-lg text-brand lg:text-xl">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <p className="line-clamp-2 text-sm text-neutral-600 lg:text-base">{video.title}</p>
+        </CardContent>
+      </Card>
+    </TiltCard>
+  );
+}
+
 export default async function Home() {
   const [
     notionMembers,
@@ -180,6 +214,7 @@ export default async function Home() {
     notionVideos,
     notionLinks,
     notionTexts,
+    latestVideos,
   ] = await Promise.all([
     fetchPublishedMembers("メインメンバー"),
     fetchPublishedMembers("スタッフ"),
@@ -188,6 +223,7 @@ export default async function Home() {
     fetchVideos(),
     fetchLinks(),
     fetchSiteTexts(),
+    fetchLatestVideos(3),
   ]);
 
   const members =
@@ -297,8 +333,8 @@ export default async function Home() {
         <FadeIn>
           <section id="profile" className="scroll-mt-24 pb-24 lg:pb-32">
             <div className={CONTAINER}>
-              {/* 見出しを左列に固定し、本文は右列で最大42rem。18pxで約39字/行に収まる。 */}
-              <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_minmax(0,42rem)] lg:gap-16">
+              {/* 見出しを左列に固定し、本文は右列でコンテナ右端まで広げる。 */}
+              <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
                 <SectionHeading
                   index={1}
                   label="About"
@@ -414,7 +450,8 @@ export default async function Home() {
           id="achievements"
           className="relative scroll-mt-24 overflow-hidden bg-black py-24 lg:py-32"
         >
-          <OpArtRings className="top-1/2 right-0 h-[280px] w-[280px] -translate-y-1/2 translate-x-1/3 sm:h-[420px] sm:w-[420px] lg:h-[560px] lg:w-[560px]" />
+          {/* カード群(実カード背景は不透明)と重ならないよう、見出し行の高さに合わせて右上に配置する */}
+          <OpArtRings className="top-0 right-0 h-[220px] w-[220px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px]" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="dark" />
             <StatSpotlight
@@ -452,42 +489,27 @@ export default async function Home() {
           <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {videos.map((v, i) => (
               <FadeIn key={v.id} delay={i * 0.1}>
-                <TiltCard>
-                  <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="WATCH">
-                    <VideoModal videoId={v.videoId} title={`おすすめ動画${v.id}`}>
-                      <div className="relative aspect-video">
-                        <Image
-                          src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`}
-                          alt={v.title}
-                          fill
-                          className="object-cover"
-                        />
-                        <span className="absolute inset-0 flex items-center justify-center">
-                          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-brand shadow-lg transition-transform duration-300 group-hover/mono:scale-110 lg:h-20 lg:w-20">
-                            <svg
-                              viewBox="0 0 24 24"
-                              className="ml-1 h-6 w-6 fill-current lg:h-8 lg:w-8"
-                              aria-hidden="true"
-                            >
-                              <path d="M8 5v14l11-7z" />
-                            </svg>
-                          </span>
-                        </span>
-                      </div>
-                    </VideoModal>
-                    <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
-                      <span className="font-display text-lg text-brand lg:text-xl">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <p className="line-clamp-2 text-sm text-neutral-600 lg:text-base">
-                        {v.title}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </TiltCard>
+                <VideoCard video={v} index={i} labelPrefix="おすすめ動画" />
               </FadeIn>
             ))}
           </div>
+
+          {latestVideos && latestVideos.length > 0 && (
+            <>
+              <p className="mt-16 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
+                Latest
+              </p>
+              <h3 className="font-display mt-2 text-2xl text-neutral-900 lg:text-3xl">最新動画</h3>
+              <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
+                {latestVideos.map((v, i) => (
+                  <FadeIn key={v.videoId} delay={i * 0.1}>
+                    <VideoCard video={v} index={i} labelPrefix="最新動画" />
+                  </FadeIn>
+                ))}
+              </div>
+            </>
+          )}
+
           <Magnetic>
             <WipeLink
               href="https://www.youtube.com/@KYOUPOKE"

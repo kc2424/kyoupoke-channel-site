@@ -30,7 +30,7 @@ export function FullscreenMenu() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-full border-2 border-black px-5 py-2.5 text-sm font-bold text-black lg:px-6 lg:py-3 lg:text-base"
+        className="rounded-full border-2 border-black px-5 py-2.5 text-sm font-bold text-black md:hidden"
       >
         Menu
       </button>
