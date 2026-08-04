@@ -356,6 +356,7 @@ export default async function Home() {
               <div className="relative">
                 <ParallaxImage
                   wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
+                  className="object-cover"
                   src="/hero-mascots.png"
                   alt="今日ポケ マスコットイラスト"
                   fill

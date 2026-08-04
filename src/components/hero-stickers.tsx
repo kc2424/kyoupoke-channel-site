@@ -45,7 +45,7 @@ export function HeroStickers() {
         </Float>
       </motion.div>
       <motion.div
-        className="pointer-events-auto absolute right-[7%] bottom-[24%]"
+        className="pointer-events-auto absolute right-[7%] bottom-[40%] sm:bottom-[24%]"
         initial={{ opacity: 0, scale: 0.7, y: 28, rotate: 16 }}
         animate={{ opacity: 1, scale: 1, y: 0, rotate: 6 }}
         transition={{ type: "spring", stiffness: 260, damping: 17, delay: 0.38 }}
@@ -73,7 +73,7 @@ export function HeroStickers() {
         </Float>
       </motion.div>
       <motion.div
-        className="pointer-events-auto absolute bottom-[18%] left-[9%]"
+        className="pointer-events-auto absolute bottom-[36%] left-[9%] sm:bottom-[18%]"
         initial={{ opacity: 0, scale: 0.7, y: 24, rotate: -14 }}
         animate={{ opacity: 1, scale: 1, y: 0, rotate: -6 }}
         transition={{ type: "spring", stiffness: 260, damping: 17, delay: 0.62 }}
