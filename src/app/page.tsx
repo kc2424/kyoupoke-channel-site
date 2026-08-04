@@ -313,7 +313,7 @@ export default async function Home() {
           </FadeIn>
         </div>
 
-        <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-neutral-600">
+        <div className="pointer-events-none relative mt-6 flex flex-col items-center gap-2 text-neutral-600 sm:absolute sm:bottom-8 sm:left-1/2 sm:mt-0 sm:-translate-x-1/2">
           <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
             Scroll
           </span>
