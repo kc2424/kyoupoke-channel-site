@@ -123,20 +123,16 @@ export function GiantTitle({ children }: { children: string }) {
 
       const chars = charRefs.current.filter(Boolean) as HTMLSpanElement[];
 
-      // 浮き上がって登場する演出
+      // 浮き上がって登場する演出。
+      // ヒーロー内で常に初期表示されるため、スクロール判定ではなくマウント直後に再生する。
       gsap.set(chars, { yPercent: 120, opacity: 0 });
-      ScrollTrigger.create({
-        trigger: container,
-        start: "top 85%",
-        onEnter: () => {
-          gsap.to(chars, {
-            yPercent: 0,
-            opacity: 1,
-            duration: 1.1,
-            ease: "power4.out",
-            stagger: 0.05,
-          });
-        },
+      gsap.to(chars, {
+        yPercent: 0,
+        opacity: 1,
+        duration: 1.1,
+        ease: "power4.out",
+        stagger: 0.05,
+        delay: 0.15,
       });
 
       // マウス位置に応じたふにゃふにゃスクイーズ（タッチ端末は mousemove だけ合成発火して

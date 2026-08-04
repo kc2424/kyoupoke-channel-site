@@ -9,6 +9,7 @@ import {
 } from "@/components/brand-icons";
 import { FadeIn } from "@/components/fade-in";
 import { GiantTitle } from "@/components/giant-title";
+import { HeroPhoto } from "@/components/hero-photo";
 import { HeroStickers } from "@/components/hero-stickers";
 import { LogoMark } from "@/components/logo-mark";
 import { MemberCard } from "@/components/member-card";
@@ -168,7 +169,7 @@ const fallbackMemberLinks = [
 ];
 
 const fallbackTexts = {
-  hero_tagline: "世界トップクラスの対戦理論と、笑えるバラエティ企画を届けるポケモン対戦YouTuberグループ。",
+  hero_tagline: "世界トップクラスの対戦理論と、笑えるバラエティ企画を届ける\nポケモン対戦YouTuberグループ。",
   catchcopy_line1: "絶対的エース。",
   catchcopy_line2: "論理の体現者。",
   catchcopy_line3: "悟りの天才。",
@@ -262,14 +263,7 @@ export default async function Home() {
       <main>
       <section className="relative flex min-h-[100svh] flex-col items-center overflow-hidden bg-white px-6 sm:px-10 lg:px-16">
         {/* 顔は上、テキストは腰〜胴体のあたりに重なるよう写真は全身フルで敷く */}
-        <Image
-          src="/hero-members.jpg"
-          alt="今日ポケ メンバー3人"
-          fill
-          priority
-          className="pointer-events-none object-cover object-top opacity-90"
-          style={{ transform: "translateY(-20px)" }}
-        />
+        <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
 
         <HeroStickers />
@@ -284,21 +278,32 @@ export default async function Home() {
           {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない） */}
           <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 h-[130%] -translate-y-1/2 bg-white/70 blur-3xl" />
 
-          <a
-            href="#videos"
-            data-cursor-label="VIEW"
-            className="group relative mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white/70 px-4 py-1.5 text-xs font-bold tracking-wide text-neutral-700 backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:text-brand lg:text-sm"
-          >
-            <span className="text-brand">New</span>
-            最新動画を公開中
-            <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-          </a>
+          <FadeIn y={12}>
+            <a
+              href="#videos"
+              data-cursor-label="VIEW"
+              className="group relative mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white/70 px-4 py-1.5 text-xs font-bold tracking-wide text-neutral-700 backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:text-brand lg:text-sm"
+            >
+              <span className="text-brand">New</span>
+              最新動画を公開中
+              <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+            </a>
+          </FadeIn>
 
           <GiantTitle>KYOU POKE</GiantTitle>
 
-          <p className="relative mt-6 max-w-md text-center text-sm text-neutral-600 sm:max-w-lg sm:text-base lg:max-w-xl lg:text-lg">
-            {texts.hero_tagline}
-          </p>
+          <FadeIn delay={0.3} y={12}>
+            <p className="relative mt-6 max-w-md text-center text-sm whitespace-pre-line text-neutral-600 sm:max-w-lg sm:text-base lg:max-w-xl lg:text-lg">
+              {texts.hero_tagline.includes("届ける")
+                ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
+                    <span key={i}>
+                      {chunk}
+                      {i === 0 && <br />}
+                    </span>
+                  ))
+                : texts.hero_tagline}
+            </p>
+          </FadeIn>
         </div>
 
         <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-neutral-600">
