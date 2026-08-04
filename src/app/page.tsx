@@ -261,19 +261,13 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-white px-6 pt-8 pb-10 sm:min-h-[100svh] sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
+      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(130%_90%_at_20%_0%,#fff3d6_0%,#ffd9ae_45%,#ffffff_88%)] px-6 pt-8 pb-10 sm:bg-none sm:bg-white sm:min-h-[100svh] sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
         {/*
-          モバイル: 写真は本来の縦横比のままフローに乗せて実サイズで表示し、
-          そのすぐ下にタイトルを続ける（フルスクリーン化すると余白だけの
-          空白ゾーンができてしまうため）。
+          モバイル: テキストを先に、写真をその下に配置（写真は本来の縦横比の
+          ままフローに乗せて実サイズ表示）。ヒーロー全体には写真の色味に合わせた
+          暖色グラデーションを敷き、テキスト部分にも写真の世界観を続ける。
           sm以上: 従来通りセクション全体に写真を敷き、テキストは腰〜胴体に重ねる。
         */}
-        <div className="relative w-full overflow-hidden aspect-[1601/1101] sm:absolute sm:inset-0 sm:aspect-auto sm:overflow-visible">
-          <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-          <HeroStickers />
-        </div>
-
         <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
           Unofficial Fan Site
         </span>
@@ -281,9 +275,9 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative mt-6 flex flex-col items-center pb-2 sm:mt-auto sm:pb-[8vh] lg:pb-[10vh]">
-          {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない） */}
-          <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 h-[130%] -translate-y-1/2 bg-white/70 blur-3xl" />
+        <div className="relative order-1 mb-6 flex flex-col items-center sm:order-none sm:mt-auto sm:mb-0 sm:pb-[8vh] lg:pb-[10vh]">
+          {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない）。sm以上（写真に重なる場合）のみ有効 */}
+          <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 hidden h-[130%] -translate-y-1/2 bg-white/70 blur-3xl sm:block" />
 
           <FadeIn y={12}>
             <a
@@ -313,7 +307,13 @@ export default async function Home() {
           </FadeIn>
         </div>
 
-        <div className="pointer-events-none relative mt-6 flex flex-col items-center gap-2 text-neutral-600 sm:absolute sm:bottom-8 sm:left-1/2 sm:mt-0 sm:-translate-x-1/2">
+        <div className="relative order-2 w-full overflow-hidden aspect-[1601/1101] sm:order-none sm:absolute sm:inset-0 sm:aspect-auto sm:overflow-visible">
+          <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+          <HeroStickers />
+        </div>
+
+        <div className="pointer-events-none relative order-3 mt-6 flex flex-col items-center gap-2 text-neutral-600 sm:order-none sm:absolute sm:bottom-8 sm:left-1/2 sm:mt-0 sm:-translate-x-1/2">
           <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
             Scroll
           </span>
