@@ -261,12 +261,19 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex min-h-[100svh] flex-col items-center overflow-hidden bg-white px-6 sm:px-10 lg:px-16">
-        {/* 顔は上、テキストは腰〜胴体のあたりに重なるよう写真は全身フルで敷く */}
-        <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+      <section className="relative flex flex-col items-center overflow-hidden bg-white px-6 pt-8 pb-10 sm:min-h-[100svh] sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
+        {/*
+          モバイル: 写真は本来の縦横比のままフローに乗せて実サイズで表示し、
+          そのすぐ下にタイトルを続ける（フルスクリーン化すると余白だけの
+          空白ゾーンができてしまうため）。
+          sm以上: 従来通りセクション全体に写真を敷き、テキストは腰〜胴体に重ねる。
+        */}
+        <div className="relative w-full overflow-hidden aspect-[1601/1101] sm:absolute sm:inset-0 sm:aspect-auto sm:overflow-visible">
+          <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+          <HeroStickers />
+        </div>
 
-        <HeroStickers />
         <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
           Unofficial Fan Site
         </span>
@@ -274,7 +281,7 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative mt-auto flex flex-col items-center pb-[8vh] lg:pb-[10vh]">
+        <div className="relative mt-6 flex flex-col items-center pb-2 sm:mt-auto sm:pb-[8vh] lg:pb-[10vh]">
           {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない） */}
           <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 h-[130%] -translate-y-1/2 bg-white/70 blur-3xl" />
 
