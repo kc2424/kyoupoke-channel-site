@@ -112,6 +112,37 @@ html.cursor-none * {
   font-family: var(--font-wordmark), sans-serif;
 }
 
+/* モバイルのヒーロー写真は上下の境界をフェードさせ、四角い画像を貼った見た目では
+   なく背景のグラデーションに溶け込んだ見た目にする。左右は画面端まで全幅に敷いて
+   継ぎ目が出ないため、縦方向だけをぼかせばよい。
+   上は顔に掛からないよう短く、下は胴体〜背景なので長く溶かす。
+   sm以上では写真を画面全体に敷くため、マスクは無効化する。 */
+.hero-photo-fade {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 9%,
+    #000 74%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 9%,
+    #000 74%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+@media (min-width: 40rem) {
+  .hero-photo-fade {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);
