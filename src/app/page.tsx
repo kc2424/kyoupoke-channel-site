@@ -484,7 +484,7 @@ export default async function Home() {
                           src={image}
                           alt={a.label}
                           fill
-                          className="object-cover object-center grayscale"
+                          className="object-cover object-center"
                         />
                         <div
                           className={cn(
