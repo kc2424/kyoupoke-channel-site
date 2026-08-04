@@ -7,6 +7,27 @@ import { useLayoutEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ヒーロー写真の背景（黄色→淡いオレンジ→赤）に合わせた文字グラデーション。
+const GRADIENT_STOPS = ["#fbdd8e", "#f6c453", "#e8763a", "#c8501f", "#8f2d14"];
+
+function hexToRgb(hex: string) {
+  const num = parseInt(hex.replace("#", ""), 16);
+  return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+}
+
+function mixColor(t: number) {
+  const segments = GRADIENT_STOPS.length - 1;
+  const scaled = Math.min(Math.max(t, 0), 1) * segments;
+  const i = Math.min(Math.floor(scaled), segments - 1);
+  const localT = scaled - i;
+  const c1 = hexToRgb(GRADIENT_STOPS[i]);
+  const c2 = hexToRgb(GRADIENT_STOPS[i + 1]);
+  const r = Math.round(c1.r + (c2.r - c1.r) * localT);
+  const g = Math.round(c1.g + (c2.g - c1.g) * localT);
+  const b = Math.round(c1.b + (c2.b - c1.b) * localT);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
 export function GiantTitle({ children }: { children: string }) {
   const containerRef = useRef<HTMLHeadingElement>(null);
   const rowRef = useRef<HTMLDivElement>(null);
@@ -168,7 +189,7 @@ export function GiantTitle({ children }: { children: string }) {
   return (
     <h1
       ref={containerRef}
-      className="font-wordmark text-brand flex w-full justify-center overflow-hidden text-[17vw] leading-[0.85] sm:text-[13.5vw]"
+      className="font-wordmark flex w-full justify-center overflow-hidden text-[17vw] leading-[0.85] drop-shadow-[3px_5px_0_rgba(90,30,10,0.18)] sm:text-[13.5vw]"
     >
       <div
         ref={rowRef}
@@ -187,6 +208,7 @@ export function GiantTitle({ children }: { children: string }) {
               charRefs.current[i] = el;
             }}
             className="inline-block will-change-transform"
+            style={{ color: mixColor(children.length > 1 ? i / (children.length - 1) : 0) }}
           >
             {char === " " ? " " : char}
           </span>

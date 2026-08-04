@@ -260,7 +260,18 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-white px-6 sm:px-10 lg:px-16">
+      <section className="relative flex min-h-[100svh] flex-col items-center overflow-hidden bg-white px-6 sm:px-10 lg:px-16">
+        {/* 顔は上、テキストは腰〜胴体のあたりに重なるよう写真は全身フルで敷く */}
+        <Image
+          src="/hero-members.jpg"
+          alt="今日ポケ メンバー3人"
+          fill
+          priority
+          className="pointer-events-none object-cover object-top opacity-90"
+          style={{ transform: "translateY(-20px)" }}
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+
         <HeroStickers />
         <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
           Unofficial Fan Site
@@ -269,7 +280,26 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <GiantTitle>KYOU POKE</GiantTitle>
+        <div className="relative mt-auto flex flex-col items-center pb-[8vh] lg:pb-[10vh]">
+          {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない） */}
+          <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 h-[130%] -translate-y-1/2 bg-white/70 blur-3xl" />
+
+          <a
+            href="#videos"
+            data-cursor-label="VIEW"
+            className="group relative mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white/70 px-4 py-1.5 text-xs font-bold tracking-wide text-neutral-700 backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:text-brand lg:text-sm"
+          >
+            <span className="text-brand">New</span>
+            最新動画を公開中
+            <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+          </a>
+
+          <GiantTitle>KYOU POKE</GiantTitle>
+
+          <p className="relative mt-6 max-w-md text-center text-sm text-neutral-600 sm:max-w-lg sm:text-base lg:max-w-xl lg:text-lg">
+            {texts.hero_tagline}
+          </p>
+        </div>
 
         <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-neutral-600">
           <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
@@ -280,12 +310,9 @@ export default async function Home() {
       </section>
 
       <FadeIn>
-        <section className="bg-white pt-24 pb-10 lg:pt-32">
+        <section className="bg-white pt-16 pb-10 lg:pt-20">
           <div className={CONTAINER}>
-            <p className="mx-auto max-w-xl text-center text-neutral-700 lg:max-w-2xl lg:text-xl">
-              {texts.hero_tagline}
-            </p>
-            <div className="mt-12 border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
+            <div className="border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
               Featured
             </div>
           </div>
