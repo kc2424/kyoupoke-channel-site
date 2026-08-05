@@ -6,6 +6,7 @@ import { LiveClockBadge } from "@/components/live-clock-badge";
 import { QuoteGeneratorModal } from "@/components/quote-generator-modal";
 import { TrophyShowcaseModal } from "@/components/trophy-showcase-modal";
 import { ThemeAmbientToggle } from "@/components/theme-ambient-toggle";
+import { UISoundEffects } from "@/components/ui-sound-effects";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { LogoMark } from "@/components/logo-mark";
 import { UnderlineLink } from "@/components/underline-link";
@@ -55,6 +56,7 @@ export function SiteHeader({
             <LiveClockBadge />
             <QuoteGeneratorModal />
             <TrophyShowcaseModal />
+            <UISoundEffects />
           </div>
         </a>
         <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-800 md:flex lg:gap-8 lg:text-base">

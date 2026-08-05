@@ -29,6 +29,11 @@ import { SnapReveal } from "@/components/snap-reveal";
 import { SoundBoard } from "@/components/sound-board";
 import { MilestoneTracker } from "@/components/milestone-tracker";
 import { ThemeAmbientToggle } from "@/components/theme-ambient-toggle";
+import { MemberSkillRadar } from "@/components/member-skill-radar";
+import { BattleTimeline } from "@/components/battle-timeline";
+import { TypeSynergyWidget } from "@/components/type-synergy-widget";
+import { FanStatsCounter } from "@/components/fan-stats-counter";
+import { FooterCopyrightBadge } from "@/components/footer-copyright-badge";
 import { SparkTap } from "@/components/spark-tap";
 import { StatSpotlight } from "@/components/stat-spotlight";
 import { TiltCard } from "@/components/tilt-card";
@@ -439,6 +444,10 @@ export default async function Home() {
               ))}
             </div>
 
+            <MemberSkillRadar />
+            <BattleTimeline />
+            <TypeSynergyWidget />
+
             <p className="mt-16 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
               Staff
             </p>
@@ -643,9 +652,12 @@ export default async function Home() {
           ))}
         </div>
 
-        <p className={cn(CONTAINER, "relative mt-12 text-center text-sm text-white/70 lg:text-base")}>
-          このページは非公式のファンサイトです。今日ポケの活動を応援しています。
-        </p>
+        <div className={CONTAINER}>
+          <p className="relative mt-12 text-center text-sm text-white/70 lg:text-base">
+            このページは非公式のファンサイトです。今日ポケの活動を応援しています。
+          </p>
+          <FooterCopyrightBadge />
+        </div>
       </footer>
     </div>
   );

@@ -85,6 +85,11 @@ export const metadata: Metadata = {
   },
 };
 
+import { LiveStatTicker } from "@/components/live-stat-ticker";
+import { NewsBulletin } from "@/components/news-bulletin";
+import { FloatingQuickDock } from "@/components/floating-quick-dock";
+import { InertiaIndicator } from "@/components/inertia-indicator";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -104,7 +109,11 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
         <ScrollProgressBar />
+        <LiveStatTicker />
+        <NewsBulletin />
         <BackToTopButton />
+        <FloatingQuickDock />
+        <InertiaIndicator />
         <KeyboardShortcuts />
         <IntroLoader />
         <CustomCursor />
