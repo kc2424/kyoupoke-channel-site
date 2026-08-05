@@ -283,8 +283,8 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative h-[82vh] min-h-[520px] max-h-[680px] w-full sm:h-auto sm:min-h-0 sm:max-h-none sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
-          <div className="absolute inset-0 overflow-hidden sm:hidden p-3 pt-16 pb-4">
+        <div className="relative h-[100dvh] w-full sm:h-auto sm:min-h-0 sm:max-h-none sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
+          <div className="absolute inset-0 overflow-hidden sm:hidden">
             <MobileHeroCarousel />
           </div>
           <div className="absolute inset-0 hidden overflow-hidden sm:block">
