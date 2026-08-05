@@ -1,0 +1,36 @@
+# site-brushup 自動ブラッシュアップ Checker 状態ファイル
+
+このファイルはChecker（検証役クラウドルーティン）が読み書きする状態ファイルです。
+Maker役はこのファイルを編集しません。Checkerは自身の判定をここに追記し、次回実行時の
+「前回チェック済みコミット」の判断材料にします。
+
+## 既知の問題・回避策
+
+- **lint: `react-hooks/set-state-in-effect`（4件）**: `src/components/scramble-text.tsx`・
+  `src/components/sound-toggle.tsx`・`src/components/video-modal.tsx` で `npm run lint` が
+  エラーになる。2026-08-05のChecker初回実行時点で、直近のMaker変更（f9d3e8f, 7576296）が
+  触れていないファイルであり、それより前の `fc13e9a` 時点でも同じ4件が再現することを確認済み。
+  今回の変更が原因ではない既知の技術的負債として扱う。将来のChecker実行でもこの3ファイル由来の
+  同じ4件はビルド判定のブロッカーにしない（新しいファイル・別のエラー内容が増えていないかは
+  毎回確認すること）。
+- **`npm run build`（Turbopack）がサンドボックスでGoogle Fonts取得に失敗することがある**:
+  HANDOVER.md記載の通り、Maker側のセッションでも過去に発生している既知の環境要因。再現したら
+  `next build --webpack` で切り分けるか、ベースコミットでも同じ失敗が起きるか確認すること。
+
+## 直近の実行ログ
+
+- **2026-08-05 (Checker初回実行)**: STATE.mdがsite-brushup/mainどちらにも存在しなかったため、
+  本ファイルを新規作成。前回チェック済みコミットの記録が無いため、直近2コミット
+  (`7576296` ナビ移動へオレンジのカーテン演出, `f9d3e8f` エディトリアル見出し帯へスクロール連動の
+  重み演出) を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認、origin/mainとsite-brushupは無関係な履歴に分岐して
+    いるが、これは今回の2コミットの範囲外の既存事象であり今回の判定対象外とした）
+  - 各コミットは1回で1テーマの変更に限定されており、無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md相当のファイル（HANDOVER.md）は実行ログの追記のみで、既存内容の不自然な書き換えなし
+  - `npm install` → `npm run build`（Turbopack）: 成功
+  - `npm run lint`: 上記「既知の問題」の4件のみで失敗。`fc13e9a`（検証対象コミットより前）でも
+    同じ4件が再現することを確認し、今回の変更由来ではないと判断
+  - **判定: PASS**（対象コミット: `f9d3e8f7ea02f60e2d31137f3824b3f06f847a7c`）
