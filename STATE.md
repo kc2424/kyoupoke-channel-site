@@ -71,8 +71,8 @@
 - 判定: PASS
 -->
 
-### 2026-08-06 (Antigravity Loop 3 - Maker & Checker)
-- 対象: メンバーカード (MemberCard) アクセシビリティ ＆ キーボード操作性強化
-- 変更: `src/components/member-card.tsx` のボタンに `aria-expanded` および `focus-visible:ring-2` を追加
+### 2026-08-06 (Antigravity Loop 4 - Maker & Checker)
+- 対象: ワイプリンク (WipeLink) アクセシビリティ ＆ フォーカスエフェクト強化
+- 変更: `src/components/wipe-link.tsx` に `focus-visible:ring-2` および `focus-visible:ring-brand` を追加
 - 検証 (Checker): `npm run build` 成功 (TypeScript / 静的ページ 4/4 クリア)、`git diff` 監査 PASS
 - 判定: PASS（`antigravity/seo-ogp` ブランチへコミット＆Push）

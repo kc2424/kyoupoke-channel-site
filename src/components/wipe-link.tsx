@@ -22,7 +22,7 @@ export function WipeLink({
       rel="noopener noreferrer"
       data-cursor-label={cursorLabel}
       className={cn(
-        "group relative inline-flex items-center justify-center overflow-hidden rounded-full border-2 border-black px-6 py-3 text-sm font-bold text-black",
+        "group relative inline-flex items-center justify-center overflow-hidden rounded-full border-2 border-black px-6 py-3 text-sm font-bold text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2",
         className
       )}
     >
