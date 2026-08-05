@@ -62,6 +62,14 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 30 - White Bottom Gradient Overlay & Crisp Dark Typography)
+- 対象: ユーザー指定の「下部は白（ホワイト）のグラデーション」デザイン変更
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: 下部グラデーションを `from-white via-white/90 to-transparent` に変更。
+  2. 白グラデーション上の文字・ボタン・スクロール案内をクッキリ可読な `text-neutral-800` / `text-[#d9552e]` に調整。
+- 検証 (Checker): `npm run build` 成功 (3.6s)、ホワイトグラデーション可読性監査 PASS、TypeScript PASS
+- 判定: PASS（白グラデーション変更完了）
+
 ### 2026-08-06 (Antigravity Loop 29 - Align Top Edge of Photo Flush to Top of Viewport)
 - 対象: 写真の上端が画面最上部（`y=0`）までピッタリ隙間なく届く `object-top` 位置調整
 - 変更点:
