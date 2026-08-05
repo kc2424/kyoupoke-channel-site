@@ -34,3 +34,13 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm run lint`: 上記「既知の問題」の4件のみで失敗。`fc13e9a`（検証対象コミットより前）でも
     同じ4件が再現することを確認し、今回の変更由来ではないと判断
   - **判定: PASS**（対象コミット: `f9d3e8f7ea02f60e2d31137f3824b3f06f847a7c`）
+- **2026-08-05 (Checker 2回目実行)**: 前回チェック済み以降の新規コミット `1da6334`（Meet the Membersバナーへギャラリー風キャプション演出を追加）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）
+  - 変更ファイルは4件（HANDOVER.md, MAKER_STATE.md新規, src/app/page.tsx, src/components/gallery-caption.tsx新規）で、いずれも今回のテーマ（ギャラリーキャプション演出）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし。追加したキャプション中の人物名（くろこ/いろは/バンビー）は既存本文と一致することを確認
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、代わりにMaker専用の`MAKER_STATE.md`を新設して分離する対応が取られていた（前回実行時のSTATE.md衝突を受けた適切な対応）
+  - `npm install` → `npm run build`（Turbopack）: 成功
+  - `npm run lint`: 既知の問題（scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規追加ファイル(gallery-caption.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `1da6334f8e35c22dcb1ecad6e3254573f6a90a34`）
