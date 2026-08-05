@@ -18,13 +18,13 @@ type MobileHeroCard = {
 };
 
 const MOBILE_HERO_CARDS: MobileHeroCard[] = [
-  {
+          {
     id: "all",
     name: "今日ポケ 3人組",
     role: "対戦ガチ勢YouTuber",
     tag: "登録者 67万人+",
     image: "/hero-mobile.png",
-    objectPos: "object-[50%_25%]",
+    objectPos: "object-center",
     quote: "「世界トップクラスの対戦理論 ✕ 笑えるバラエティ」",
     stats: "総再生 12億回超",
   },
@@ -89,6 +89,7 @@ export function MobileHeroCarousel() {
               src={current.image}
               alt={current.name}
               fill
+              unoptimized
               priority
               quality={90}
               className={`object-cover ${current.objectPos}`}
