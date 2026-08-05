@@ -71,8 +71,8 @@
 - 判定: PASS
 -->
 
-### 2026-08-06 (Antigravity Loop 5 - Maker & Checker)
-- 対象: モバイル版ヒーロー画像 (HeroPhoto) 顔位置・トリミングアライメント最適化
-- 変更: `src/app/page.tsx` の `objectPosition` を `60%`（下寄り）から `18%`（上寄り・顔中央）に最適化し、`src/components/hero-photo.tsx` の不要な `translateY` を除去
+### 2026-08-06 (Antigravity Loop 6 - Maker & Checker)
+- 対象: ヒーローポップバッジ (HeroStickers) のメンバー顔被り解消
+- 変更: `src/components/hero-stickers.tsx` の「最終1位14回」バッジの位置を `bottom-[51%]`（顔真上）から `bottom-[28%]`（腰・空きスペース）へ逃がし、3人の顔を完全にクリアに視認可能に最適化
 - 検証 (Checker): `npm run build` 成功 (TypeScript / 静的ページ 4/4 クリア)、`git diff` 監査 PASS
 - 判定: PASS（`antigravity/seo-ogp` ブランチへコミット＆Push）
