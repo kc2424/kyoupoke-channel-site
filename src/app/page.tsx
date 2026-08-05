@@ -17,6 +17,7 @@ import { LogoMark } from "@/components/logo-mark";
 import { MemberCard } from "@/components/member-card";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
+import { PartyDeckPreview } from "@/components/party-deck-preview";
 import { PopReveal } from "@/components/pop-reveal";
 import { ProfileBento } from "@/components/profile-bento";
 import { RevealText } from "@/components/reveal-text";
@@ -24,6 +25,9 @@ import { SectionBlend } from "@/components/section-blend";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
 import { SnapReveal } from "@/components/snap-reveal";
+import { SoundBoard } from "@/components/sound-board";
+import { MilestoneTracker } from "@/components/milestone-tracker";
+import { ThemeAmbientToggle } from "@/components/theme-ambient-toggle";
 import { SparkTap } from "@/components/spark-tap";
 import { StatSpotlight } from "@/components/stat-spotlight";
 import { TiltCard } from "@/components/tilt-card";
@@ -428,6 +432,11 @@ export default async function Home() {
                 aboutParagraph1={texts.about_paragraph1}
                 aboutParagraph2={texts.about_paragraph2}
               />
+              <PartyDeckPreview />
+              <div className="mt-8">
+                <SoundBoard />
+              </div>
+              <MilestoneTracker />
             </div>
           </section>
         </FadeIn>

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import { LiveClockBadge } from "@/components/live-clock-badge";
 import { QuoteGeneratorModal } from "@/components/quote-generator-modal";
+import { TrophyShowcaseModal } from "@/components/trophy-showcase-modal";
+import { ThemeAmbientToggle } from "@/components/theme-ambient-toggle";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { LogoMark } from "@/components/logo-mark";
 import { UnderlineLink } from "@/components/underline-link";
@@ -52,6 +54,7 @@ export function SiteHeader({
           <div className="hidden xl:flex items-center gap-2">
             <LiveClockBadge />
             <QuoteGeneratorModal />
+            <TrophyShowcaseModal />
           </div>
         </a>
         <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-800 md:flex lg:gap-8 lg:text-base">
