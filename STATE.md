@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 25 - Restore Natural 50% 50% objectPosition for Updated Source Image)
+- 対象: ユーザーによる元画像ファイル（`hero-mobile.png`）差し替えに伴う標準中央配置（`50% 50%`）の復元
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: 事前に構図調整された差し替え画像が自然に中央でフィットするよう `style={{ objectFit: "cover", objectPosition: "50% 50%" }}` へ戻し設定。
+- 検証 (Checker): `npm run build` 成功 (3.1s)、画像表示確認 PASS、TypeScript PASS
+- 判定: PASS（標準中央配置復元完了）
+
 ### 2026-08-06 (Antigravity Loop 24 - Set Explicit 15000% objectPosition Style)
 - 対象: ユーザーの明確な指示に基づく `15000%` (`style={{ objectFit: "cover", objectPosition: "50% 15000%" }}`) の即時適用
 - 変更点:
