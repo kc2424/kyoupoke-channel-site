@@ -62,6 +62,14 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 12 - Mobile Hero Carousel Stage Overhaul)
+- 対象: モバイル版ヒーロー画像＆ファーストビューの大幅インタラクティブアップデート
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: モバイル専用の「メンバー別インタラクティブ・カルーセル・スポットライトステージ」を新調。
+  2. スマホ画面でのスワイプ・タップ切替（3人集結/バンビー/いろは/くろこ）、専用実績バッジ、名言表示、即時動画再生WipeLinkを完備。
+- 検証 (Checker): `npm run build` 成功 (3.3s)、TypeScript PASS、レスポンシブ最適化確認 PASS
+- 判定: PASS（モバイルヒーロー画像・ステージ大幅刷新完了）
+
 ### 2026-08-06 (Antigravity Loop 11 - 5 Major System Features Update)
 - 対象: システム機能の大型アップデート（一挙5機能導入）
 - 変更点:
