@@ -62,6 +62,14 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 21 - Negative objectPosition Inline Style Support)
+- 対象: マイナス％値（`-25%` / `-20%` 等）指定による写真位置大幅上方移動の完全反映
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: Tailwindの非標準パーサーを回避し、`style={{ objectPosition: "50% -25%" }}` のインラインスタイルへ置き換え。
+  2. マイナス値による画像の顔位置大幅引き上げが100%確実にブラウザ上で即座に反映されるよう修復。
+- 検証 (Checker): `npm run build` 成功 (3.2s)、スタイル反映監査 PASS、TypeScript PASS
+- 判定: PASS（マイナス位置反映修復完了）
+
 ### 2026-08-06 (Antigravity Loop 20 - Photo Position Fine-Tuning)
 - 対象: ユーザーフィードバックに基づく「顔半個分上方（`object-[50%_10%]`）」への精密位置移動
 - 変更点:
