@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 24 - Set Explicit 15000% objectPosition Style)
+- 対象: ユーザーの明確な指示に基づく `15000%` (`style={{ objectFit: "cover", objectPosition: "50% 15000%" }}`) の即時適用
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: 画像の `objectPosition` をユーザー指定の `50% 15000%` に設定しコミット。
+- 検証 (Checker): `npm run build` 成功 (3.2s)、TypeScript PASS
+- 判定: PASS（15000%適用完了）
+
 ### 2026-08-06 (Antigravity Loop 23 - Fix 15000% Typo & Restore Optimal Photo Framing)
 - 対象: コード編集時の誤入力 `15000%`（画面外へ消失する異常値）の即時修正
 - 変更点:
