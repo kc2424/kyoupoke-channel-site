@@ -3,6 +3,7 @@ import { ChapterMark } from "@/components/chapter-mark";
 import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
+import { GalleryCaption } from "@/components/gallery-caption";
 import { GiantTitle } from "@/components/giant-title";
 import { GrowthTimeline } from "@/components/growth-timeline";
 import { HeroStickers } from "@/components/hero-stickers";
@@ -177,7 +178,7 @@ export default function Home() {
             <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
           </div>
           <CurtainReveal className="mt-6 rounded-2xl" flapColor="#ffffff">
-            <div className="relative">
+            <div tabIndex={0} className="group/gallery relative rounded-2xl focus:outline-none">
               <ParallaxImage
                 wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
                 src="/hero-mascots.png"
@@ -186,6 +187,10 @@ export default function Home() {
                 priority
               />
               <BlueprintCorners tone="light" label="FIG.01 — MASCOTS" />
+              <GalleryCaption
+                eyebrow="Fig.01 — くろこ / いろは / バンビー"
+                caption="1つの部屋、1台の画面。3人の距離感がそのままチームの空気。"
+              />
             </div>
           </CurtainReveal>
         </section>
