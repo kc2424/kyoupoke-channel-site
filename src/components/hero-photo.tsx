@@ -72,7 +72,6 @@ export function HeroPhoto({
             sizes="100vw"
             quality={90}
             className={`object-cover ${objectPosition}`}
-            style={{ transform: "translateY(-20px)" }}
           />
         </div>
       </motion.div>

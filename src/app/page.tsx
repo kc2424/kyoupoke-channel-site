@@ -282,8 +282,8 @@ export default async function Home() {
             <HeroPhoto
               src="/hero-mobile.png"
               alt="今日ポケ メンバー3人"
-              objectPosition="object-[50%_60%]"
-              zoom={1.06}
+              objectPosition="object-[50%_18%]"
+              zoom={1.04}
               parallax
             />
             {/* タイトル〜Scrollまでを写真の上に重ねるため、下端を広めに暗く落とす */}

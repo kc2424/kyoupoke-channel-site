@@ -71,8 +71,8 @@
 - 判定: PASS
 -->
 
-### 2026-08-06 (Antigravity Loop 4 - Maker & Checker)
-- 対象: ワイプリンク (WipeLink) アクセシビリティ ＆ フォーカスエフェクト強化
-- 変更: `src/components/wipe-link.tsx` に `focus-visible:ring-2` および `focus-visible:ring-brand` を追加
+### 2026-08-06 (Antigravity Loop 5 - Maker & Checker)
+- 対象: モバイル版ヒーロー画像 (HeroPhoto) 顔位置・トリミングアライメント最適化
+- 変更: `src/app/page.tsx` の `objectPosition` を `60%`（下寄り）から `18%`（上寄り・顔中央）に最適化し、`src/components/hero-photo.tsx` の不要な `translateY` を除去
 - 検証 (Checker): `npm run build` 成功 (TypeScript / 静的ページ 4/4 クリア)、`git diff` 監査 PASS
 - 判定: PASS（`antigravity/seo-ogp` ブランチへコミット＆Push）
