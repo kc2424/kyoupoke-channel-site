@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 27 - Restore Full-Screen Edge-to-Edge objectFit Cover)
+- 対象: 差し替え画像に対する画面縦幅全画面（`100dvh`）フィット表示（`objectFit: "cover"`）の復元
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: `style={{ objectFit: "cover", objectPosition: "center" }}` を適用し、画面ぴったり全画面ヒーロー表示へ設定。
+- 検証 (Checker): `npm run build` 成功 (3.5s)、全画面フィット PASS、TypeScript PASS
+- 判定: PASS（全画面カバー表示完了）
+
 ### 2026-08-06 (Antigravity Loop 26 - Change objectFit to Contain for Horizontal Width Fitting)
 - 対象: ユーザー指定の「縦ではなく横幅に合わせる（`objectFit: "contain"`）」フィット表示
 - 変更点:
