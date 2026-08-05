@@ -275,7 +275,7 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative flex flex-col items-center sm:mt-auto sm:pb-[8vh] lg:pb-[10vh]">
+        <div className="relative z-10 flex flex-col items-center sm:mt-auto sm:pb-[8vh] lg:pb-[10vh]">
           {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない）。写真に重なる sm 以上のみ有効 */}
           <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 hidden h-[130%] -translate-y-1/2 bg-white/70 blur-3xl sm:block" />
 
