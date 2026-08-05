@@ -261,11 +261,12 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_40%,#ffffff_84%)] px-6 pt-28 pb-0 sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
+      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_40%,#ffffff_84%)] pt-24 pb-10 sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
         {/*
-          モバイル: 先に名前とタグラインを読ませ、その下に写真を置く（DOM順のまま）。
-          写真は画面幅いっぱいに広げたうえで外周をフェードさせ、背景の暖色
-          グラデーションに溶け込ませる（四角い画像を貼った見た目を避ける）。
+          モバイル: 写真を先に大きく見せ、タイトルは写真下端のフェード（暖色に
+          溶けた部分）に重ねて配置し、写真とテキストを一体の「ヒーロー画像」として
+          見せる。写真の縦横比は顔が見切れない範囲でギリギリまで高くしてある
+          （object-cover が横方向を削り出す前に縦方向で収まる比率＝目安 0.92 未満）。
           sm以上: 従来通りセクション全体に写真を敷き、テキストは腰〜胴体に重ねる。
         */}
         <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
@@ -275,7 +276,18 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative z-10 flex flex-col items-center sm:mt-auto sm:pb-[8vh] lg:pb-[10vh]">
+        <div className="relative aspect-[5/4] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
+          {/* フェードした写真の外周が白地でぶつ切りにならないよう、背後に暖色のにじみを敷く */}
+          <div className="pointer-events-none absolute inset-x-[-6%] inset-y-[-4%] bg-[radial-gradient(closest-side,#ffdcac_0%,rgba(255,220,172,0)_100%)] blur-2xl sm:hidden" />
+          <div className="hero-photo-fade absolute inset-0 overflow-hidden">
+            <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
+          </div>
+          {/* sm以上は写真が全画面のため、下端を白へ落として次セクションへ繋ぐ */}
+          <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-white via-transparent to-transparent sm:block" />
+          <HeroStickers />
+        </div>
+
+        <div className="relative z-10 -mt-20 flex flex-col items-center px-6 sm:mt-auto sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
           {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない）。写真に重なる sm 以上のみ有効 */}
           <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 hidden h-[130%] -translate-y-1/2 bg-white/70 blur-3xl sm:block" />
 
@@ -306,18 +318,6 @@ export default async function Home() {
                 : texts.hero_tagline}
             </p>
           </FadeIn>
-        </div>
-
-        {/* -mx-6 / w-[calc(100%+3rem)] でセクションの px-6 を打ち消し、モバイルでは全幅に */}
-        <div className="relative -mx-6 mt-8 aspect-[1601/1101] w-[calc(100%+3rem)] sm:absolute sm:inset-0 sm:mx-0 sm:mt-0 sm:aspect-auto sm:w-full">
-          {/* フェードした写真の外周が白地でぶつ切りにならないよう、背後に暖色のにじみを敷く */}
-          <div className="pointer-events-none absolute inset-x-[-6%] inset-y-[-4%] bg-[radial-gradient(closest-side,#ffdcac_0%,rgba(255,220,172,0)_100%)] blur-2xl sm:hidden" />
-          <div className="hero-photo-fade absolute inset-0 overflow-hidden">
-            <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
-          </div>
-          {/* sm以上は写真が全画面のため、下端を白へ落として次セクションへ繋ぐ */}
-          <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-white via-transparent to-transparent sm:block" />
-          <HeroStickers />
         </div>
 
         {/* モバイルはスクロールが自明なうえ、写真の下に置くと余白が間延びするので sm 以上のみ */}
