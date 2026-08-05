@@ -62,6 +62,14 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 18 - Face Haze Removal & Absolute Clarity)
+- 対象: 3人の顔に被るモヤ・影・全画面グラデーションの完全除去
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: 画面上部・中央のモヤ（グラデーション・ソフトオーラ）を完全撤去。
+  2. 文字がある最下部38%のみにグラデーションを限定し、3人の顔と上半身が100%生写真のままクッキリと表示されるよう修正。
+- 検証 (Checker): `npm run build` 成功 (3.8s)、顔視認性・鮮明度監査 PASS、TypeScript PASS
+- 判定: PASS（顔のモヤ完全除去完了）
+
 ### 2026-08-06 (Antigravity Loop 17 - Brand Orange Theme Aura Enhancement)
 - 対象: ユーザー好みの「今日ポケ・ブランドオレンジ（`#d9552e` / `#b8431f`）」熱量カラーの全面強化
 - 変更点:
