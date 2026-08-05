@@ -1,4 +1,5 @@
 import { AchievementIcon } from "@/components/achievement-icon";
+import { ActIndex } from "@/components/act-index";
 import { BlueprintCorners } from "@/components/blueprint-corners";
 import { ChapterMark } from "@/components/chapter-mark";
 import { CurtainReveal } from "@/components/curtain-reveal";
@@ -38,6 +39,14 @@ const navItems = [
   { label: "動画", href: "#videos" },
   { label: "リンク", href: "#links" },
 ];
+
+const acts = [
+  { id: "profile", label: "プロフィール", tone: "light" },
+  { id: "members", label: "メンバー", tone: "light" },
+  { id: "achievements", label: "実績", tone: "dark" },
+  { id: "videos", label: "動画", tone: "light" },
+  { id: "links", label: "リンク", tone: "brand" },
+] as const;
 
 const members = [
   {
@@ -100,6 +109,7 @@ const links = [
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-neutral-100">
+      <ActIndex acts={acts} />
       <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 lg:px-10 lg:py-6">
         <div className="flex items-center gap-3 lg:gap-4">
           <LogoMark animated className="h-12 w-12 lg:h-16 lg:w-16" />
