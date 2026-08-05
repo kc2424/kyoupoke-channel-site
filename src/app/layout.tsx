@@ -34,9 +34,51 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "今日ポケ ファンサイト",
-  description: "今日ポケ（KYOUPOKE）の非公式ファンサイト",
-  robots: "noindex, nofollow",
+  metadataBase: new URL("https://kyoupoke-channel-site.vercel.app"),
+  title: {
+    default: "今日ポケ 非公式ファンサイト | KYOUPOKE",
+    template: "%s | 今日ポケ 非公式ファンサイト",
+  },
+  description:
+    "ポケモン対戦YouTubeチャンネル「今日ポケ」の非公式ファンサイト。メンバー紹介（バンビー・いろは・くろこ）、YouTube受賞実績、メディア出演情報を掲載！",
+  keywords: [
+    "今日ポケ",
+    "KYOUPOKE",
+    "バンビー",
+    "いろは",
+    "くろこ",
+    "ポケモン",
+    "ファンサイト",
+  ],
+  authors: [{ name: "今日ポケ ファン" }],
+  openGraph: {
+    title: "今日ポケ 非公式ファンサイト | KYOUPOKE",
+    description:
+      "ポケモン対戦YouTubeチャンネル「今日ポケ」の非公式ファンサイト。メンバー紹介（バンビー・いろは・くろこ）、YouTube受賞実績などを掲載！",
+    url: "https://kyoupoke-channel-site.vercel.app",
+    siteName: "今日ポケ 非公式ファンサイト",
+    locale: "ja_JP",
+    type: "website",
+    images: [
+      {
+        url: "/hero-mascots.png",
+        width: 1200,
+        height: 630,
+        alt: "今日ポケ マスコットキャラクター",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "今日ポケ 非公式ファンサイト | KYOUPOKE",
+    description:
+      "ポケモン対戦YouTubeチャンネル「今日ポケ」の非公式ファンサイト。メンバー紹介、最新情報、動画実績を掲載中！",
+    images: ["/hero-mascots.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
