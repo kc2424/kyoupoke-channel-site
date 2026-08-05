@@ -6,7 +6,7 @@ import { WipeLink } from "@/components/wipe-link";
 
 export function MobileHeroCarousel() {
   return (
-    <div className="relative w-full h-[100dvh] flex flex-col justify-between overflow-hidden bg-neutral-950 text-white sm:hidden">
+    <div className="relative w-full h-[100dvh] flex flex-col justify-between overflow-hidden bg-neutral-950 text-neutral-900 sm:hidden">
       {/* 画面いっぱいに敷き詰める大判ヒーロー画像（100dvhフル表示） */}
       <div className="absolute inset-0">
         <img
@@ -14,8 +14,8 @@ export function MobileHeroCarousel() {
           alt="今日ポケ メンバー"
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
-        {/* 顔には一切被らないよう、文字がある最下部38%のみにグラデーションを限定 */}
-        <div className="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
+        {/* 下部：ホワイト（白）グラデーションオーバーレイ */}
+        <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none" />
       </div>
 
       {/* 上部ヘッダーバッジ */}
@@ -30,15 +30,15 @@ export function MobileHeroCarousel() {
         </span>
       </div>
 
-      {/* 下部：大判タイトグラフィック・コピー・スクロール案内 */}
+      {/* 下部：白グラデーション上のタイトグラフィック・コピー・スクロール案内 */}
       <div className="relative z-10 p-6 pb-8 flex flex-col items-center text-center">
         <GiantTitle>KYOU POKE</GiantTitle>
 
-        <p className="mt-2 text-xs font-bold text-amber-300 tracking-widest uppercase">
+        <p className="mt-2 text-xs font-extrabold text-[#d9552e] tracking-widest uppercase">
           バンビー ✕ いろは ✕ くろこ
         </p>
 
-        <p className="mt-2 max-w-xs text-xs sm:text-sm text-neutral-100 leading-relaxed font-medium">
+        <p className="mt-2 max-w-xs text-xs sm:text-sm text-neutral-800 leading-relaxed font-bold">
           世界トップクラスの対戦理論 ✕ 笑えるバラエティ
           <br />
           ポケモン対戦YouTubeチャンネル「今日ポケ」
@@ -48,7 +48,7 @@ export function MobileHeroCarousel() {
           <WipeLink
             href="#videos"
             wipeColor="bg-black"
-            className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9552e] to-[#b8431f] border border-amber-300/40 px-5 py-3.5 text-xs font-bold text-white shadow-2xl hover:scale-105 transition-transform"
+            className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9552e] to-[#b8431f] border border-amber-400/40 px-5 py-3.5 text-xs font-bold text-white shadow-2xl hover:scale-105 transition-transform"
           >
             <Play className="h-3.5 w-3.5 fill-current text-amber-300" />
             <span>最新動画を見る</span>
@@ -56,9 +56,9 @@ export function MobileHeroCarousel() {
         </div>
 
         {/* Scroll 指示 */}
-        <a href="#profile" className="mt-6 flex flex-col items-center gap-1 text-amber-300/90 hover:text-white transition-colors">
+        <a href="#profile" className="mt-6 flex flex-col items-center gap-1 text-[#d9552e] hover:text-[#b8431f] transition-colors">
           <span className="text-[10px] font-mono font-bold tracking-widest uppercase">SCROLL</span>
-          <ChevronDown className="h-4 w-4 animate-bounce text-amber-400" />
+          <ChevronDown className="h-4 w-4 animate-bounce text-[#d9552e]" />
         </a>
       </div>
     </div>
