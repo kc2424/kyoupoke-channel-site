@@ -276,13 +276,13 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative aspect-[5/4] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
+        <div className="relative aspect-[3/4] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
           {/* フェードした写真の外周が白地でぶつ切りにならないよう、背後に暖色のにじみを敷く */}
           <div className="pointer-events-none absolute inset-x-[-6%] inset-y-[-4%] bg-[radial-gradient(closest-side,#ffdcac_0%,rgba(255,220,172,0)_100%)] blur-2xl sm:hidden" />
           {/* モバイル: 縦長に撮った専用カット（顔と手元の付箋がフレーム中央に収まる構図）。
               sm以上: 従来の横長写真をそのまま全画面に敷く。 */}
           <div className="hero-photo-fade absolute inset-0 overflow-hidden sm:hidden">
-            <HeroPhoto src="/hero-mobile.png" alt="今日ポケ メンバー3人" objectPosition="object-[50%_28%]" />
+            <HeroPhoto src="/hero-mobile.png" alt="今日ポケ メンバー3人" objectPosition="object-[50%_18%]" />
           </div>
           <div className="absolute inset-0 hidden overflow-hidden sm:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
@@ -292,7 +292,7 @@ export default async function Home() {
           <HeroStickers />
         </div>
 
-        <div className="relative z-10 -mt-20 flex flex-col items-center px-6 sm:mt-auto sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
+        <div className="relative z-10 -mt-28 flex flex-col items-center px-6 sm:mt-auto sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
           {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない）。写真に重なる sm 以上のみ有効 */}
           <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 hidden h-[130%] -translate-y-1/2 bg-white/70 blur-3xl sm:block" />
 
