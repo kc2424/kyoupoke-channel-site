@@ -62,6 +62,14 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 17 - Brand Orange Theme Aura Enhancement)
+- 対象: ユーザー好みの「今日ポケ・ブランドオレンジ（`#d9552e` / `#b8431f`）」熱量カラーの全面強化
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: モバイル全画面ヒーローの下部グラデーション・ボタン・バッジ・オーラ球体に熱量のあるブランドオレンジ（`#d9552e` / `#b8431f`）を注入。
+  2. `src/components/ambient-light-leak.tsx`: マウス追従アンビエントライトリークのオレンジオーラを45%に強化。
+- 検証 (Checker): `npm run build` 成功 (3.3s)、カラーテーマ調和監査 PASS、TypeScript PASS
+- 判定: PASS（ブランドオレンジオーラ強化完了）
+
 ### 2026-08-06 (Antigravity Loop 16 - Full-Viewport 100dvh Edge-to-Edge Mobile Hero)
 - 対象: 専用比率の `hero-mobile.png` をスマホ画面全体（`100dvh`）へ迫力満点に全画面表示
 - 変更点:
