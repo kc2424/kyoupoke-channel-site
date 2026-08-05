@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 29 - Align Top Edge of Photo Flush to Top of Viewport)
+- 対象: 写真の上端が画面最上部（`y=0`）までピッタリ隙間なく届く `object-top` 位置調整
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: `object-cover object-top` を適用し、写真の上部が画面最上部までピッタリ埋まるよう改修。
+- 検証 (Checker): `npm run build` 成功 (4.0s)、上端フィット確認 PASS、TypeScript PASS
+- 判定: PASS（上部画面いっぱい表示完了）
+
 ### 2026-08-06 (Antigravity Loop 28 - Standard HTML img Tag for Instant Live Disk Cache Bypass)
 - 対象: ディスク上の画像差し替えがNext.jsの内部キャッシュをバイパスして即座に画面反映される最適化
 - 変更点:
