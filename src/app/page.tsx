@@ -17,6 +17,7 @@ import { MemberCard } from "@/components/member-card";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { PopReveal } from "@/components/pop-reveal";
+import { ProfileBento } from "@/components/profile-bento";
 import { RevealText } from "@/components/reveal-text";
 import { SectionBlend } from "@/components/section-blend";
 import { SectionHeading } from "@/components/section-heading";
@@ -415,66 +416,17 @@ export default async function Home() {
       </FadeIn>
 
         <FadeIn>
-          <section id="profile" className="scroll-mt-24 pb-24 lg:pb-32">
+          <section id="profile" className="scroll-mt-24 pb-14 lg:pb-32">
             <div className={CONTAINER}>
-              {/* 見出しを左列に固定し、本文は右列でコンテナ右端まで広げる。 */}
-              <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
-                <SectionHeading
-                  index={1}
-                  label="About"
-                  heading="プロフィール"
-                  className="lg:sticky lg:top-32 lg:self-start"
-                />
-                <div className="mt-6 lg:mt-0">
-                  {notionTexts?.about_paragraph1 ? (
-                    <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                      {texts.about_paragraph1}
-                    </p>
-                  ) : (
-                    <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                      「今日ポケ」は<span className="text-brand font-bold">2021年8月8日</span>に活動を開始した、『ポケットモンスター』シリーズの対戦（対戦競技シーン）を専門とする
-                      <span className="text-brand font-bold">3人組</span>YouTuberグループです。
-                      バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
-                    </p>
-                  )}
-                  {notionTexts?.about_paragraph2 ? (
-                    <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                      {texts.about_paragraph2}
-                    </p>
-                  ) : (
-                    <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                      2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
-                      現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-                {[
-                  { href: "#members", label: "メンバー紹介", desc: "バンビー・いろは・くろこ、3人それぞれの実績と人柄。" },
-                  { href: "#achievements", label: "実績・出演", desc: "登録者数や再生回数、受賞歴をまとめて紹介。" },
-                  { href: "#videos", label: "おすすめ動画", desc: "まずはここから見てほしいおすすめの3本。" },
-                  { href: "#links", label: "リンク", desc: "SNSやショップ、メンバー個人チャンネルへ。" },
-                ].map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    data-cursor-label="VIEW"
-                    className="group flex flex-col justify-between gap-6 rounded-2xl border border-neutral-200 p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand hover:shadow-lg lg:p-6"
-                  >
-                    <div>
-                      <p className="font-display text-lg text-neutral-900 group-hover:text-brand lg:text-xl">
-                        {item.label}
-                      </p>
-                      <p className="mt-2 text-sm text-neutral-600 lg:text-base">{item.desc}</p>
-                    </div>
-                    <span className="text-xs font-bold tracking-widest text-neutral-600 uppercase transition-colors group-hover:text-brand">
-                      View →
-                    </span>
-                  </a>
-                ))}
-              </div>
+              <SectionHeading
+                index={1}
+                label="About"
+                heading="プロフィール"
+              />
+              <ProfileBento
+                aboutParagraph1={texts.about_paragraph1}
+                aboutParagraph2={texts.about_paragraph2}
+              />
             </div>
           </section>
         </FadeIn>
