@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 26 - Change objectFit to Contain for Horizontal Width Fitting)
+- 対象: ユーザー指定の「縦ではなく横幅に合わせる（`objectFit: "contain"`）」フィット表示
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: `objectFit: "contain", objectPosition: "center"` を適用し、画像の横幅いっぱいに自然に収まるレスポンシブ配置に改修。
+- 検証 (Checker): `npm run build` 成功 (3.8s)、横幅フィット確認 PASS、TypeScript PASS
+- 判定: PASS（横幅合わせ表示完了）
+
 ### 2026-08-06 (Antigravity Loop 25 - Restore Natural 50% 50% objectPosition for Updated Source Image)
 - 対象: ユーザーによる元画像ファイル（`hero-mobile.png`）差し替えに伴う標準中央配置（`50% 50%`）の復元
 - 変更点:
