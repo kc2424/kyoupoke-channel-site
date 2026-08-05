@@ -13,6 +13,7 @@ import { GiantTitle } from "@/components/giant-title";
 import { HeroPhoto } from "@/components/hero-photo";
 import { HeroStage } from "@/components/hero-stage";
 import { HeroStickers } from "@/components/hero-stickers";
+import { MobileHeroCarousel } from "@/components/mobile-hero-carousel";
 import { LogoMark } from "@/components/logo-mark";
 import { MemberCard } from "@/components/member-card";
 import { OpArtRings } from "@/components/op-art-rings";
@@ -286,43 +287,16 @@ export default async function Home() {
         </span>
 
         <div className="relative aspect-[8/13] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
-          <div className="absolute inset-0 overflow-hidden sm:hidden">
-            <HeroPhoto
-              src="/hero-mobile.png"
-              alt="今日ポケ メンバー3人"
-              objectPosition="object-[50%_35%]"
-              zoom={1.02}
-              parallax
-            />
-            {/* タイトル〜Scrollまでを写真の上に重ねるため、下端および中央の可読性グラデーション */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/90 via-black/55 to-transparent" />
+          <div className="absolute inset-0 overflow-hidden sm:hidden p-3 pt-16">
+            <MobileHeroCarousel />
           </div>
           <div className="absolute inset-0 hidden overflow-hidden sm:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
           </div>
           {/* sm以上は写真が全画面のため、下端を白へ落として次セクションへ繋ぐ */}
           <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-white via-transparent to-transparent sm:block" />
-          <HeroStickers />
-
-          {/* モバイル: タイトル・タグライン・Scrollを写真下部に直接重ねる */}
-          <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-6 sm:hidden">
-            <GiantTitle>KYOU POKE</GiantTitle>
-            <FadeIn delay={0.3} y={12}>
-              <p className="relative mt-4 max-w-md text-center text-sm text-balance whitespace-pre-line text-white/90">
-                {texts.hero_tagline.includes("届ける")
-                  ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
-                      <span key={i}>
-                        {chunk}
-                        {i === 0 && <br />}
-                      </span>
-                    ))
-                  : texts.hero_tagline}
-              </p>
-            </FadeIn>
-            <div className="pointer-events-none relative mt-4 flex flex-col items-center gap-2 text-white/80">
-              <span className="text-[10px] font-bold tracking-widest uppercase">Scroll</span>
-              <span className="h-6 w-px animate-pulse bg-white/70" />
-            </div>
+          <div className="hidden sm:block">
+            <HeroStickers />
           </div>
         </div>
 
