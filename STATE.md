@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 19 - Vertical Photo Focal Point Elevation)
+- 対象: メンバー顔写真の縦構図位置をやや上方（`object-[50%_20%]`）へ微調整
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: 画像の縦フォーカス位置を `object-[50%_20%]` に移動。3人の表情がスマホ画面上の最適領域へ完璧に納まるよう微調整。
+- 検証 (Checker): `npm run build` 成功 (3.3s)、視覚バランス監査 PASS、TypeScript PASS
+- 判定: PASS（配置上方調整完了）
+
 ### 2026-08-06 (Antigravity Loop 18 - Face Haze Removal & Absolute Clarity)
 - 対象: 3人の顔に被るモヤ・影・全画面グラデーションの完全除去
 - 変更点:
