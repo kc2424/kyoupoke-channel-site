@@ -453,20 +453,18 @@ export default async function Home() {
           </div>
         </section>
 
-      <SectionBlend from="#ffffff" to="#000000" />
-
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden bg-black py-14 sm:py-24 lg:py-32"
+          className="relative scroll-mt-24 overflow-hidden bg-white py-14 sm:py-24 lg:py-32"
         >
           {/* カード群(実カード背景は不透明)と重ならないよう、見出し行の高さに合わせて右上に配置する */}
           <OpArtRings className="top-0 right-0 h-[180px] w-[180px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px]" />
           <div className={cn(CONTAINER, "relative z-10")}>
-            <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="dark" />
+            <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="light" />
             <StatSpotlight
               stats={stats}
-              className="mt-8 border-y border-white/10 py-6 sm:py-8 lg:py-10"
+              className="mt-8 border-y border-neutral-200 py-6 sm:py-8 lg:py-10 text-neutral-900"
             />
             <SnapReveal className="mt-8 grid gap-3 sm:grid-cols-3 lg:gap-5">
               {achievements.map((a) => {
@@ -476,10 +474,8 @@ export default async function Home() {
                     key={a.label}
                     className={cn(
                       "flex aspect-[16/10] sm:aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-4 sm:p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
-                      // 白文字を載せるオレンジは brand-dark(#b8431f)。brand(#d9552e)だと
-                      // 白文字とのコントラストが3.97しか出ずAA基準(4.5)を満たさない。
                       a.tone === "brand" && "bg-brand-dark text-white",
-                      a.tone === "black" && "bg-white/10 text-white"
+                      a.tone === "black" && "bg-neutral-900 text-white"
                     )}
                   >
                     {image && (
@@ -512,8 +508,6 @@ export default async function Home() {
           </div>
         </section>
       </FadeIn>
-
-      <SectionBlend from="#000000" to="#ffffff" />
 
         <section id="videos" className="scroll-mt-24 py-14 sm:py-24 lg:py-32">
           <div className={CONTAINER}>
