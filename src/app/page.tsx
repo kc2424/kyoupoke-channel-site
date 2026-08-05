@@ -261,12 +261,13 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] pt-20 pb-6 sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
+      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
         {/*
-          モバイル: 写真を先に大きく見せ、タイトルは写真下端のフェード（暖色に
-          溶けた部分）に重ねて配置し、写真とテキストを一体の「ヒーロー画像」として
-          見せる。写真の縦横比は顔が見切れない範囲でギリギリまで高くしてある
-          （object-cover が横方向を削り出す前に縦方向で収まる比率＝目安 0.92 未満）。
+          モバイル: 写真をセクションいっぱいに敷き、タイトル・タグライン・
+          Scrollまで全部写真の上に重ねて表示する「1枚の画像」構成（PC版と
+          同じ考え方）。写真の縦横比は顔が見切れない範囲でギリギリまで
+          高くしてある（object-cover が横方向を削り出す境界＝目安1.79
+          より十分低い1.62に設定）。
           sm以上: 従来通りセクション全体に写真を敷き、テキストは腰〜胴体に重ねる。
         */}
         <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
@@ -276,21 +277,17 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative aspect-[7/9] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
-          {/* モバイル: 縦長カットをできるだけ縦長のまま見せ、写真本来の暖色
-              グラデーション（ページの配色とほぼ同じ）を上端にそのまま活かす。
-              セクション背景に溶かすための別レイヤーのフェードは不要になった。
-              下端はタイトルとの境目を暗いスクリムのみで確保。
-              sm以上: 従来の横長写真をそのまま全画面に敷く。 */}
+        <div className="relative aspect-[8/13] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
           <div className="absolute inset-0 overflow-hidden sm:hidden">
             <HeroPhoto
               src="/hero-mobile.png"
               alt="今日ポケ メンバー3人"
-              objectPosition="object-[50%_53%]"
+              objectPosition="object-[50%_60%]"
               zoom={1.06}
               parallax
             />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+            {/* タイトル〜Scrollまでを写真の上に重ねるため、下端を広めに暗く落とす */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
           </div>
           <div className="absolute inset-0 hidden overflow-hidden sm:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
@@ -298,18 +295,39 @@ export default async function Home() {
           {/* sm以上は写真が全画面のため、下端を白へ落として次セクションへ繋ぐ */}
           <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-white via-transparent to-transparent sm:block" />
           <HeroStickers />
+
+          {/* モバイル: タイトル・タグライン・Scrollを写真下部に直接重ねる */}
+          <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-6 sm:hidden">
+            <GiantTitle>KYOU POKE</GiantTitle>
+            <FadeIn delay={0.3} y={12}>
+              <p className="relative mt-4 max-w-md text-center text-sm text-balance whitespace-pre-line text-white/90">
+                {texts.hero_tagline.includes("届ける")
+                  ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
+                      <span key={i}>
+                        {chunk}
+                        {i === 0 && <br />}
+                      </span>
+                    ))
+                  : texts.hero_tagline}
+              </p>
+            </FadeIn>
+            <div className="pointer-events-none relative mt-4 flex flex-col items-center gap-2 text-white/80">
+              <span className="text-[10px] font-bold tracking-widest uppercase">Scroll</span>
+              <span className="h-6 w-px animate-pulse bg-white/70" />
+            </div>
+          </div>
         </div>
 
-        <div className="relative z-10 -mt-[96px] flex flex-col items-center px-6 sm:mt-auto sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
-          {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない）。写真に重なる sm 以上のみ有効 */}
-          <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 hidden h-[130%] -translate-y-1/2 bg-white/70 blur-3xl sm:block" />
+        {/* sm以上専用: タイトル・タグラインを写真の腰〜胴体あたりに重ねる */}
+        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
+          {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない） */}
+          <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 h-[130%] -translate-y-1/2 bg-white/70 blur-3xl" />
 
-          {/* モバイルでは最初に目に入る情報を名前だけに絞りたいので、この導線は sm 以上のみ */}
           <FadeIn y={12}>
             <a
               href="#videos"
               data-cursor-label="VIEW"
-              className="group relative mb-6 hidden items-center gap-2 rounded-full border border-neutral-300 bg-white/70 px-4 py-1.5 text-xs font-bold tracking-wide text-neutral-700 backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:text-brand sm:inline-flex lg:text-sm"
+              className="group relative mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white/70 px-4 py-1.5 text-xs font-bold tracking-wide text-neutral-700 backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:text-brand lg:text-sm"
             >
               <span className="text-brand">New</span>
               最新動画を公開中
@@ -320,7 +338,7 @@ export default async function Home() {
           <GiantTitle>KYOU POKE</GiantTitle>
 
           <FadeIn delay={0.3} y={12}>
-            <p className="relative mt-[56px] max-w-md text-center text-sm text-balance whitespace-pre-line text-neutral-600 sm:mt-6 sm:max-w-lg sm:text-base lg:max-w-xl lg:text-lg">
+            <p className="relative mt-6 max-w-lg text-center text-base text-balance whitespace-pre-line text-neutral-600 lg:max-w-xl lg:text-lg">
               {texts.hero_tagline.includes("届ける")
                 ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
                     <span key={i}>
@@ -333,7 +351,8 @@ export default async function Home() {
           </FadeIn>
         </div>
 
-        <div className="pointer-events-none relative mt-[8px] flex flex-col items-center gap-2 text-neutral-600 sm:absolute sm:bottom-8 sm:left-1/2 sm:mt-0 sm:-translate-x-1/2">
+        {/* sm以上専用のScrollインジケーター（画面下部中央に絶対配置） */}
+        <div className="pointer-events-none absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-neutral-600 sm:flex">
           <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
             Scroll
           </span>
