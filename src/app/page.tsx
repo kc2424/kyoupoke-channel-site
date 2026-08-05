@@ -1,4 +1,5 @@
 import { BlueprintCorners } from "@/components/blueprint-corners";
+import { BattleQuizWidget } from "@/components/battle-quiz-widget";
 import {
   InstagramIcon,
   ShopIcon,
@@ -535,6 +536,10 @@ export default async function Home() {
                 );
               })}
             </SnapReveal>
+
+            <div className="mt-12 border-t border-white/10 pt-10">
+              <BattleQuizWidget />
+            </div>
           </div>
         </section>
       </FadeIn>
