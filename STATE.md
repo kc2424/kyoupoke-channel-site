@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 31 - Pure White Transition Gradient Under Scroll)
+- 対象: SCROLL（スクロール案内）より下部の黒グラデーション残骸を完全排除し純白グラデーションへ変更
+- 変更点:
+  1. `src/app/page.tsx`: ヒーロー直後の境界帯を `h-20 bg-gradient-to-b from-white/0 via-white/80 to-white` に変更し、黒い影を100%撤去。
+- 検証 (Checker): `npm run build` 成功 (4.3s)、純白境界監査 PASS、TypeScript PASS
+- 判定: PASS（スクロール下純白グラデーション化完了）
+
 ### 2026-08-06 (Antigravity Loop 30 - White Bottom Gradient Overlay & Crisp Dark Typography)
 - 対象: ユーザー指定の「下部は白（ホワイト）のグラデーション」デザイン変更
 - 変更点:
