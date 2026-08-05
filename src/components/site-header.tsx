@@ -54,9 +54,6 @@ export function SiteHeader({
           </Badge>
           <div className="hidden xl:flex items-center gap-2">
             <LiveClockBadge />
-            <QuoteGeneratorModal />
-            <TrophyShowcaseModal />
-            <UISoundEffects />
           </div>
         </a>
         <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-800 md:flex lg:gap-8 lg:text-base">
