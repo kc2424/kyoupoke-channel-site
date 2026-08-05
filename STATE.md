@@ -62,6 +62,15 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 13 - 3-Member Photo Framing & Brand Orange Theme Unification)
+- 対象: 3人組写真の完璧なフレーミング配置＆ブランド・オレンジ基調へのカラー統一
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: 写真表示領域を独立化（`h-[62%] bg-[#df5330]`）し、`object-[50%_25%]` により3人（バンビー・いろは・くろこ）の顔が一切被らない＆切れない構図に修正。
+  2. 文字・ボタンUIを下部の不透明グラスドック（`bg-neutral-950/95`）へ分離配置。
+  3. テーマカラーを黒から今日ポケの**ブランド・オレンジ基調（`#d9552e` / `brand-dark`）**へ全面統一。
+- 検証 (Checker): `npm run build` 成功 (3.2s)、顔被り監査 PASS、TypeScript PASS
+- 判定: PASS（フレーミング・ブランドカラー修正完了）
+
 ### 2026-08-06 (Antigravity Loop 12 - Mobile Hero Carousel Stage Overhaul)
 - 対象: モバイル版ヒーロー画像＆ファーストビューの大幅インタラクティブアップデート
 - 変更点:
