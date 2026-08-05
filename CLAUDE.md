@@ -12,9 +12,13 @@
 
 ### 2. サーキットブレーカー（暴走防止）
 - 1回の実行につき変更は1件のみ。ビルド修正の試行は最大2回まで（3回失敗したら変更を取り消して終了、無限リトライしない）。
-- mainブランチには絶対に触れない。force pushは絶対にしない。
 - ローカルでheadless実行（`claude -p`等）を使う場合は必ず`--max-turns`と`--max-budget-usd`を指定する。
 - カスタムStop hookを追加する場合は、入力JSONの`stop_hook_active`フラグを必ず確認し、trueなら即`exit 0`する（無限ブロックループ防止）。クライアント側のデフォルト上限は8回連続ブロックだが、`CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`環境変数で調整可能。
+
+<negative_constraints>
+- mainブランチには絶対に触れない。作業は必ず`site-brushup`ブランチ上で行うこと。
+- force pushは絶対にしない。
+</negative_constraints>
 
 ### 3. State Discipline（状態はセッション外に）
 - ループの状態（引用済み受賞作品の重複防止リスト、既知の問題、直近の実行ログ）は会話コンテキストではなく**リポジトリ直下の`STATE.md`**に記録する。クラウドルーティンの実行環境はObsidian Vaultにアクセスできないため、ループ運用に必要な状態はVaultではなく`STATE.md`で完結させること。
@@ -24,8 +28,11 @@
 ## プロジェクト固有の安全ルール（既存）
 
 - ブランドカラーはオレンジ(`--brand: #d9552e`)+黒+白の3色ルール
+
+<negative_constraints>
 - `public/icon.png`・`public/hero-mascots.png`など実物のブランド素材を差し替えない
 - Lenis + GSAP ScrollTriggerの連携（`src/components/smooth-scroll.tsx`）を壊さない
 - メンバー紹介文・実績・リンクURLなど事実情報は変更しない
 - 「非公式ファンサイトです」の注記は削除しない、公式を名乗る文言を追加しない
 - 受賞作品のコード・画像・文章を直接コピーしない（考え方だけを抽出して独自実装する）
+</negative_constraints>

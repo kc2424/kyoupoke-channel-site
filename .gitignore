@@ -45,6 +45,9 @@ next-env.d.ts
 *memo*.txt
 *.local.md
 
+# Obsidian Vaultへのジャンクション（実体はVault側。gitでは追跡しない）
+/kyoupoke_site
+
 # 未使用の元画像(実写)
 /image.png
 
