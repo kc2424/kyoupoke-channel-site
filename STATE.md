@@ -62,6 +62,15 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 9 - Major Structural Overhaul)
+- 対象: サイト全体の構造的変革＆UI/UX大規模リファクタリング
+- 変更点:
+  1. `src/components/hero-stage.tsx`: ヒーローセクションに3人組メンバー切り替えインタラクティブドック（バンビー/いろは/くろこ）を追加。
+  2. `src/components/video-filter-section.tsx`: おすすめ動画セクションにカテゴリ別タブフィルター（すべて/ガチ対戦・大会/企画・旅）を追加。
+  3. `src/components/intro-loader.tsx`: ローディングブロック感を解消し、セッション初回のみ高速かつ自然に明けるよう最適化。
+- 検証 (Checker): `npm run build` 成功 (3.2s)、レスポンシブ崩れなし、TypeScript PASS
+- 判定: PASS（大規模構造変化完了）
+
 ### 2026-08-06 (Antigravity Loop 8 - 5-Iteration Batch Run)
 - 対象: Awwwards SOTD受賞作（Active Theory, Lusion, Gucci Ancora, Studio Freight, Pitch）のUI演出5件を一括導入
 - 変更点:

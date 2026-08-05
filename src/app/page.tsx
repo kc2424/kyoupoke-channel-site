@@ -10,6 +10,7 @@ import {
 import { FadeIn } from "@/components/fade-in";
 import { GiantTitle } from "@/components/giant-title";
 import { HeroPhoto } from "@/components/hero-photo";
+import { HeroStage } from "@/components/hero-stage";
 import { HeroStickers } from "@/components/hero-stickers";
 import { LogoMark } from "@/components/logo-mark";
 import { MemberCard } from "@/components/member-card";
@@ -24,6 +25,7 @@ import { SnapReveal } from "@/components/snap-reveal";
 import { SparkTap } from "@/components/spark-tap";
 import { StatSpotlight } from "@/components/stat-spotlight";
 import { TiltCard } from "@/components/tilt-card";
+import { VideoFilterSection } from "@/components/video-filter-section";
 import { VideoModal } from "@/components/video-modal";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -318,8 +320,8 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* sm以上専用: タイトル・タグラインを写真の腰〜胴体あたりに重ねる */}
-        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
+          {/* sm以上専用: タイトル・タグライン・HeroStageを写真の腰〜胴体あたりに重ねる */}
+        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[6vh] lg:pb-[8vh]">
           {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない） */}
           <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 h-[130%] -translate-y-1/2 bg-white/70 blur-3xl" />
 
@@ -327,7 +329,7 @@ export default async function Home() {
             <a
               href="#videos"
               data-cursor-label="VIEW"
-              className="group relative mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white/70 px-4 py-1.5 text-xs font-bold tracking-wide text-neutral-700 backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:text-brand lg:text-sm"
+              className="group relative mb-4 inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white/70 px-4 py-1.5 text-xs font-bold tracking-wide text-neutral-700 backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:text-brand lg:text-sm"
             >
               <span className="text-brand">New</span>
               最新動画を公開中
@@ -337,17 +339,8 @@ export default async function Home() {
 
           <GiantTitle>KYOU POKE</GiantTitle>
 
-          <FadeIn delay={0.3} y={12}>
-            <p className="relative mt-6 max-w-lg text-center text-base text-balance whitespace-pre-line text-neutral-600 lg:max-w-xl lg:text-lg">
-              {texts.hero_tagline.includes("届ける")
-                ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
-                    <span key={i}>
-                      {chunk}
-                      {i === 0 && <br />}
-                    </span>
-                  ))
-                : texts.hero_tagline}
-            </p>
+          <FadeIn delay={0.2} y={12}>
+            <HeroStage />
           </FadeIn>
         </div>
 
@@ -599,13 +592,7 @@ export default async function Home() {
         <section id="videos" className="scroll-mt-24 py-14 sm:py-24 lg:py-32">
           <div className={CONTAINER}>
           <SectionHeading index={4} label="Videos" heading="おすすめ動画" />
-          <div className="mt-8 grid gap-4 sm:grid-cols-3 lg:gap-8">
-            {videos.map((v, i) => (
-              <FadeIn key={v.id} delay={i * 0.1}>
-                <VideoCard video={v} index={i} labelPrefix="おすすめ動画" />
-              </FadeIn>
-            ))}
-          </div>
+          <VideoFilterSection videos={videos} />
 
           {latestVideos && latestVideos.length > 0 && (
             <>
