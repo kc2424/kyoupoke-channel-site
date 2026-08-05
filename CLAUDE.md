@@ -8,6 +8,7 @@
 
 ### 1. Maker / Checker分離
 - **Maker**（実装役）: `site-brushup`ブランチ上で1回1変更を実装し、`npm run build`が通ることを確認してpushする。自分の実装を自分で「良し」と最終判断させない。
+  - **ボールド変革方針（ユーザー承認済み）**: 微細なCSS調整にとどまらず、構造的なレイアウト変革、不適切な要素・ノイズの削除、3D/インタラクティブコンポーネントの導入など、ユーザー体験を飛躍させる大胆な刷新を推奨。
 - **Checker**（検証役）: `.claude/agents/checker.md`のsubagent定義を使う。`Edit`/`Write`を持たず、`Bash`(git diff/build/lint)と`Read`/`Grep`だけで検証する、別セッション・別権限の役割。mainへのマージ前に必ずこのCheckerでdiffを検証してからマージすること。
 
 ### 2. サーキットブレーカー（暴走防止）
