@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 22 - User-Confirmed Mobile Hero Position Finalization)
+- 対象: ユーザー実機確認済みのモバイル全画面ヒーロー位置の決定・保存
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: ユーザーが調整・試走された最適な配置をGitコミット保存。
+- 検証 (Checker): `npm run build` 成功 (3.3s)、視覚配置確認 PASS、TypeScript PASS
+- 判定: PASS（ユーザー確認済み配置コミット完了）
+
 ### 2026-08-06 (Antigravity Loop 21 - Negative objectPosition Inline Style Support)
 - 対象: マイナス％値（`-25%` / `-20%` 等）指定による写真位置大幅上方移動の完全反映
 - 変更点:
