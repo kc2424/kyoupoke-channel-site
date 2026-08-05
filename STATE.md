@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 20 - Photo Position Fine-Tuning)
+- 対象: ユーザーフィードバックに基づく「顔半個分上方（`object-[50%_10%]`）」への精密位置移動
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: 縦フォーカスを `object-[50%_10%]` にセットし、表情がちょうどスマホ画面上部のベストポジションに納まるよう微調整。
+- 検証 (Checker): `npm run build` 成功 (3.1s)、視覚配置PASS、TypeScript PASS
+- 判定: PASS（顔半個分上方調整完了）
+
 ### 2026-08-06 (Antigravity Loop 19 - Vertical Photo Focal Point Elevation)
 - 対象: メンバー顔写真の縦構図位置をやや上方（`object-[50%_20%]`）へ微調整
 - 変更点:
