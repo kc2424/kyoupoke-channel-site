@@ -4,6 +4,7 @@ import { BlueprintCorners } from "@/components/blueprint-corners";
 import { ChapterMark } from "@/components/chapter-mark";
 import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
+import { FrameScrub } from "@/components/frame-scrub";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GalleryCaption } from "@/components/gallery-caption";
 import { GenerativeTrace } from "@/components/generative-trace";
@@ -30,7 +31,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WipeLink } from "@/components/wipe-link";
-import Image from "next/image";
 
 const navItems = [
   { label: "プロフィール", href: "#profile" },
@@ -345,12 +345,7 @@ export default function Home() {
                   <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="見る">
                     <VideoModal videoId={v.videoId} title={`おすすめ動画${v.id}`}>
                       <MonoReveal className="relative aspect-video">
-                        <Image
-                          src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`}
-                          alt={`おすすめ動画${v.id}のサムネイル`}
-                          fill
-                          className="object-cover"
-                        />
+                        <FrameScrub videoId={v.videoId} alt={`おすすめ動画${v.id}のサムネイル`} />
                         <span className="absolute inset-0 flex items-center justify-center">
                           <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-brand shadow-lg transition-transform duration-300 group-hover/mono:scale-110 lg:h-20 lg:w-20">
                             <svg

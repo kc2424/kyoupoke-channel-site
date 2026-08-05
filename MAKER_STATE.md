@@ -43,7 +43,8 @@
 30. Noomo Showcase（Noomo Agency制作、Awwwards Site of the Day 2026-08-01、総合スコア7.34）
 31. Lacoste Ace Breaker（Merci-Michel制作、Awwwards Site of the Day 2026-08-03、Developer Award、総合スコア7.46）
 32. 2xA Studio（2xA制作、Awwwards Site of the Day 2026-07-31、Developer Award、総合スコア7.22）
-33. **The Triadic Ballet AI**（isaWabi / Isabelle Cuisset制作、CSS Design Awards Website of the Day 2026-08-04）← 今回追加
+33. The Triadic Ballet AI（isaWabi / Isabelle Cuisset制作、CSS Design Awards Website of the Day 2026-08-04）
+34. **Motiondeep**（John Jattoh制作、CSS Design Awards Website of the Day 2026-08-05受賞）← 今回追加
 
 次回以降は必ずこのリストに無い作品を選ぶこと。
 
@@ -84,4 +85,9 @@
   - `src/components/achievement-icon.tsx`: 新規作成。実績カード用の丸バッジアイコンコンポーネント。award（トロフィー）/tv/controller/globe/live/cardsの6種類の線画SVGアイコンを用意し、カードの背景トーン（オレンジ/黒）に応じてバッジの配色を反転（オレンジ背景カードには白バッジ+オレンジ文字のアイコン、黒背景カードにはオレンジバッジ+白アイコン）することで、既存のブランド3色のみで高コントラストな色分けを実現。GSAP不使用の純SVG+CSSで既存コンポーネント群と同じ軽量方針を踏襲。
   - `src/app/page.tsx`: 「実績・出演」セクションの`achievements`データ配列に`icon`フィールド（表示用メタデータのみ）を追加し、各`SparkTap`カードの本文テキストの前に`AchievementIcon`を配置。ラベル・サブテキスト・トーン等の既存事実情報は一切変更していない。
   - ビルド結果: `npm install` → `npm run build`（Turbopack）はこの実行環境でGoogle Fonts取得に失敗し既知の問題として再現（`next build --webpack`では正常に成功しTypeScriptチェック・静的ページ生成まで確認済み。これは本変更が原因ではなく既知の環境要因）。`npm run lint` は既知の問題（本変更と無関係な3ファイル・計4件の`react-hooks/set-state-in-effect`）のみで、新規/変更ファイル（achievement-icon.tsx, page.tsx）にlintエラーなし。dev serverを起動しHTML応答（200、実績・出演の文言を含む）を確認。Playwrightがこの環境に未インストールのため実ブラウザでの目視スクリーンショット確認は省略。
+  - コミットハッシュ: （このコミット自体。`git log -1`参照）
+- **2026-08-05（34回目）**: CSS Design Awards「Motiondeep」（John Jattoh制作。モーションデザイン/2D・3D/インタラクティブゲーム開発/VFX/UI・UXモーションシステムを横断する本人のポートフォリオサイト。2026-08-05 Website of the Day受賞）を参考に分析。**注記: 今回はWebFetchで cssdesignawards.com・awwwards.com・motiondeep.com・thefwa.com・winners.webbyawards.com のいずれも403で直接確認できず、WebSearchのスニペット（本人の肩書き「Motion Designer | 2D / 3D Specialist | Animator」、姉妹サイトjohnjattoh.com（Awwwards Honorable Mention、タグ「Clean, Minimal, Single page, 3D elements with Microinteractions」）、CSSDAのUI/UX/Innovation評価基準の解説記事）から評価点を分析した**。5つの評価ポイント: ①モーション/2D・3D/ゲーム開発/VFX/UI-UXモーションシステムという畑違いに見える専門分野を1つの人格・1サイトへ統合する構成力、②CSSDA WOTDが要求するUI・UX・Innovation全軸平均8.00超という「見た目だけでなく機能性も同時に高い」バランス、③姉妹サイト(johnjattoh.com)がAwwwards Honorable Mentionで示す通り、モーション専門家でありながら「Clean, Minimal, Single page」という抑制も両立させている点、④「動きを見せる仕事をする人自身のサイトが、その動き自体で実力を証明する」という職能ブランディングの構造（説明文やショーリール動画に頼らずインターフェース自体が実演になる）、⑤ショーリール文化由来の「1枚の静止画ではなく複数の瞬間を予感させて“これは動く”と伝える」提示作法。今日ポケのブランド3色・軽量CSS/GSAP方針に対し、①②のような専門分野統合や本格的なUI/UX刷新は本サイトの本質（ファンサイト）とは無関係なため見送り。今回は⑤の本質——「クリックする前から、これは静止画ではなく動画だと予感させる」提示作法——を、YouTubeが動画ごとに自動生成する3枚のフレーム画像（`1.jpg`/`2.jpg`/`3.jpg`、動画内のおよそ25%/50%/75%地点、既存の`hqdefault.jpg`と同じ`img.youtube.com`ホストで追加素材不要）を使い、サムネイル上でのポインター横位置に応じてクロスフェードする独自実装として抽出した。
+  - `src/components/frame-scrub.tsx`: 新規作成。`videoId`のみを受け取り、`hqdefault.jpg`（アイドル状態）と`1.jpg`/`2.jpg`/`3.jpg`の4枚を絶対配置で重ね、`pointermove`のX位置に応じて該当フレームの`opacity`を1にしcrossfadeさせる薄いラッパーコンポーネント。GSAP不使用の純CSS transition（既存の`MonoReveal`/`GalleryCaption`と同じ設計方針を踏襲）。追加のスクロールバー等のUIチープは付けず、既存の再生ボタンオーバーレイと`MonoReveal`のグレースケール演出はそのまま。
+  - `src/app/page.tsx`: 「おすすめ動画」セクションの各サムネイル（`<Image src=".../hqdefault.jpg" .../>` 単体）を `<FrameScrub videoId={v.videoId} .../>` に置き換えただけ。動画ID・タイトル・TODO文言等の既存事実情報は変更なし。置き換えにより`next/image`の直接importが不要になったため未使用importとして削除（`ParallaxImage`など他コンポーネント経由の利用には影響なし）。
+  - ビルド結果: `npm install` → `npm run build`（Turbopack）で成功（Google Fontsの取得も問題なし、修正リトライなしの1回で成功）。型チェック・静的ページ生成まで確認済み。`npm run lint`は既知の問題（本変更と無関係な3ファイル・計4件の`react-hooks/set-state-in-effect`）のみで、新規/変更ファイル（frame-scrub.tsx, page.tsx）にlintエラーなし。`npm run dev`を起動しHTMLを取得（200応答、`hqdefault.jpg`/`1.jpg`/`2.jpg`/`3.jpg`の4枚とも3動画分（計12枚）がSSRで期待通り出力されていることを確認）。Playwrightでの目視スクリーンショット確認は今回省略（変更は既存パターン踏襲のCSS opacity遷移のみでリスクは低いと判断）。
   - コミットハッシュ: （このコミット自体。`git log -1`参照）
