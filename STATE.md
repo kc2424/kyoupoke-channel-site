@@ -62,6 +62,14 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 16 - Full-Viewport 100dvh Edge-to-Edge Mobile Hero)
+- 対象: 専用比率の `hero-mobile.png` をスマホ画面全体（`100dvh`）へ迫力満点に全画面表示
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx` / `src/app/page.tsx`: 外枠カード・パディングを排除し、スマホ画面縦幅 `100dvh` いっぱいに全画面表示。
+  2. `unoptimized` プロパティと `object-center` を適用し、アップ調整された `hero-mobile.png` の高画質構図がダイレクトに100%全画面で表示されるよう改修。
+- 検証 (Checker): `npm run build` 成功 (3.1s)、全画面レスポンシブ PASS、TypeScript PASS
+- 判定: PASS（モバイル全画面ヒーロー表示完了）
+
 ### 2026-08-06 (Antigravity Loop 15 - Massive Visual Cleanup & Tab Consolidation)
 - 対象: 乱立したUI・フローティング要素の整理整頓＆タブ統合による洗練
 - 変更点:
