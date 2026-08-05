@@ -71,8 +71,8 @@
 - 判定: PASS
 -->
 
-### 2026-08-06 (Antigravity Loop 1 - Maker & Checker)
-- 対象: ヒーローセクション (HeroPhoto) LCP パフォーマンス最適化
-- 変更: `src/components/hero-photo.tsx` の Next.js Image に `sizes="100vw"` および `quality={90}` を指定
-- 検証 (Checker): `npm run build` 成功 (TypeScript / 静的ページ生成 4/4 クリア)、`git diff` 監査 PASS
+### 2026-08-06 (Antigravity Loop 2 - Maker & Checker)
+- 対象: 動画モーダル (VideoModal) アクセシビリティ ＆ キーボード操作性強化
+- 変更: `src/components/video-modal.tsx` の Close ボタンに `aria-label` および `focus-visible:ring-2` を追加
+- 検証 (Checker): `npm run build` 成功 (TypeScript / 静的ページ 4/4 クリア)、`git diff` 監査 PASS
 - 判定: PASS（`antigravity/seo-ogp` ブランチへコミット＆Push）

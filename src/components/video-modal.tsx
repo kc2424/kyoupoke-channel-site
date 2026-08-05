@@ -77,7 +77,8 @@ export function VideoModal({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="absolute -top-12 right-0 rounded-full border-2 border-white px-5 py-2 text-sm font-bold text-white lg:px-6 lg:py-2.5 lg:text-base"
+                aria-label="動画モーダルを閉じる"
+                className="absolute -top-12 right-0 rounded-full border-2 border-white px-5 py-2 text-sm font-bold text-white transition-all duration-300 hover:bg-white hover:text-black lg:px-6 lg:py-2.5 lg:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 Close
               </button>
