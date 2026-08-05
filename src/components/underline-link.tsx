@@ -9,10 +9,14 @@ export function UnderlineLink({
   href,
   children,
   className,
+  cursorLabel,
+  cursorIndex,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
+  cursorLabel?: string;
+  cursorIndex?: string;
 }) {
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (href.startsWith("#")) {
@@ -27,6 +31,8 @@ export function UnderlineLink({
       onClick={handleClick}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+      data-cursor-label={cursorLabel}
+      data-cursor-index={cursorIndex}
       className={cn("group relative inline-block pb-1", className)}
     >
       <span className="inline-block font-bold transition-[font-weight] duration-300 ease-out group-hover:font-black">

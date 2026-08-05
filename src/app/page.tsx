@@ -105,8 +105,13 @@ export default function Home() {
           <Badge className="bg-brand text-white lg:px-4 lg:py-1.5 lg:text-sm">FAN SITE</Badge>
         </div>
         <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-700 md:flex lg:gap-8 lg:text-base">
-          {navItems.map((item) => (
-            <UnderlineLink key={item.href} href={item.href}>
+          {navItems.map((item, i) => (
+            <UnderlineLink
+              key={item.href}
+              href={item.href}
+              cursorLabel={item.label}
+              cursorIndex={`${String(i + 1).padStart(2, "0")} / ${String(navItems.length).padStart(2, "0")}`}
+            >
               {item.label}
             </UnderlineLink>
           ))}

@@ -7,10 +7,11 @@ import { useRef, useState } from "react";
 export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
-  const labelRef = useRef<HTMLSpanElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [label, setLabel] = useState<string | null>(null);
+  const [previewIndex, setPreviewIndex] = useState<string | null>(null);
 
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) {
@@ -43,6 +44,7 @@ export function CustomCursor() {
 
       const labelTarget = (e.target as HTMLElement)?.closest?.("[data-cursor-label]") as HTMLElement | null;
       setLabel(labelTarget?.dataset.cursorLabel ?? null);
+      setPreviewIndex(labelTarget?.dataset.cursorIndex ?? null);
     };
 
     const handleLeave = () => setActive(false);
@@ -77,14 +79,22 @@ export function CustomCursor() {
           backgroundColor: hovering ? "rgba(255, 255, 255, 0.15)" : "transparent",
         }}
       />
-      <span
+      <div
         ref={labelRef}
         aria-hidden
-        className="font-display pointer-events-none fixed top-0 left-0 z-[999] ml-8 -translate-x-1/2 -translate-y-1/2 text-lg font-bold tracking-wide text-white uppercase mix-blend-difference transition-opacity duration-200"
+        className="pointer-events-none fixed top-0 left-0 z-[999] ml-8 flex -translate-x-1/2 -translate-y-1/2 flex-col items-start gap-1 transition-opacity duration-200"
         style={{ opacity: active && label ? 1 : 0 }}
       >
-        {label}
-      </span>
+        {previewIndex && (
+          <span className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-white uppercase mix-blend-difference">
+            <span className="h-px w-4 bg-current" />
+            {previewIndex}
+          </span>
+        )}
+        <span className="font-display text-lg font-bold tracking-wide text-white uppercase mix-blend-difference">
+          {label}
+        </span>
+      </div>
     </>
   );
 }

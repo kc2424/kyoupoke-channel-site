@@ -39,7 +39,8 @@
 26. Bucks Sauce（Awwwards SOTD）
 27. Crazy About Eggs（Awwwards SOTD）
 28. Artem Shcherbakov Portfolio（Awwwards SOTD）
-29. **Hearst Exhibit 2026**（OSMOS PRO制作、Awwwards Site of the Day 2026-08-02、Developer Award）← 今回追加
+29. Hearst Exhibit 2026（OSMOS PRO制作、Awwwards Site of the Day 2026-08-02、Developer Award）
+30. **Noomo Showcase**（Noomo Agency制作、Awwwards Site of the Day 2026-08-01、総合スコア7.34）← 今回追加
 
 次回以降は必ずこのリストに無い作品を選ぶこと。
 
@@ -59,4 +60,10 @@
   - `src/app/page.tsx`: 「Meet the Members」の実写マスコットバナー（`hero-mascots.png`）にのみ適用。既存の`BlueprintCorners`の常時表示ラベルは変更せず残し、`GalleryCaption`をホバー時だけ追加で現れる第二層の情報として重ねた。他のセクション（実績カード・動画サムネイル等）には適用せず、節度を保った。
   - ビルド結果: `npm install` → `npm run build`（Turbopack）で成功。型チェック・静的ページ生成まで確認済み。`npm run lint` は上記の既知の問題（本変更と無関係な3ファイル・計4件）のみでビルドはブロックされない。
   - `STATE.md`衝突の経緯: 当初`STATE.md`を新規作成してpushしようとしたところ、Checkerロールが同時刻に別内容の`STATE.md`をpushしており衝突。rebaseの上、Checker側の`STATE.md`をそのまま残し、Maker用の記録は本ファイル（`MAKER_STATE.md`）に分離した。
+  - コミットハッシュ: （このコミット自体。`git log -1`参照）
+- **2026-08-05（30回目）**: Awwwards Site of the Day「Noomo Showcase」（Noomo Agency制作。Salesforce・AMD・Coinbaseなど大手ブランド案件を紹介するエージェンシーの実績ショーケースサイト。2026-08-01 SOTD受賞、総合スコア7.34／design 7.29・usability 7.06・creativity 7.79・content 7.51）を参考に分析。**注記: 今回もWebFetch（awwwards.com）は403で直接確認できず、WebSearchのスニペット（Awwwardsの個別インスピレーションページ「Noomo Showcase - Project Hover」「3D hover effect」等の紹介文・スコア情報）から評価点を分析した**。5つの評価ポイント: ①3Dホバープレビュー＝プロジェクト項目にカーソルを合わせると、その場でクリックせずとも中身の質感が伝わる3D/WebGLプレビューが浮かぶ「触れる前に見せる」設計、②WebGL/Three.js/GSAPを使った没入型のモーション演出、③エディトリアルな余白とレイアウトでポートフォリオを見せる構成、④カーソル追従のマイクロインタラクション、⑤4項目（design/usability/creativity/content）で偏りなく高スコアという総合力の高さ。今日ポケのオレンジ/黒/白3色ルールと軽量なCSS/GSAP構成に対し本格的なWebGL/3D（①②相当そのもの）は不釣り合いなため見送り。今回は④の本質——「カーソルに寄り添って“これから見に行く場所”の手がかりを差し出す」というプレビュー体験——を、画像やWebGLを使わずタイポグラフィのみで抽出し独自実装した。
+  - `src/components/custom-cursor.tsx`: 既存のカスタムカーソル（リング/ドット/ラベル追従）を拡張。新たに`previewIndex`ステートを追加し、ホバー対象の`data-cursor-index`属性を読み取って、カーソル追従ラベルの上に「区切り線＋セクション番号（例: 03 / 05）」の小さなインデックスチップを重ねて表示するようにした。既存の`labelX/labelY`の位置トラッキング（GSAP `quickTo`）や`mix-blend-difference`の仕組みはそのまま踏襲し、新しい追従ロジックは追加していない。
+  - `src/components/underline-link.tsx`: `cursorLabel`・`cursorIndex`の任意propsを追加し、`data-cursor-label`・`data-cursor-index`として`<a>`要素へ橋渡しするだけの薄い変更。デフォルトでは何も指定しなければ従来通り無属性のまま。
+  - `src/app/page.tsx`: ヘッダーのグローバルナビ（プロフィール/メンバー/実績/動画/リンク）の`UnderlineLink`にのみ`cursorLabel`（ナビ項目名）と`cursorIndex`（"01 / 05"形式の連番）を付与。他のリンク（YouTubeへ/SNS等）には適用せず、「これから移動するセクションの手がかりを事前に見せる」というナビゲーション文脈に限定して節度を保った。
+  - ビルド結果: `npm install` → `npm run build`（Turbopack）で成功。型チェック・静的ページ生成まで確認済み。`npm run lint` は既知の問題（本変更と無関係な3ファイル・計4件の`react-hooks/set-state-in-effect`）のみでビルドはブロックされない。Playwrightがこの環境に未インストールのため実ブラウザでの目視スクリーンショット確認は今回省略した（コード変更は既存の`data-cursor-label`機構を素直に拡張したのみで、リスクは低いと判断）。
   - コミットハッシュ: （このコミット自体。`git log -1`参照）
