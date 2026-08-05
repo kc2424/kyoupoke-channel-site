@@ -69,6 +69,8 @@ export function HeroPhoto({
             alt={alt}
             fill
             priority
+            sizes="100vw"
+            quality={90}
             className={`object-cover ${objectPosition}`}
             style={{ transform: "translateY(-20px)" }}
           />
