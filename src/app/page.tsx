@@ -261,7 +261,7 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
+      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] min-h-[92dvh] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
         {/*
           モバイル: 写真をセクションいっぱいに敷き、タイトル・タグライン・
           Scrollまで全部写真の上に重ねて表示する「1枚の画像」構成（PC版と
@@ -367,7 +367,7 @@ export default async function Home() {
       <div aria-hidden className="h-20 w-full bg-gradient-to-b from-black/70 to-white sm:hidden" />
 
       <FadeIn>
-        <section className="bg-white pt-16 pb-10 lg:pt-20">
+        <section className="bg-white pt-10 pb-6 lg:pt-20">
           <div className={CONTAINER}>
             <div className="border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
               Featured
@@ -377,22 +377,22 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section className="border-y border-neutral-200 bg-white py-24 lg:py-32">
+        <section className="border-y border-neutral-200 bg-white py-14 sm:py-24 lg:py-32">
           <div className={cn(CONTAINER, "flex flex-col items-start gap-1 lg:gap-2")}>
             <RevealText
               as="p"
               text={texts.catchcopy_line1}
-              className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:text-8xl"
+              className="font-display text-3xl leading-[1.1] text-neutral-900 sm:text-6xl lg:text-8xl"
             />
             <RevealText
               as="p"
               text={texts.catchcopy_line2}
-              className="font-display text-4xl leading-[1.05] text-brand sm:text-6xl lg:self-center lg:text-8xl"
+              className="font-display text-3xl leading-[1.1] text-brand sm:text-6xl lg:self-center lg:text-8xl"
             />
             <RevealText
               as="p"
               text={texts.catchcopy_line3}
-              className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:self-end lg:text-8xl"
+              className="font-display text-3xl leading-[1.1] text-neutral-900 sm:text-6xl lg:self-end lg:text-8xl"
             />
           </div>
         </section>
@@ -539,24 +539,24 @@ export default async function Home() {
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden bg-black py-24 lg:py-32"
+          className="relative scroll-mt-24 overflow-hidden bg-black py-14 sm:py-24 lg:py-32"
         >
           {/* カード群(実カード背景は不透明)と重ならないよう、見出し行の高さに合わせて右上に配置する */}
-          <OpArtRings className="top-0 right-0 h-[220px] w-[220px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px]" />
+          <OpArtRings className="top-0 right-0 h-[180px] w-[180px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px]" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="dark" />
             <StatSpotlight
               stats={stats}
-              className="mt-10 border-y border-white/10 py-8 lg:py-10"
+              className="mt-8 border-y border-white/10 py-6 sm:py-8 lg:py-10"
             />
-            <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
+            <SnapReveal className="mt-8 grid gap-3 sm:grid-cols-3 lg:gap-5">
               {achievements.map((a) => {
                 const image = achievementImages[a.label];
                 return (
                   <SparkTap
                     key={a.label}
                     className={cn(
-                      "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
+                      "flex aspect-[16/10] sm:aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-4 sm:p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
                       // 白文字を載せるオレンジは brand-dark(#b8431f)。brand(#d9552e)だと
                       // 白文字とのコントラストが3.97しか出ずAA基準(4.5)を満たさない。
                       a.tone === "brand" && "bg-brand-dark text-white",
@@ -580,10 +580,10 @@ export default async function Home() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                       </>
                     )}
-                    <p className="font-display relative text-lg leading-tight sm:text-xl lg:text-2xl">
+                    <p className="font-display relative text-base sm:text-xl lg:text-2xl leading-tight">
                       {a.label}
                     </p>
-                    <p className="relative mt-1 text-sm font-bold opacity-90 lg:text-base">
+                    <p className="relative mt-1 text-xs font-bold opacity-90 sm:text-sm lg:text-base">
                       {a.sub}
                     </p>
                   </SparkTap>
@@ -596,10 +596,10 @@ export default async function Home() {
 
       <SectionBlend from="#000000" to="#ffffff" />
 
-        <section id="videos" className="scroll-mt-24 py-24 lg:py-32">
+        <section id="videos" className="scroll-mt-24 py-14 sm:py-24 lg:py-32">
           <div className={CONTAINER}>
           <SectionHeading index={4} label="Videos" heading="おすすめ動画" />
-          <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
+          <div className="mt-8 grid gap-4 sm:grid-cols-3 lg:gap-8">
             {videos.map((v, i) => (
               <FadeIn key={v.id} delay={i * 0.1}>
                 <VideoCard video={v} index={i} labelPrefix="おすすめ動画" />
@@ -609,11 +609,11 @@ export default async function Home() {
 
           {latestVideos && latestVideos.length > 0 && (
             <>
-              <p className="mt-16 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
+              <p className="mt-12 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
                 Latest
               </p>
-              <h3 className="font-display mt-2 text-2xl text-neutral-900 lg:text-3xl">最新動画</h3>
-              <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
+              <h3 className="font-display mt-2 text-xl sm:text-2xl text-neutral-900 lg:text-3xl">最新動画</h3>
+              <div className="mt-6 grid gap-4 sm:grid-cols-3 lg:gap-8">
                 {latestVideos.map((v, i) => (
                   <FadeIn key={v.videoId} delay={i * 0.1}>
                     <VideoCard video={v} index={i} labelPrefix="最新動画" />
@@ -626,7 +626,7 @@ export default async function Home() {
           <WipeLink
             href="https://www.youtube.com/@KYOUPOKE"
             cursorLabel="OPEN"
-            className="mt-10 lg:px-8 lg:py-4 lg:text-base"
+            className="mt-8 lg:px-8 lg:py-4 lg:text-base"
           >
             チャンネルの動画をもっと見る
           </WipeLink>
@@ -638,7 +638,7 @@ export default async function Home() {
       <FadeIn>
         {/* 白文字を載せるためオレンジは brand-dark(#b8431f)。brand(#d9552e)では
             白文字とのコントラストが3.97でAA基準(4.5)に届かない。 */}
-        <section id="links" className="scroll-mt-24 bg-brand-dark py-24 lg:py-32">
+        <section id="links" className="scroll-mt-24 bg-brand-dark py-14 sm:py-24 lg:py-32">
           <div className={CONTAINER}>
             <SectionHeading index={5} label="Links" heading="リンク" tone="brand" />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
