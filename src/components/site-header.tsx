@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { LiveClockBadge } from "@/components/live-clock-badge";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { LogoMark } from "@/components/logo-mark";
 import { UnderlineLink } from "@/components/underline-link";
@@ -47,6 +48,9 @@ export function SiteHeader({
           <Badge className="bg-brand-dark hidden shrink-0 text-white sm:inline-flex lg:px-4 lg:py-1.5 lg:text-sm">
             FAN SITE
           </Badge>
+          <div className="hidden lg:block">
+            <LiveClockBadge />
+          </div>
         </a>
         <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-800 md:flex lg:gap-8 lg:text-base">
           {navItems.map((item) => (

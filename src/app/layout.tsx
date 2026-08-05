@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { Mochiy_Pop_One, Modak, Noto_Sans_JP, Zen_Kaku_Gothic_New, Geist } from "next/font/google";
 import "./globals.css";
+import { AmbientLightLeak } from "@/components/ambient-light-leak";
+import { BackToTopButton } from "@/components/back-to-top-button";
 import { CustomCursor } from "@/components/custom-cursor";
 import { GrainOverlay } from "@/components/grain-overlay";
 import { IntroLoader } from "@/components/intro-loader";
+import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 import { NavTransition } from "@/components/nav-transition";
+import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
 
@@ -99,9 +103,13 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
+        <ScrollProgressBar />
+        <BackToTopButton />
+        <KeyboardShortcuts />
         <IntroLoader />
         <CustomCursor />
         <GrainOverlay />
+        <AmbientLightLeak />
         <NavTransition />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

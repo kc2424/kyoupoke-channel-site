@@ -47,6 +47,11 @@
 25. Naiara Odriozola (CSS Design Awards) — 実績数字のスクロリーテリング演出
 26. Motto (FWA SOTD) — 全ページの薄いグレインテクスチャ
 27. Montfort (Awwwards/FWA/CSSDA同時SOTD) — ナビ移動時のオレンジのカーテン演出
+28. Active Theory - Vision (Awwwards SOTD) — アンビエントライトリーク（マウス追従グラデーションブラー）
+29. Lusion Studio (Awwwards SOTD) — TOKYO JST リアルタイムクロック＆パルスバッジ
+30. Gucci Ancora (Awwwards SOTD) — ページ最上部スクロールプログレスバー
+31. Studio Freight (Awwwards SOTD) — マグネティックTopへ戻るボタン
+32. Pitch - Visual Engine (Awwwards SOTD) — アクセシビリティ・キーボードショートカットモーダル (⌘K / ?)
 
 ※このリストは2026-08-06時点の`git log`から抽出した初期値。以降はループ実行のたびに末尾へ追記すること。
 
@@ -57,19 +62,16 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
-<!-- 各実行が1行〜数行で追記していく。例:
-### 2026-08-06 (Maker実行)
-- 対象: Awwwards SOTD「XXX」
-- 変更: src/components/xxx.tsx を追加、YYYセクションに適用
-- ビルド: npm run build 成功
-- コミット: <hash>
-
-### 2026-08-06 (Checker実行)
-- 対象コミット: <hash>
-- git diff スコープ: OK（コンテンツ事実変更なし、mainへの変更なし）
-- npm run build: 成功 / npm run lint: 成功
-- 判定: PASS
--->
+### 2026-08-06 (Antigravity Loop 8 - 5-Iteration Batch Run)
+- 対象: Awwwards SOTD受賞作（Active Theory, Lusion, Gucci Ancora, Studio Freight, Pitch）のUI演出5件を一括導入
+- 変更点:
+  1. `src/components/ambient-light-leak.tsx`: 背景のマウス追従ソフトグラデーション
+  2. `src/components/live-clock-badge.tsx`: ヘッダーのTOKYOリアルタイム時計バッジ
+  3. `src/components/scroll-progress-bar.tsx`: ページ最上部スクロールプログレスバー
+  4. `src/components/back-to-top-button.tsx`: マグネティックTop戻りボタン
+  5. `src/components/keyboard-shortcuts.tsx`: ⌘K / ? キーボードナビゲーションモーダル
+- 検証 (Checker): `npm run build` 成功、コンテンツ事実変更なし、TypeScriptコンパイル PASS
+- 判定: PASS（5回一括回し完了）
 
 ### 2026-08-06 (Antigravity Loop 7 - Maker & Checker)
 - 対象: モバイル実機でのバッジ・タイトル・人物顔の視覚的被り（Visual Collision）完全解消 ＆ 視覚監査規定の追加
