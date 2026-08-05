@@ -11,14 +11,11 @@ export function MobileHeroCarousel() {
     <div className="relative w-full h-full flex flex-col justify-between overflow-hidden bg-neutral-950 text-white sm:hidden">
       {/* スマホ全画面ぴったりに敷き詰める大判ヒーロー画像（顔部分は100%クリア・モヤ一切なし） */}
       <div className="absolute inset-0">
-        <Image
+        {/* 画面いっぱいに敷き詰める全画面ヒーロー画像 (標準imgタグでキャッシュ即時反映) */}
+        <img
           src="/hero-mobile.png"
           alt="今日ポケ メンバー"
-          fill
-          unoptimized
-          priority
-          quality={95}
-          style={{ objectFit: "cover", objectPosition: "center" }}
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
         {/* 顔には一切被らないよう、文字がある最下部35%のみにグラデーションを限定 */}
         <div className="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
