@@ -4,7 +4,15 @@ import { motion } from "motion/react";
 import Image from "next/image";
 
 // フェードインしてからゆっくり広がるKen Burns風の演出。
-export function HeroPhoto({ src, alt }: { src: string; alt: string }) {
+export function HeroPhoto({
+  src,
+  alt,
+  objectPosition = "object-top",
+}: {
+  src: string;
+  alt: string;
+  objectPosition?: string;
+}) {
   return (
     <motion.div
       className="pointer-events-none absolute inset-0"
@@ -22,7 +30,7 @@ export function HeroPhoto({ src, alt }: { src: string; alt: string }) {
           alt={alt}
           fill
           priority
-          className="object-cover object-top"
+          className={`object-cover ${objectPosition}`}
           style={{ transform: "translateY(-20px)" }}
         />
       </motion.div>

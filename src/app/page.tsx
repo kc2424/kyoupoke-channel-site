@@ -279,7 +279,12 @@ export default async function Home() {
         <div className="relative aspect-[5/4] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
           {/* フェードした写真の外周が白地でぶつ切りにならないよう、背後に暖色のにじみを敷く */}
           <div className="pointer-events-none absolute inset-x-[-6%] inset-y-[-4%] bg-[radial-gradient(closest-side,#ffdcac_0%,rgba(255,220,172,0)_100%)] blur-2xl sm:hidden" />
-          <div className="hero-photo-fade absolute inset-0 overflow-hidden">
+          {/* モバイル: 縦長に撮った専用カット（顔と手元の付箋がフレーム中央に収まる構図）。
+              sm以上: 従来の横長写真をそのまま全画面に敷く。 */}
+          <div className="hero-photo-fade absolute inset-0 overflow-hidden sm:hidden">
+            <HeroPhoto src="/hero-mobile.png" alt="今日ポケ メンバー3人" objectPosition="object-[50%_28%]" />
+          </div>
+          <div className="absolute inset-0 hidden overflow-hidden sm:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
           </div>
           {/* sm以上は写真が全画面のため、下端を白へ落として次セクションへ繋ぐ */}
