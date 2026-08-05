@@ -282,12 +282,12 @@ export default async function Home() {
             <HeroPhoto
               src="/hero-mobile.png"
               alt="今日ポケ メンバー3人"
-              objectPosition="object-[50%_18%]"
-              zoom={1.04}
+              objectPosition="object-[50%_35%]"
+              zoom={1.02}
               parallax
             />
-            {/* タイトル〜Scrollまでを写真の上に重ねるため、下端を広めに暗く落とす */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/78 via-black/32 to-transparent" />
+            {/* タイトル〜Scrollまでを写真の上に重ねるため、下端および中央の可読性グラデーション */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/90 via-black/55 to-transparent" />
           </div>
           <div className="absolute inset-0 hidden overflow-hidden sm:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />

@@ -73,13 +73,13 @@ export function HeroStickers() {
         </Float>
       </motion.div>
       <motion.div
-        className="pointer-events-auto absolute bottom-[28%] left-[4%] sm:bottom-[4%]"
+        className="pointer-events-auto absolute top-[28%] left-[3%] sm:bottom-[4%]"
         initial={{ opacity: 0, scale: 0.7, y: 24, rotate: -14 }}
         animate={{ opacity: 1, scale: 1, y: 0, rotate: -6 }}
         transition={{ type: "spring", stiffness: 260, damping: 17, delay: 0.62 }}
       >
         <Float duration={6} delay={1.6}>
-          <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-6} className="bg-brand-dark text-white">
+          <StickerDrag boundsSelector="[data-hero-bounds]" rotate={-6} className="bg-brand-dark text-white text-xs sm:text-sm shadow-lg">
             最終1位14回
           </StickerDrag>
         </Float>

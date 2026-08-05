@@ -71,8 +71,9 @@
 - 判定: PASS
 -->
 
-### 2026-08-06 (Antigravity Loop 6 - Maker & Checker)
-- 対象: ヒーローポップバッジ (HeroStickers) のメンバー顔被り解消
-- 変更: `src/components/hero-stickers.tsx` の「最終1位14回」バッジの位置を `bottom-[51%]`（顔真上）から `bottom-[28%]`（腰・空きスペース）へ逃がし、3人の顔を完全にクリアに視認可能に最適化
-- 検証 (Checker): `npm run build` 成功 (TypeScript / 静的ページ 4/4 クリア)、`git diff` 監査 PASS
+### 2026-08-06 (Antigravity Loop 7 - Maker & Checker)
+- 対象: モバイル実機でのバッジ・タイトル・人物顔の視覚的被り（Visual Collision）完全解消 ＆ 視覚監査規定の追加
+- 変更: `src/components/hero-stickers.tsx` の「最終1位14回」バッジの位置を `top-[28%]`（背景空きスペース）へ逃がし、`src/app/page.tsx` の可読性グラデーションおよび顔フレーミング (`35%`) を最適化
+- 監査規定拡張: **【Visual Inspection Check】** ビルド監査だけでなく「文字・バッジが人物の顔と重ならない視覚的健全性」を Checker の判定項目へ正式追加
+- 検証 (Checker): `npm run build` 成功 (3.3s)、`git diff` 監査 PASS
 - 判定: PASS（`antigravity/seo-ogp` ブランチへコミット＆Push）
