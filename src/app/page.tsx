@@ -277,12 +277,19 @@ export default async function Home() {
         </span>
 
         <div className="relative aspect-[3/4] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
-          {/* フェードした写真の外周が白地でぶつ切りにならないよう、背後に暖色のにじみを敷く */}
-          <div className="pointer-events-none absolute inset-x-[-6%] inset-y-[-4%] bg-[radial-gradient(closest-side,#ffdcac_0%,rgba(255,220,172,0)_100%)] blur-2xl sm:hidden" />
           {/* モバイル: 縦長に撮った専用カット（顔と手元の付箋がフレーム中央に収まる構図）。
+              写真自体が大きく画面を占めるので、周囲をぼかして背景に溶かす処理はせず
+              くっきり写真として見せる。タイトルとの境目は下端の暗いスクリムのみで確保。
               sm以上: 従来の横長写真をそのまま全画面に敷く。 */}
-          <div className="hero-photo-fade absolute inset-0 overflow-hidden sm:hidden">
-            <HeroPhoto src="/hero-mobile.png" alt="今日ポケ メンバー3人" objectPosition="object-[50%_18%]" />
+          <div className="absolute inset-0 overflow-hidden sm:hidden">
+            <HeroPhoto
+              src="/hero-mobile.png"
+              alt="今日ポケ メンバー3人"
+              objectPosition="object-[50%_16%]"
+              zoom={1.06}
+              parallax
+            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
           </div>
           <div className="absolute inset-0 hidden overflow-hidden sm:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
@@ -312,7 +319,7 @@ export default async function Home() {
           <GiantTitle>KYOU POKE</GiantTitle>
 
           <FadeIn delay={0.3} y={12}>
-            <p className="relative mt-5 max-w-md text-center text-sm text-balance whitespace-pre-line text-neutral-600 sm:mt-6 sm:max-w-lg sm:text-base lg:max-w-xl lg:text-lg">
+            <p className="relative mt-20 max-w-md text-center text-sm text-balance whitespace-pre-line text-neutral-600 sm:mt-6 sm:max-w-lg sm:text-base lg:max-w-xl lg:text-lg">
               {texts.hero_tagline.includes("届ける")
                 ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
                     <span key={i}>
