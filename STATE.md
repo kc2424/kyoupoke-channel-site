@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 23 - Fix 15000% Typo & Restore Optimal Photo Framing)
+- 対象: コード編集時の誤入力 `15000%`（画面外へ消失する異常値）の即時修正
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: 異常値 `15000%` を除去し、正常な `50% 15%`（頭部と表情が最も綺麗に収まるフォーカス位置）へ修復。
+- 検証 (Checker): `npm run build` 成功 (3.2s)、スタイル数値正常化監査 PASS、TypeScript PASS
+- 判定: PASS（15000%タイポ修正・配置復元完了）
+
 ### 2026-08-06 (Antigravity Loop 22 - User-Confirmed Mobile Hero Position Finalization)
 - 対象: ユーザー実機確認済みのモバイル全画面ヒーロー位置の決定・保存
 - 変更点:
