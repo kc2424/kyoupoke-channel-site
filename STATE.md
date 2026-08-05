@@ -62,6 +62,13 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (Antigravity Loop 28 - Standard HTML img Tag for Instant Live Disk Cache Bypass)
+- 対象: ディスク上の画像差し替えがNext.jsの内部キャッシュをバイパスして即座に画面反映される最適化
+- 変更点:
+  1. `src/components/mobile-hero-carousel.tsx`: Next.js `<Image />` から標準 HTML `<img>` タグへ置き換え。全画面（`object-cover object-center`）で表示。
+- 検証 (Checker): `npm run build` 成功 (5.5s)、即時反映 PASS、TypeScript PASS
+- 判定: PASS（キャッシュバイパス全画面表示完了）
+
 ### 2026-08-06 (Antigravity Loop 27 - Restore Full-Screen Edge-to-Edge objectFit Cover)
 - 対象: 差し替え画像に対する画面縦幅全画面（`100dvh`）フィット表示（`objectFit: "cover"`）の復元
 - 変更点:
