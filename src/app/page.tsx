@@ -286,7 +286,7 @@ export default async function Home() {
             <HeroPhoto
               src="/hero-mobile.png"
               alt="今日ポケ メンバー3人"
-              objectPosition="object-[50%_16%]"
+              objectPosition="object-[50%_78%]"
               zoom={1.06}
               parallax
             />
