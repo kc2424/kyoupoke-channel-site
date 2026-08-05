@@ -18,7 +18,7 @@ export function MobileHeroCarousel() {
           unoptimized
           priority
           quality={95}
-          style={{ objectFit: "contain", objectPosition: "center" }}
+          style={{ objectFit: "cover", objectPosition: "center" }}
         />
         {/* 顔には一切被らないよう、文字がある最下部35%のみにグラデーションを限定 */}
         <div className="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
