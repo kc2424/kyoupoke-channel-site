@@ -9,7 +9,7 @@ import { WipeLink } from "@/components/wipe-link";
 export function MobileHeroCarousel() {
   return (
     <div className="relative w-full h-full flex flex-col justify-between overflow-hidden bg-neutral-950 text-white sm:hidden">
-      {/* スマホ全画面ぴったりに敷き詰める大判ヒーロー画像 */}
+      {/* スマホ全画面ぴったりに敷き詰める大判ヒーロー画像（顔部分は100%クリア・モヤ一切なし） */}
       <div className="absolute inset-0">
         <Image
           src="/hero-mobile.png"
@@ -20,14 +20,13 @@ export function MobileHeroCarousel() {
           quality={95}
           className="object-cover object-center"
         />
-        {/* ブランドオレンジ主調の暖かく鮮やかなグラデーション overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-[#b8431f]/40 to-black/30" />
-        <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#d9552e]/30 blur-3xl pointer-events-none" />
+        {/* 顔には一切被らないよう、文字がある最下部35%のみにグラデーションを限定 */}
+        <div className="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
       </div>
 
       {/* 上部ヘッダーバッジ */}
       <div className="relative z-10 flex items-center justify-between p-4 pt-16">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/50 bg-[#b8431f]/80 px-3.5 py-1 text-xs font-mono font-bold text-white backdrop-blur-md shadow-lg">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/50 bg-[#b8431f]/90 px-3.5 py-1 text-xs font-mono font-bold text-white backdrop-blur-md shadow-lg">
           <Sparkles className="h-3.5 w-3.5 text-amber-300" />
           <span>登録者 67万人突破</span>
         </span>
