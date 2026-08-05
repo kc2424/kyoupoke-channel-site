@@ -14,8 +14,8 @@ export function MobileHeroCarousel() {
           alt="今日ポケ メンバー"
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
-        {/* 下部：ホワイト（白）グラデーションオーバーレイ */}
-        <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none" />
+        {/* 下部：温かみのある黄色クリームグラデーションオーバーレイ（#fff3da / #ffeec2） */}
+        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#fff3da] via-[#ffeec2]/80 to-transparent pointer-events-none z-[5]" />
       </div>
 
       {/* 上部ヘッダーバッジ */}

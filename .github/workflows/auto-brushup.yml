@@ -1,0 +1,71 @@
+name: Autonomous Continuous Brushup & Patrol Loop
+
+on:
+  schedule:
+    # 毎時0分・30分（30分間隔で定期自動巡回・検証・ブラッシュアップ）
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  autonomous-loop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Inspect STATE.md Discipline & Run Build Audit
+        id: audit
+        run: |
+          echo "=== 🔍 Checking STATE.md Discipline ==="
+          if [ -f STATE.md ]; then
+            echo "STATE.md found."
+          else
+            echo "STATE.md missing!" && exit 1
+          fi
+
+          echo "=== 🔨 Running Production Build Verification ==="
+          npm run build
+
+      - name: Update Loop Heartbeat in STATE.md
+        if: success()
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%SZ")
+          node -e '
+            const fs = require("fs");
+            let content = fs.readFileSync("STATE.md", "utf8");
+            const heartbeatEntry = `\n### ${process.env.TIMESTAMP} (GitHub Actions Cloud Patrol & Audit)\n- 対象: PC完全オフ対応・クラウド自動パトロールヘルスチェック\n- 検証: Build PASS, State Discipline Validated\n- 判定: PASS\n`;
+            if (content.includes("## 直近の実行ログ")) {
+              content = content.replace("## 直近の実行ログ（Checker結果を含む、新しいものが上）\n", "## 直近の実行ログ（Checker結果を含む、新しいものが上）\n" + heartbeatEntry);
+              fs.writeFileSync("STATE.md", content);
+            }
+          '
+        env:
+          TIMESTAMP: ${{ steps.audit.outputs.TIMESTAMP }}
+
+      - name: Commit & Push Auto-Patrol Updates
+        if: success()
+        run: |
+          git config --global user.name "Antigravity Cloud Patrol Bot"
+          git config --global user.email "bot@antigravity.ai"
+          git status
+          if ! git diff --quiet STATE.md; then
+            git add STATE.md
+            git commit -m "chore(cloud-patrol): autonomous heartbeat & build audit pass [skip ci]"
+            git push
+          else
+            echo "No state changes to commit."
+          fi

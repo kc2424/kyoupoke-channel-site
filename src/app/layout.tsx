@@ -102,7 +102,7 @@ export default function RootLayout({
         geist.variable
       )}
     >
-      <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
+      <body className="min-h-screen bg-white text-neutral-900 antialiased">
         <ScrollProgressBar />
         <BackToTopButton />
         <KeyboardShortcuts />

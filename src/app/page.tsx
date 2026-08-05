@@ -267,7 +267,7 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] min-h-[92dvh] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
+        <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] min-h-[92dvh] sm:min-h-[100svh] sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
         {/*
           モバイル: 写真をセクションいっぱいに敷き、タイトル・タグライン・
           Scrollまで全部写真の上に重ねて表示する「1枚の画像」構成（PC版と

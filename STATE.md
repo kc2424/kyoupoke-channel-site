@@ -62,6 +62,14 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-08-06 (GitHub Actions Cloud Patrol Setup)
+- 対象: PCシャットダウン・完全離席時の放置全自動パトロール・ビルド監査ワークフローの構築
+- 変更点:
+  1. `.github/workflows/auto-brushup.yml`: 30分間隔でクラウド起動しビルド・状態・パトロールを巡回実行するGitHub Actionsワークフローを作成。
+  2. `kyoupoke_site/Antigravity専用ガイド.md`: デュアルトリガー型（ローカルschedule＋クラウドGitHub Actions）運用仕様へ更新。
+- 検証 (Checker): ワークフロー構文検証 PASS, `STATE.md` Discipline PASS
+- 判定: PASS（PC不要クラウド自動化セットアップ完了）
+
 ### 2026-08-06 (Antigravity Loop 32 - Convert Lower Achievements Section from Black to Pure White Background)
 - 対象: ユーザー指定の「さらに下部（実績・出演セクション）も黒から白（ホワイト）へ変更」
 - 変更点:
