@@ -84,3 +84,13 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(act-index.tsx, page.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `79167d695864f7e272da2da806600e7c5a4145d7`）
+- **2026-08-05 (Checker 7回目実行)**: 前回チェック済み以降の新規コミット `9b8c5cb`（Motiondeep(CSS Design Awards WOTD)を参考におすすめ動画サムネイルへフレームスクラブ演出を追加）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/mainとsite-brushupは既存の無関係な履歴分岐（`no merge base`）のままで、今回の対象コミットの範囲外
+  - 変更ファイルは3件（MAKER_STATE.md, src/app/page.tsx, src/components/frame-scrub.tsx新規）で、いずれも今回のテーマ（おすすめ動画サムネイルのフレームスクラブ演出）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし。page.tsxの変更は「おすすめ動画」サムネイルの`<Image>`単体を`<FrameScrub videoId={v.videoId} />`に置き換えたのみで、動画ID・タイトル等は不変。未使用になった`next/image`直接importの削除も確認
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(frame-scrub.tsx, page.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `9b8c5cbc8cd5b2bdbdaff416a8a0cf84e1b4ffa5`）
