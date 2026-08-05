@@ -54,3 +54,13 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack）: 成功
   - `npm run lint`: 既知の問題（scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(custom-cursor.tsx, underline-link.tsx, page.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `d3640465667f56e76b5c1ecef1aa05fc39ea010b`）
+- **2026-08-05 (Checker 4回目実行)**: 前回チェック済み以降の新規コミット `de79dd0`（Lacoste Ace Breaker(Awwwards SOTD)を参考に実績カードへ色分けアイコンバッジを追加）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）
+  - 変更ファイルは3件（MAKER_STATE.md, src/app/page.tsx, src/components/achievement-icon.tsx新規）で、いずれも今回のテーマ（実績カードの色分けアイコンバッジ）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績のlabel/sub文言・トーン等の既存事実情報は一切変更なし。`icon`フィールドの追加のみを確認
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功（今回はGoogle Fonts取得も問題なく完了）
+  - `npm run lint`: 既知の問題（scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(achievement-icon.tsx, page.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `de79dd0c713af09d566cd8c6dbba9bd8028a2248`）
