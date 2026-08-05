@@ -112,25 +112,6 @@ html.cursor-none * {
   font-family: var(--font-wordmark), sans-serif;
 }
 
-/* モバイルのヒーロー写真は上端だけ短くフェードさせ、セクション自体の背景色
-   （暖色グラデーション）に自然に溶け込ませる。色を足すのではなく写真の
-   端をぼかすだけなので、新しいグラデーション層は増やしていない。
-   下端はスクリム(黒の半透明)で処理しているためフェード不要。
-   sm以上では写真を画面全体に敷くため無効化する。 */
-.hero-photo-fade-top {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 7%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 7%);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-}
-
-@media (min-width: 40rem) {
-  .hero-photo-fade-top {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-}
-
 @keyframes marquee {
   from {
     transform: translateX(0);

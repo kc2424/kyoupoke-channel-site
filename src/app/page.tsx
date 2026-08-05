@@ -261,7 +261,7 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_40%,#ffffff_84%)] pt-20 pb-6 sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
+      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] pt-20 pb-6 sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
         {/*
           モバイル: 写真を先に大きく見せ、タイトルは写真下端のフェード（暖色に
           溶けた部分）に重ねて配置し、写真とテキストを一体の「ヒーロー画像」として
@@ -276,17 +276,17 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative aspect-[4/5] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
-          {/* モバイル: 縦長に撮った専用カット（顔と手元の付箋がフレーム中央に収まる構図）。
-              上端だけ短くフェードさせてセクション自体の背景色に溶かし、
-              くっきりした四角い切れ目に見えないようにする（新しい色は足さない）。
+        <div className="relative aspect-[7/9] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
+          {/* モバイル: 縦長カットをできるだけ縦長のまま見せ、写真本来の暖色
+              グラデーション（ページの配色とほぼ同じ）を上端にそのまま活かす。
+              セクション背景に溶かすための別レイヤーのフェードは不要になった。
               下端はタイトルとの境目を暗いスクリムのみで確保。
               sm以上: 従来の横長写真をそのまま全画面に敷く。 */}
-          <div className="hero-photo-fade-top absolute inset-0 overflow-hidden sm:hidden">
+          <div className="absolute inset-0 overflow-hidden sm:hidden">
             <HeroPhoto
               src="/hero-mobile.png"
               alt="今日ポケ メンバー3人"
-              objectPosition="object-[50%_78%]"
+              objectPosition="object-[50%_53%]"
               zoom={1.06}
               parallax
             />
@@ -300,7 +300,7 @@ export default async function Home() {
           <HeroStickers />
         </div>
 
-        <div className="relative z-10 -mt-24 flex flex-col items-center px-6 sm:mt-auto sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
+        <div className="relative z-10 -mt-[96px] flex flex-col items-center px-6 sm:mt-auto sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
           {/* 腰〜胴体あたりのみ白ぼかしで視認性を確保（顔には掛からない）。写真に重なる sm 以上のみ有効 */}
           <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 hidden h-[130%] -translate-y-1/2 bg-white/70 blur-3xl sm:block" />
 
@@ -320,7 +320,7 @@ export default async function Home() {
           <GiantTitle>KYOU POKE</GiantTitle>
 
           <FadeIn delay={0.3} y={12}>
-            <p className="relative mt-14 max-w-md text-center text-sm text-balance whitespace-pre-line text-neutral-600 sm:mt-6 sm:max-w-lg sm:text-base lg:max-w-xl lg:text-lg">
+            <p className="relative mt-[56px] max-w-md text-center text-sm text-balance whitespace-pre-line text-neutral-600 sm:mt-6 sm:max-w-lg sm:text-base lg:max-w-xl lg:text-lg">
               {texts.hero_tagline.includes("届ける")
                 ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
                     <span key={i}>
@@ -333,7 +333,7 @@ export default async function Home() {
           </FadeIn>
         </div>
 
-        <div className="pointer-events-none relative mt-3 flex flex-col items-center gap-2 text-neutral-600 sm:absolute sm:bottom-8 sm:left-1/2 sm:mt-0 sm:-translate-x-1/2">
+        <div className="pointer-events-none relative mt-[8px] flex flex-col items-center gap-2 text-neutral-600 sm:absolute sm:bottom-8 sm:left-1/2 sm:mt-0 sm:-translate-x-1/2">
           <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
             Scroll
           </span>
