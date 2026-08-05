@@ -287,7 +287,7 @@ export default async function Home() {
               parallax
             />
             {/* タイトル〜Scrollまでを写真の上に重ねるため、下端を広めに暗く落とす */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/78 via-black/32 to-transparent" />
           </div>
           <div className="absolute inset-0 hidden overflow-hidden sm:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
@@ -359,6 +359,12 @@ export default async function Home() {
           <span className="h-8 w-px animate-pulse bg-neutral-400" />
         </div>
       </section>
+
+      {/* モバイル: ヒーロー写真下端の暗いスクリムから、次の白背景セクションへ
+          継ぎ目なく繋ぐ静的なグラデーション帯（PC版は既にヒーロー内で
+          白へフェードしているため不要）。SectionBlendはスクロール連動で
+          色が変わる仕組みのため、初回表示時は単色に見えてしまい不向き。 */}
+      <div aria-hidden className="h-20 w-full bg-gradient-to-b from-black/70 to-white sm:hidden" />
 
       <FadeIn>
         <section className="bg-white pt-16 pb-10 lg:pt-20">
