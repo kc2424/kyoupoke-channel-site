@@ -5,6 +5,7 @@ import { CurtainReveal } from "@/components/curtain-reveal";
 import { FadeIn } from "@/components/fade-in";
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { GalleryCaption } from "@/components/gallery-caption";
+import { GenerativeTrace } from "@/components/generative-trace";
 import { GiantTitle } from "@/components/giant-title";
 import { GrowthTimeline } from "@/components/growth-timeline";
 import { HeroStickers } from "@/components/hero-stickers";
@@ -264,7 +265,10 @@ export default function Home() {
 
       </main>
 
-      <SectionBlend from="#f5f5f5" to="#000000" />
+      <div className="relative">
+        <SectionBlend from="#f5f5f5" to="#000000" />
+        <GenerativeTrace seed={1} />
+      </div>
 
       <FadeIn>
         <section
@@ -308,7 +312,10 @@ export default function Home() {
         </section>
       </FadeIn>
 
-      <SectionBlend from="#000000" to="#f5f5f5" />
+      <div className="relative">
+        <SectionBlend from="#000000" to="#f5f5f5" />
+        <GenerativeTrace seed={2} />
+      </div>
 
       <main className="mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16">
         <section id="videos">
@@ -373,7 +380,10 @@ export default function Home() {
 
       </main>
 
-      <SectionBlend from="#f5f5f5" to="#d9552e" />
+      <div className="relative">
+        <SectionBlend from="#f5f5f5" to="#d9552e" />
+        <GenerativeTrace seed={3} />
+      </div>
 
       <FadeIn>
         <section id="links" className="scroll-mt-24 bg-brand px-6 py-16 sm:px-10">
@@ -406,7 +416,10 @@ export default function Home() {
         </section>
       </FadeIn>
 
-      <SectionBlend from="#d9552e" to="#000000" />
+      <div className="relative">
+        <SectionBlend from="#d9552e" to="#000000" />
+        <GenerativeTrace seed={4} />
+      </div>
 
       <footer className="relative overflow-hidden bg-black py-16">
         <div className="flex select-none whitespace-nowrap">

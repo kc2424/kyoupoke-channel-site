@@ -41,7 +41,8 @@
 28. Artem Shcherbakov Portfolio（Awwwards SOTD）
 29. Hearst Exhibit 2026（OSMOS PRO制作、Awwwards Site of the Day 2026-08-02、Developer Award）
 30. Noomo Showcase（Noomo Agency制作、Awwwards Site of the Day 2026-08-01、総合スコア7.34）
-31. **Lacoste Ace Breaker**（Merci-Michel制作、Awwwards Site of the Day 2026-08-03、Developer Award、総合スコア7.46）← 今回追加
+31. Lacoste Ace Breaker（Merci-Michel制作、Awwwards Site of the Day 2026-08-03、Developer Award、総合スコア7.46）
+32. **2xA Studio**（2xA制作、Awwwards Site of the Day 2026-07-31、Developer Award、総合スコア7.22）← 今回追加
 
 次回以降は必ずこのリストに無い作品を選ぶこと。
 
@@ -67,6 +68,11 @@
   - `src/components/underline-link.tsx`: `cursorLabel`・`cursorIndex`の任意propsを追加し、`data-cursor-label`・`data-cursor-index`として`<a>`要素へ橋渡しするだけの薄い変更。デフォルトでは何も指定しなければ従来通り無属性のまま。
   - `src/app/page.tsx`: ヘッダーのグローバルナビ（プロフィール/メンバー/実績/動画/リンク）の`UnderlineLink`にのみ`cursorLabel`（ナビ項目名）と`cursorIndex`（"01 / 05"形式の連番）を付与。他のリンク（YouTubeへ/SNS等）には適用せず、「これから移動するセクションの手がかりを事前に見せる」というナビゲーション文脈に限定して節度を保った。
   - ビルド結果: `npm install` → `npm run build`（Turbopack）で成功。型チェック・静的ページ生成まで確認済み。`npm run lint` は既知の問題（本変更と無関係な3ファイル・計4件の`react-hooks/set-state-in-effect`）のみでビルドはブロックされない。Playwrightがこの環境に未インストールのため実ブラウザでの目視スクリーンショット確認は今回省略した（コード変更は既存の`data-cursor-label`機構を素直に拡張したのみで、リスクは低いと判断）。
+  - コミットハッシュ: （このコミット自体。`git log -1`参照）
+- **2026-08-05（32回目）**: Awwwards Site of the Day「2xA Studio」（Amsterdam/Athens拠点のコード駆動デザインスタジオ2xA自身のポートフォリオサイト。2026-07-31 SOTD受賞、Developer Award同時受賞、総合スコア7.22）を参考に分析。**注記: 今回もWebFetch（awwwards.com/sites/2xa-studio、2xa.studio本体とも）は403で直接確認できず、WebSearchのスニペット（Awwwards掲載記事、2xa.studio/aboutの紹介文の要約）から評価点を分析した**。5つの評価ポイント: ①わずか2色（#0F0F0Fのほぼ黒、#FDFDFDのほぼ白）に絞ったミニマルパレットで、コードそのものが生む造形を主役にする抑制されたデザイン、②"Form follows process"というジェネレーティブ/コンピュテーショナルなデザイン哲学——「静的な成果物ではなく、条件が動きの中に解き放たれたシステム」として作品を捉える姿勢、③Developer Award同時受賞が示す高い実装力、④タイポグラフィ主体で装飾を削ぎ落としたレイアウト、⑤アニメーション・モーションデザインの完成度。今日ポケのオレンジ/黒/白3色ルールに対し、②の哲学そのもの（本格的なジェネレーティブアート/WebGL）は規模・工数の面で不釣り合いなため見送り。今回は②の本質——「同じ生成ルール（システム）を場所ごとに走らせることで、毎回違うが一貫した“構造”が現れる」という考え方——を、既存のセクション間トランジション（`SectionBlend`の色帯）に重ねる形で、Math.random()を使わないseed値だけで決まる決定論的な折れ線（基板配線のような`GenerativeTrace`）として抽出し独自実装した。
+  - `src/components/generative-trace.tsx`: 新規作成。`seed`値のみから経路が決まる自前の擬似乱数（mulberry32）で、基板配線のような直角の折れ線パスをSVGで生成するコンポーネント。GSAP `ScrollTrigger`（`scrub`）でセクション境界をスクロールする間だけ`stroke-dashoffset`を使って線が「描かれていく」演出を付け、既存の`smooth-scroll.tsx`のLenis↔ScrollTrigger連携（`lenis.on('scroll', ScrollTrigger.update)`）はそのまま利用（変更なし）。線は`mix-blend-difference`の白で描画するため、下地がどの背景色（`#f5f5f5`/`#000000`/`#d9552e`のいずれ）でも自動的に反転して視認できる。
+  - `src/app/page.tsx`: 既存の4箇所の`SectionBlend`（セクション間の色帯）それぞれを`relative`な`div`で包み、異なる`seed`（1〜4）を渡した`GenerativeTrace`を重ねただけ。色帯以外の新しいセクションや文言は追加していない。
+  - ビルド結果: `npm install` → `npm run build`（Turbopack）で成功（Google Fontsの取得も問題なし）。型チェック・静的ページ生成まで確認済み。`npm run lint`は既知の問題（本変更と無関係な3ファイル・計4件の`react-hooks/set-state-in-effect`）のみで、新規ファイル（generative-trace.tsx）・変更ファイル（page.tsx）にlintエラーなし。`npm run dev`を起動しHTMLを取得（200応答、「実績・出演」等の既存文言を含み、新規`GenerativeTrace`のSVG（`viewBox="0 0 100 24"`）が4箇所とも期待通りSSRされていることを確認）。Playwrightでの目視スクリーンショット確認は今回省略（変更は既存パターン踏襲のCSS/SVG演出のみでリスクは低いと判断）。
   - コミットハッシュ: （このコミット自体。`git log -1`参照）
 - **2026-08-05（31回目）**: Awwwards Site of the Day「Lacoste Ace Breaker」（Merci-Michel制作。Roland Garros開催に合わせたLacosteのブラウザゲーム、ブロック崩し風のテニステーマゲームで本物のチケット・ポロシャツが当たる企画。2026-08-03 SOTD受賞、Developer Award同時受賞、総合スコア7.46）を参考に分析。**注記: 今回もWebFetch（awwwards.com/sites/lacoste-ace-breaker）は403で直接確認できず、WebSearchのスニペット（Awwwards掲載記事・紹介ブログの評からの要約）から評価点を分析した**。5つの評価ポイント: ①パワーアップ等のアイコノグラフィをLacosteブランドカラー（グリーン/ホワイト/イエロー）で色分けし、本文を読まずとも一目で種類が伝わる高コントラストな「即時可読性」の設計、②ワンバーブ（ブロックを崩す、の一動作）に絞ったゲームメカニクスによる導線のシンプルさ、③本番プレイ前に簡潔なルール・特典説明画面を挟むオンボーディング、④リーダーボード＋実際の景品というリプレイ性を生むゲーミフィケーション、⑤WebGL/Three.jsによる本格的な3D演出。今日ポケのオレンジ/黒/白3色ルールと軽量なCSS構成に対し、本格的なゲーム実装（②③④相当）やWebGL（⑤）は規模・工数の面で不釣り合いなため見送り。今回は①の本質——「本文を読む前に、色分けされたアイコンだけで種類が一目で伝わる」設計——を、実績セクションのカードに抽出し独自実装した。
   - `src/components/achievement-icon.tsx`: 新規作成。実績カード用の丸バッジアイコンコンポーネント。award（トロフィー）/tv/controller/globe/live/cardsの6種類の線画SVGアイコンを用意し、カードの背景トーン（オレンジ/黒）に応じてバッジの配色を反転（オレンジ背景カードには白バッジ+オレンジ文字のアイコン、黒背景カードにはオレンジバッジ+白アイコン）することで、既存のブランド3色のみで高コントラストな色分けを実現。GSAP不使用の純SVG+CSSで既存コンポーネント群と同じ軽量方針を踏襲。
