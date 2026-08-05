@@ -39,8 +39,9 @@ export function MemberCard({
     <button
       type="button"
       onClick={() => canToggle && setOpen((v) => !v)}
+      aria-expanded={canToggle ? open : undefined}
       data-cursor-label={canToggle ? (open ? "CLOSE" : "MORE") : undefined}
-      className="group mx-auto flex w-full max-w-6xl flex-col gap-6 border-b border-neutral-200 py-8 text-left sm:flex-row sm:items-center lg:max-w-7xl lg:gap-10 lg:py-10"
+      className="group mx-auto flex w-full max-w-6xl flex-col gap-6 border-b border-neutral-200 py-8 text-left transition-colors sm:flex-row sm:items-center lg:max-w-7xl lg:gap-10 lg:py-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-2xl"
     >
       <LiveGlowFrame
         rounded="rounded-xl"
