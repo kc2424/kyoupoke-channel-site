@@ -44,3 +44,13 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack）: 成功
   - `npm run lint`: 既知の問題（scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規追加ファイル(gallery-caption.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `1da6334f8e35c22dcb1ecad6e3254573f6a90a34`）
+- **2026-08-05 (Checker 3回目実行)**: 前回チェック済み以降の新規コミット `d364046`（Noomo Showcase(Awwwards SOTD)を参考にヘッダーナビへカーソル追従のセクションプレビューを追加）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）
+  - 変更ファイルは4件（MAKER_STATE.md, src/app/page.tsx, src/components/custom-cursor.tsx, src/components/underline-link.tsx）で、いずれも今回のテーマ（ヘッダーナビのカーソル追従セクションプレビュー）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし。ヘッダーナビ項目のラベル文字列も既存のnavItems定義をそのまま参照しており改変なし
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack）: 成功
+  - `npm run lint`: 既知の問題（scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(custom-cursor.tsx, underline-link.tsx, page.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `d3640465667f56e76b5c1ecef1aa05fc39ea010b`）
