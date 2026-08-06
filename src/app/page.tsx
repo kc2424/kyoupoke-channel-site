@@ -571,15 +571,15 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="group relative w-full justify-start gap-4 rounded-2xl border border-neutral-200/90 bg-white/85 p-5 text-left text-neutral-900 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d9552e]/60 hover:shadow-xl lg:p-6"
+                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-[#ffe8d6] p-5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#ffd9be] hover:border-brand hover:shadow-md lg:p-6"
                   >
                     <div className="flex items-center gap-4">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#d9552e] via-[#c44722] to-[#a83617] text-white shadow-md transition-transform duration-300 group-hover:scale-105 lg:h-12 lg:w-12">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-transform duration-300 group-hover:scale-105 lg:h-12 lg:w-12">
                         <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
                       </span>
                       <span className="flex flex-col">
                         <span className="font-display font-extrabold text-base text-neutral-900 lg:text-lg">{l.label}</span>
-                        <span className="text-xs font-semibold text-neutral-600 lg:text-sm">{l.sub}</span>
+                        <span className="text-xs font-semibold text-neutral-700 lg:text-sm">{l.sub}</span>
                       </span>
                     </div>
                   </WipeLink>
@@ -599,15 +599,15 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="group relative w-full justify-start gap-4 rounded-2xl border border-neutral-200/90 bg-white/85 p-5 text-left text-neutral-900 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d9552e]/60 hover:shadow-xl lg:p-6"
+                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-[#ffe8d6] p-5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#ffd9be] hover:border-brand hover:shadow-md lg:p-6"
                   >
                     <div className="flex items-center gap-4">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#d9552e] via-[#c44722] to-[#a83617] text-white shadow-md transition-transform duration-300 group-hover:scale-105 lg:h-12 lg:w-12">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-transform duration-300 group-hover:scale-105 lg:h-12 lg:w-12">
                         <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
                       </span>
                       <span className="flex flex-col">
                         <span className="font-display font-extrabold text-base text-neutral-900 lg:text-lg">{l.label}</span>
-                        <span className="text-xs font-semibold text-neutral-600 lg:text-sm">{l.sub}</span>
+                        <span className="text-xs font-semibold text-neutral-700 lg:text-sm">{l.sub}</span>
                       </span>
                     </div>
                   </WipeLink>
