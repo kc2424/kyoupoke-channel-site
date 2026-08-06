@@ -203,3 +203,13 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 失敗（Google Fontsの取得に失敗する既知のサンドボックス環境問題）。ベースコミット`754f7f0`でも同一worktreeのnode_modulesを使い同じエラーが再現することを確認済みのため、今回の変更が原因ではないと判断
   - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(journey-stamp.tsx, page.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `159292a`）
+- **2026-08-06 (Checker 18回目実行)**: 前回チェック済み以降の新規コミット `d3208d0`（成長タイムラインのNOW地点をライブカウントアップ表示に。参考: Airofit（Rondesignlab、DesignRush Design Awards「Best App Design」2026年7月度受賞）の「時系列の先に今の到達点を1つの生きた数字として置く」という考え方を、既存`GrowthTimeline`のNOW節目に独自適用）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/main...origin/site-brushupは引き続き`no merge base`（既知の無関係な履歴分岐）
+  - Checker自身の前回コミット(`cde6208`)からのMaker差分のみを`git diff cde6208..d3208d0`で分離して確認。変更ファイルは3件（MAKER_STATE.md, src/app/page.tsx, src/components/growth-timeline.tsx）で、いずれも今回のテーマ（NOW地点のライブカウントアップ化）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の既存事実情報は変更なし。`growthMilestones`配列は`NOW`節目に新規`live`プロパティを追加しただけで、既存`label`（「登録者58万人+ / 再生10億回+」）はそのまま残存。新しく表示される数値（58万人+/10億回+）は既存の`stats`配列（登録者58万人+/総再生10億回+）と完全一致することを確認。growth-timeline.tsxの変更は`Milestone`型への任意`live?`プロパティ追加と、指定時のみ既存`StatCounter`コンポーネントを使ったカウントアップ表示に分岐する実装で、`live`未指定時（他2節目）は従来通り`label`テキスト表示のまま。フィルバー・ドットのスクロール連動ロジックは無変更
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(growth-timeline.tsx, page.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `d3208d0`）
