@@ -26,13 +26,14 @@ export function WipeLink({
         className
       )}
     >
+      {/* PC版限定の1.0秒アニメーションワイプ帯 */}
       <span
         className={cn(
-          "absolute inset-0 -translate-x-full transition-transform duration-[1000ms] ease-out group-hover:translate-x-0 group-active:translate-x-0",
+          "absolute inset-0 hidden -translate-x-full transition-transform duration-[1000ms] ease-out group-hover:translate-x-0 sm:block",
           wipeColor
         )}
       />
-      <span className="relative z-10 transition-colors duration-[1000ms] group-hover:text-white group-active:text-white">
+      <span className="relative z-10 transition-colors duration-200 group-hover:text-white group-active:text-white sm:duration-[1000ms]">
         {children}
       </span>
     </a>
