@@ -472,13 +472,10 @@ export default async function Home() {
           </div>
         </section>
 
-      {/* メンバー紹介 ➔ 実績・出演: 境目が1pxも切れない完全シームレスなマルチストップ・ロングフェード帯 */}
-      <div className="h-32 w-full bg-gradient-to-b from-white via-[#fff9f4] via-[#ffefe3] to-[#fff5ed]" />
-
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#fff5ed] via-[#fff0e6] to-white py-14 sm:py-24 lg:py-32 text-neutral-900 border-b border-neutral-200/80"
+          className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-white via-[#fff5ed] via-[#fff0e6] to-white py-16 sm:py-24 lg:py-32 text-neutral-900 border-y border-neutral-200/80"
         >
           {/* 飽きさせない幾何学ドットグリッド ＆ 静かに漂うオーラ粒子背景 */}
           <AmbientMeshBackground />
@@ -572,9 +569,6 @@ export default async function Home() {
         </section>
       </FadeIn>
 
-      {/* おすすめ動画 ➔ リンク: 急な切り替えを完全に排除し、ブランドオレンジへスーッと溶け込むグラデーション */}
-      <div className="h-28 w-full bg-gradient-to-b from-white via-[#ffebd9] via-[#d9552e] to-[#b8431f]" />
-
       <FadeIn>
         <section id="links" className="scroll-mt-24 bg-brand-dark py-20 lg:py-32">
           <div className={CONTAINER}>
@@ -631,9 +625,6 @@ export default async function Home() {
         </section>
       </FadeIn>
       </main>
-
-      {/* リンク ➔ フッター: 急な黒の切り替えを排除し、黒へと滑らかに落ちるグラデーション帯 */}
-      <div className="h-28 w-full bg-gradient-to-b from-[#b8431f] via-[#521b0a] to-black" />
 
       <footer className="relative overflow-hidden bg-black py-24">
         <div className="flex select-none whitespace-nowrap">
