@@ -11,6 +11,7 @@ import { GenerativeTrace } from "@/components/generative-trace";
 import { GiantTitle } from "@/components/giant-title";
 import { GrowthTimeline } from "@/components/growth-timeline";
 import { HeroStickers } from "@/components/hero-stickers";
+import { JourneyStamp } from "@/components/journey-stamp";
 import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
@@ -323,6 +324,12 @@ export default function Home() {
                       a.tone === "black" && "bg-white/10 text-white"
                     )}
                   >
+                    <JourneyStamp
+                      index={i}
+                      total={achievements.length}
+                      tone={a.tone}
+                      className="absolute top-3 right-3"
+                    />
                     <AchievementIcon
                       name={a.icon}
                       tone={a.tone}
