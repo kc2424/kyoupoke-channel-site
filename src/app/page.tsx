@@ -377,7 +377,6 @@ export default async function Home() {
 
       <FadeIn>
         <section id="profile" className="relative overflow-hidden scroll-mt-24 pb-24 lg:pb-32">
-          <AmbientMeshBackground variant="aurora" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
               <SectionHeading
@@ -416,7 +415,6 @@ export default async function Home() {
 
       <FadeIn>
         <section id="members" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
-          <AmbientMeshBackground variant="ring" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading
               index={2}
@@ -563,7 +561,6 @@ export default async function Home() {
 
       <FadeIn>
         <section id="links" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
-          <AmbientMeshBackground variant="dots" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading index={5} label="Links" heading="リンク" tone="light" />
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -575,7 +572,7 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="group relative w-full justify-between gap-3 rounded-2xl border border-neutral-200/90 bg-white/85 p-5 text-left text-neutral-900 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d9552e]/60 hover:shadow-xl lg:p-6"
+                    className="group relative w-full justify-start gap-4 rounded-2xl border border-neutral-200/90 bg-white/85 p-5 text-left text-neutral-900 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d9552e]/60 hover:shadow-xl lg:p-6"
                   >
                     <div className="flex items-center gap-4">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#d9552e] via-[#c44722] to-[#a83617] text-white shadow-md transition-transform duration-300 group-hover:scale-105 lg:h-12 lg:w-12">
@@ -586,7 +583,6 @@ export default async function Home() {
                         <span className="text-xs font-semibold text-neutral-600 lg:text-sm">{l.sub}</span>
                       </span>
                     </div>
-                    <ArrowUpRight className="h-5 w-5 shrink-0 text-[#d9552e] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
                   </WipeLink>
                 );
               })}
@@ -604,7 +600,7 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="group relative w-full justify-between gap-3 rounded-2xl border border-neutral-200/90 bg-white/85 p-5 text-left text-neutral-900 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d9552e]/60 hover:shadow-xl lg:p-6"
+                    className="group relative w-full justify-start gap-4 rounded-2xl border border-neutral-200/90 bg-white/85 p-5 text-left text-neutral-900 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d9552e]/60 hover:shadow-xl lg:p-6"
                   >
                     <div className="flex items-center gap-4">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#d9552e] via-[#c44722] to-[#a83617] text-white shadow-md transition-transform duration-300 group-hover:scale-105 lg:h-12 lg:w-12">
@@ -615,7 +611,6 @@ export default async function Home() {
                         <span className="text-xs font-semibold text-neutral-600 lg:text-sm">{l.sub}</span>
                       </span>
                     </div>
-                    <ArrowUpRight className="h-5 w-5 shrink-0 text-[#d9552e] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
                   </WipeLink>
                 );
               })}
