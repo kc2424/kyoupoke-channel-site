@@ -571,10 +571,10 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-white p-5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#ffe8d6] hover:border-brand hover:shadow-md lg:p-6"
+                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-white p-5 text-left text-neutral-900 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1.5 hover:bg-[#ffe8d6] hover:border-brand hover:shadow-md lg:p-6"
                   >
                     <div className="flex items-center gap-4">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-white group-hover:text-brand lg:h-12 lg:w-12">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-all duration-500 ease-out group-hover:scale-105 group-hover:bg-white group-hover:text-brand lg:h-12 lg:w-12">
                         <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
                       </span>
                       <span className="flex flex-col">
@@ -599,10 +599,10 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-white p-5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#ffe8d6] hover:border-brand hover:shadow-md lg:p-6"
+                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-white p-5 text-left text-neutral-900 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1.5 hover:bg-[#ffe8d6] hover:border-brand hover:shadow-md lg:p-6"
                   >
                     <div className="flex items-center gap-4">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-white group-hover:text-brand lg:h-12 lg:w-12">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-all duration-500 ease-out group-hover:scale-105 group-hover:bg-white group-hover:text-brand lg:h-12 lg:w-12">
                         <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
                       </span>
                       <span className="flex flex-col">
