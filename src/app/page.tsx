@@ -267,10 +267,10 @@ export default async function Home() {
       <main>
       <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
         {/* モバイル構成 */}
-        <span className="pointer-events-none absolute top-1/2 left-4 hidden -translate-y-1/2 -rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
+        <span className="pointer-events-none absolute top-1/2 left-6 z-20 hidden -translate-y-1/2 -rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block lg:text-sm">
           Unofficial Fan Site
         </span>
-        <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 text-xs font-bold tracking-widest text-neutral-600 uppercase sm:block lg:text-sm">
+        <span className="pointer-events-none absolute top-1/2 right-6 z-20 hidden -translate-y-1/2 rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block lg:text-sm">
           YouTube → World
         </span>
 
@@ -571,7 +571,7 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-[#ffe8d6] p-5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#ffd9be] hover:border-brand hover:shadow-md lg:p-6"
+                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-white p-5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#ffe8d6] hover:border-brand hover:shadow-md lg:p-6"
                   >
                     <div className="flex items-center gap-4">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-transform duration-300 group-hover:scale-105 lg:h-12 lg:w-12">
@@ -599,7 +599,7 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-[#ffe8d6] p-5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#ffd9be] hover:border-brand hover:shadow-md lg:p-6"
+                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-white p-5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#ffe8d6] hover:border-brand hover:shadow-md lg:p-6"
                   >
                     <div className="flex items-center gap-4">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-transform duration-300 group-hover:scale-105 lg:h-12 lg:w-12">
