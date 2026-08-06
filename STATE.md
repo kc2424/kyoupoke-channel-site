@@ -171,3 +171,14 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(stat-counter.tsx, stat-spotlight.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `657002d24a4ab54c72c3d8116dae18945b647506`）
+- **2026-08-06 (Checker 15回目実行)**: 前回チェック済み以降の新規コミット `3b1c449`（スクロール進捗バーの先端にセクション名タグを追従させる。参考: DesignRush Design Award「IFF 2025 Sustainability Report」）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/main...origin/site-brushupは引き続き`no merge base`（既知の無関係な履歴分岐）
+  - Checker自身の前回コミット(`e125083`)からのMaker差分のみを`git diff e125083..3b1c449`で分離して確認。変更ファイルは4件（MAKER_STATE.md, src/app/layout.tsx, src/app/page.tsx, src/components/scroll-progress.tsx）で、いずれも今回のテーマ（スクロール進捗バーへのセクション名タグ追従）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし。`acts`配列（id/label/tone）自体は不変で、`ScrollProgress`へ渡す引数として参照されるのみ
+  - `ScrollProgress`の変更は新規`sections`任意prop（既定`undefined`）の追加のみで、未指定時は従来通りバー表示のみの完全後方互換。`layout.tsx`から無引数の`<ScrollProgress />`を削除し、`page.tsx`側で`sections={acts}`を渡す形に配置し直しているが、本サイトはルートが`/`のみで`position: fixed`のためDOM上のマウント位置変更による表示上の影響なし
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(scroll-progress.tsx, layout.tsx, page.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `3b1c449`）
