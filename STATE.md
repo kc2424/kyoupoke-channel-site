@@ -182,3 +182,14 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(scroll-progress.tsx, layout.tsx, page.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `3b1c449`）
+- **2026-08-06 (Checker 16回目実行)**: 前回チェック済み以降の新規コミット `754f7f0`（おすすめ動画のカーソルをブランドオレンジの再生ボタンに変化させる。参考: RocketAir（Awwwards SOTD+Developer Award / CSSDA WOTD））を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/main...origin/site-brushupは引き続き`no merge base`（既知の無関係な履歴分岐）
+  - Checker自身の前回コミット(`ea88891`)からのMaker差分のみを`git diff ea88891..754f7f0`で分離して確認。変更ファイルは3件（MAKER_STATE.md, src/app/page.tsx, src/components/custom-cursor.tsx）で、いずれも今回のテーマ（おすすめ動画カードのカーソル再生ボタン化）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし。`videos`配列自体は不変
+  - custom-cursor.tsxの変更は新規`playAffordance`ステート追加のみで、`data-cursor-play`属性を持つ要素にホバーした時だけring要素をブランドオレンジ塗りつぶし+白い再生三角アイコンに切り替える。既存のring/dot/labelの基本追従ロジック・`hovering`時の56pxリング・`prefers-reduced-motion`/`pointer: coarse`ガードは無変更で、`playAffordance`が偽の通常時は全てのスタイル値が従来通りに戻ることをdiffで確認。page.tsxの変更はおすすめ動画`Card`への`data-cursor-play="true"`属性追加と、サムネイル中央の常設再生アイコンをfine pointerホバー時のみフェードアウトさせるTailwindクラス追加のみ
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(custom-cursor.tsx, page.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `754f7f0`）
