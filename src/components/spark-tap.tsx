@@ -4,9 +4,10 @@ import gsap from "gsap";
 import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { useRef } from "react";
 
-import { playPop } from "@/lib/sound";
+import { isSoundEnabled, playPop, popFrequencyProfile } from "@/lib/sound";
 
 const SPARK_COLORS = ["bg-brand", "bg-white", "bg-black"];
+const SPECTRUM_BAR_COUNT = 6;
 
 export function SparkTap({
   children,
@@ -22,9 +23,43 @@ export function SparkTap({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  function spectrumBurst(originX: number, originY: number) {
+    const container = containerRef.current;
+    if (!container) return;
+    const profile = popFrequencyProfile(tone, SPECTRUM_BAR_COUNT);
+    const barWidth = 4;
+    const gap = 3;
+    const totalWidth = SPECTRUM_BAR_COUNT * barWidth + (SPECTRUM_BAR_COUNT - 1) * gap;
+
+    profile.forEach((height, i) => {
+      const bar = document.createElement("span");
+      const maxHeight = 34;
+      const barHeight = Math.max(height, 0.12) * maxHeight;
+      bar.className = "pointer-events-none absolute top-0 left-0 origin-bottom rounded-full bg-brand";
+      bar.style.width = `${barWidth}px`;
+      bar.style.height = `${barHeight}px`;
+      const x = originX - totalWidth / 2 + i * (barWidth + gap);
+      bar.style.transform = `translate(${x}px, ${originY - barHeight}px)`;
+      container.appendChild(bar);
+
+      gsap.fromTo(
+        bar,
+        { scaleY: 0.15, opacity: 1 },
+        {
+          scaleY: 1,
+          opacity: 0,
+          duration: 0.35 + i * 0.03,
+          ease: "power2.out",
+          onComplete: () => bar.remove(),
+        }
+      );
+    });
+  }
+
   function burst(originX: number, originY: number) {
     playPop(tone);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (isSoundEnabled()) spectrumBurst(originX, originY);
     const container = containerRef.current;
     if (!container) return;
 

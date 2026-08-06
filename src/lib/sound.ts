@@ -38,6 +38,9 @@ function getAudioContext() {
   return audioCtx;
 }
 
+const SWEEP_START_HZ = 880;
+const SWEEP_END_HZ = 220;
+
 export function playPop(pitch = 1) {
   if (!enabled) return;
   const ctx = getAudioContext();
@@ -48,8 +51,8 @@ export function playPop(pitch = 1) {
   const gain = ctx.createGain();
 
   osc.type = "sine";
-  osc.frequency.setValueAtTime(880 * pitch, now);
-  osc.frequency.exponentialRampToValueAtTime(220 * pitch, now + 0.12);
+  osc.frequency.setValueAtTime(SWEEP_START_HZ * pitch, now);
+  osc.frequency.exponentialRampToValueAtTime(SWEEP_END_HZ * pitch, now + 0.12);
 
   gain.gain.setValueAtTime(0.0001, now);
   gain.gain.exponentialRampToValueAtTime(0.28, now + 0.01);
@@ -59,4 +62,18 @@ export function playPop(pitch = 1) {
   gain.connect(ctx.destination);
   osc.start(now);
   osc.stop(now + 0.18);
+}
+
+/**
+ * playPop()が実際に鳴らす周波数スイープ（880*pitch→220*pitch の指数減衰）を
+ * サンプリングし、0〜1に正規化した高さの並びとして返す。鳴った音と見た目の
+ * 対応が取れるよう、演出側（SparkTapのスペクトラムバー等）はこの値をそのまま使う。
+ */
+export function popFrequencyProfile(pitch = 1, steps = 6) {
+  const maxHz = SWEEP_START_HZ * 2;
+  return Array.from({ length: steps }, (_, i) => {
+    const t = i / (steps - 1);
+    const hz = SWEEP_START_HZ * pitch * (SWEEP_END_HZ / SWEEP_START_HZ) ** t;
+    return hz / maxHz;
+  });
 }

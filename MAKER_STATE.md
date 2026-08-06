@@ -47,7 +47,8 @@
 34. Motiondeep（John Jattoh制作、CSS Design Awards Website of the Day 2026-08-05受賞）
 35. Serotoninn（BL/S® / Blacklead Studio制作、Awwwards Site of the Day 2026-08-05受賞、Developer Award同時受賞、総合スコア7.37）
 36. Uncommon Studio（オーストラリアのデザインスタジオUncommon自身のポートフォリオサイト、Awwwards Site of the Day + Developer Award、FWA Site of the Day、CSS Design Awards Special Kudosの3団体・4冠受賞）
-37. **CIAO ENERGY - LAUNCH WEBSITE**（Skaald制作、エナジードリンクブランドCiao Energyの新フレーバー発売記念サイト、Awwwards Site of the Day + Developer Award、2026-07-30受賞）← 今回追加
+37. CIAO ENERGY - LAUNCH WEBSITE（Skaald制作、エナジードリンクブランドCiao Energyの新フレーバー発売記念サイト、Awwwards Site of the Day + Developer Award、2026-07-30受賞）
+38. **Spectral Field**（Rob FWA制作、CSS Design Awards Website of the Day受賞。アップロードした音源をFFT解析し、曲ごとに一点物の線画アートワークをブラウザ上で生成する体験）← 今回追加
 
 次回以降は必ずこのリストに無い作品を選ぶこと。
 
@@ -62,6 +63,12 @@
 
 ## 直近の実行ログ
 
+- **2026-08-06（38回目）**: CSS Design Awards Website of the Day「Spectral Field」（Rob FWA制作。任意の音源をアップロードすると、ブラウザ内で完結するFFT 2048の解析だけでその曲固有の一点物の線画アートワークを描き出し、PNG/SVGとして書き出せるジェネレーティブ・オーディオビジュアル作品）を参考に分析。**注記: 今回もWebFetch（cssdesignawards.com/sites/spectral-field/49730/）は403で直接確認できず、WebSearchのスニペット（CSS Design Awards掲載情報、robfwa.com自身の紹介文の要約）から評価点を分析した**。5つの評価ポイント: ①音楽そのものを「聴くもの」で終わらせず「一点物の視覚的アートワーク」として描き出す、音→視覚への翻訳という発想の飛躍、②アップロードした音源ファイルが一切サーバーに送信されずブラウザ内（FFT 2048）だけで完結するプライバシー配慮の実装、③周波数・振幅という音の物理特性を、線の揺らぎという視覚言語へ具体的に対応づける変換設計の誠実さ（見た目が「それっぽい」だけでなく実際の音のデータに基づく）、④体験を一過性で終わらせず、生成物をPNG/SVGとして「持ち帰れる成果物」にする配慮、⑤Rob FWA自身の実装によるCSSDA WOTD受賞という完成度。今日ポケのオレンジ/黒/白3色ルール・実写ブランド素材中心の方針に対し、①②のような本格的な音源アップロード＋FFT解析体験そのものは本サイトのスコープ（ファンサイト）を超え規模・工数面で不釣り合いなため見送り。今回は③の本質——「実際に鳴っている音の物理特性（周波数）を、見た目にも同じ根拠で対応させて視覚化する」という誠実さ——を、既存のタップ音基盤（`playPop`のピッチ倍率スイープ）に対して抽出し、独自の軽量な演出として実装した。
+  - `src/lib/sound.ts`: `playPop()`が実際に鳴らす周波数スイープ（880Hz→220Hzを`pitch`倍したもの）の定数を`SWEEP_START_HZ`/`SWEEP_END_HZ`に名前付けして明示化。新規関数`popFrequencyProfile(pitch, steps)`を追加し、同じスイープを指定ステップ数でサンプリングして0〜1に正規化した高さの配列を返すようにした（架空の乱数ではなく、実際に鳴る音のパラメータをそのまま流用）。
+  - `src/components/spark-tap.tsx`: `SparkTap`のタップ演出に、既存の放射状スパークに加えて新規`spectrumBurst`を追加。`popFrequencyProfile(tone)`から得た高さで6本の縦バー（簡易スペクトラムアナライザー風、色は既存のブランドオレンジ）をタップ位置から生やし、GSAPで一瞬だけ伸び上がって消える一回性の演出にした（Spectral Fieldの「毎回描いて消える」性質を踏襲）。サウンドがオンの時（`isSoundEnabled()`）のみ表示し、「鳴っていない音を視覚化する」矛盾を避けた。既存の放射状スパークやクリック/キーボード操作、`playPop(tone)`の呼び出し自体は無変更。
+  - `src/app/page.tsx`: 変更なし。`achievements`配列・`achievementTones`・各`SparkTap`の呼び出し方はすべて既存のまま（`tone`prop経由で自動的にスペクトラムバーの高さへ反映される）。
+  - ビルド結果: `npm install` → `npm run build`（Turbopack）で成功（Google Fontsの取得も問題なし、修正リトライなしの1回で成功）。型チェック・静的ページ生成まで確認済み。`npm run lint`は既知の問題（本変更と無関係な4ファイル・計4件の`react-hooks/set-state-in-effect`：intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsx）のみで、変更ファイル（sound.ts, spark-tap.tsx）にlintエラーなし。`npm run dev`を起動しHTMLを取得（200応答、「実績・出演」を含む既存文言がSSRで期待通り出力されていることを確認）。Playwrightがこの環境に未インストールのため実ブラウザでの目視・聴覚確認は今回省略（変更は既存の`gsap.fromTo`パターンを踏襲したDOM生成のみで、`isSoundEnabled()`がfalseの既定状態では見た目の変化が一切無い低リスクな追加と判断）。
+  - コミットハッシュ: （このコミット自体。`git log -1`参照）
 - **2026-08-06（37回目）**: Awwwards Site of the Day + Developer Award「CIAO ENERGY - LAUNCH WEBSITE」（フランスのクリエイティブスタジオSkaald制作。エナジードリンクブランドCiao Energyの新フレーバー発売を記念したWebflow+Three.jsの没入型サイト。2026-07-30 SOTD受賞、Developer Award同時受賞）を参考に分析。**注記: 今回もWebFetch（awwwards.com/sites/ciao-energy-launch-website、mesh3d.gallery等）はいずれも403で直接確認できず、WebSearchのスニペット（Awwwards掲載情報、Three.jsショーケースサイトの紹介文の要約）から評価点を分析した**。5つの評価ポイント: ①製品そのもの（缶）をThree.js/WebGLで描画し、写真ではなく「触れるインタラクティブな3Dオブジェクト」としてヒーローに据える構成、②その3Dオブジェクトへの操作にサウンドデザインを統合し、視覚だけでなく聴覚でもブランドの「エナジー」感を伝える演出、③装飾を削ぎ落としたミニマルな配色で3Dオブジェクトとモーションに視線の重みを集中させる抑制、④GSAPによる発売ナラティブの滑らかな演出choreography、⑤Developer Award同時受賞が示す、Webflowという制作基盤の上にThree.js/WebGLを破綻なく重ねる実装力の高さ。今日ポケのオレンジ/黒/白3色ルールと軽量CSS/GSAP構成に対し、①⑤のような本格的なThree.js/WebGL3Dオブジェクトは規模・工数・素材面（実写ブランド素材中心の方針）で不釣り合いなため見送り。今回は②の本質——「インタラクションそのものに固有の音を持たせ、触れるたびに製品/ブランドらしい聴覚的アイデンティティが返ってくる」という考え方——を抽出し、既存のタップ音基盤（`src/lib/sound.ts`の`playPop`、`SoundToggle`でオプトイン済み）を拡張する形で独自実装した。
   - `src/lib/sound.ts`: `playPop()`に任意の`pitch`引数（既定値1、後方互換）を追加。指定した倍率を発振周波数（880Hz→220Hzのスイープ）に掛けるだけの薄い変更で、既存の呼び出し（引数なし）の音は完全に不変。
   - `src/components/spark-tap.tsx`: `SparkTap`に任意の`tone`prop（既定値1、`playPop`へそのまま橋渡し）を追加。指定しなければ従来通りの単一音のまま。
