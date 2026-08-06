@@ -157,7 +157,7 @@ const fallbackVideos = [
 ];
 
 const fallbackMainLinks = [
-  { label: "YouTube", sub: "本チャンネル", href: "https://www.youtube.com/@KYOUPOKE", icon: "YouTube" as const },
+  { label: "YouTube", sub: "今日ポケ Official", href: "https://www.youtube.com/@KYOUPOKE", icon: "YouTube" as const },
   { label: "X（旧Twitter）", sub: "@KYOUPOKEch", href: "https://x.com/KYOUPOKEch", icon: "X" as const },
   { label: "Instagram", sub: "@kyoupokeexpress", href: "https://www.instagram.com/kyoupokeexpress", icon: "Instagram" as const },
   { label: "TikTok", sub: "@kyoupoke", href: "https://www.tiktok.com/@kyoupoke", icon: "TikTok" as const },
@@ -570,10 +570,11 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section id="links" className="scroll-mt-24 bg-[#fdf8f4] py-16 sm:py-24 lg:py-32 border-b border-neutral-200/80">
-          <div className={CONTAINER}>
+        <section id="links" className="relative scroll-mt-24 overflow-hidden bg-[#fdf8f4] py-16 sm:py-24 lg:py-32 border-b border-neutral-200/80">
+          <AmbientMeshBackground variant="dots" />
+          <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading index={5} label="Links" heading="リンク" tone="light" />
-            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
               {mainLinks.map((l) => {
                 const Icon = linkIconMap[l.icon];
                 return (
@@ -582,24 +583,24 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="w-full justify-start gap-4 rounded-2xl border border-neutral-200/80 bg-white/80 px-5 py-4 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-md lg:px-6 lg:py-5"
+                    className="w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-[#ffe8d6] px-5 py-4.5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-[#ffd9be] hover:border-brand hover:shadow-md lg:px-6 lg:py-5"
                   >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand lg:h-12 lg:w-12">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-sm lg:h-12 lg:w-12">
                       <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
                     </span>
                     <span className="flex flex-col">
                       <span className="font-bold lg:text-lg text-neutral-900">{l.label}</span>
-                      <span className="text-xs text-neutral-600 lg:text-sm">{l.sub}</span>
+                      <span className="text-xs font-semibold text-neutral-700 lg:text-sm">{l.sub}</span>
                     </span>
                   </WipeLink>
                 );
               })}
             </div>
 
-            <p className="mt-12 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
+            <p className="mt-12 text-xs font-bold tracking-widest text-neutral-700 uppercase lg:text-sm">
               Member Channels
             </p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            <div className="mt-4 grid gap-3.5 sm:grid-cols-3">
               {memberLinks.map((l) => {
                 const Icon = linkIconMap[l.icon];
                 return (
@@ -608,14 +609,14 @@ export default async function Home() {
                     href={l.href}
                     wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="w-full justify-start gap-4 rounded-2xl border border-neutral-200/80 bg-white/80 px-5 py-4 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-md lg:px-6 lg:py-5"
+                    className="w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-[#ffe8d6] px-5 py-4.5 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-[#ffd9be] hover:border-brand hover:shadow-md lg:px-6 lg:py-5"
                   >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand lg:h-12 lg:w-12">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-sm lg:h-12 lg:w-12">
                       <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
                     </span>
                     <span className="flex flex-col">
                       <span className="font-bold lg:text-lg text-neutral-900">{l.label}</span>
-                      <span className="text-xs text-neutral-600 lg:text-sm">{l.sub}</span>
+                      <span className="text-xs font-semibold text-neutral-700 lg:text-sm">{l.sub}</span>
                     </span>
                   </WipeLink>
                 );

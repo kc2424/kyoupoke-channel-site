@@ -29,7 +29,7 @@ export function StatSpotlight({
           transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
           className="flex flex-col items-start"
         >
-          {/* KYOU POKE ヒーローと同じ可愛くポップな font-display フォント */}
+          {/* KYOU POKE ヒーロー画像・テキストと同じ font-display フォント */}
           <p className="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-brand tracking-tight drop-shadow-sm">
             <StatCounter value={s.value} suffix={s.suffix} decimals={s.decimals} />
           </p>
