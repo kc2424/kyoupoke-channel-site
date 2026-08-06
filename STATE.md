@@ -162,3 +162,12 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(lenis.ts, scroll-progress.tsx, layout.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `3439891f9798f626aba5c877544a62b4cb7d236c`）
+- **2026-08-06 (Checker 14回目実行)**: 前回チェック済み以降の新規コミット `657002d`（実績セクションの数字カウントアップに検証リング演出を追加。参考: Alethia（The FWA/Awwwards SOTD））を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/mainの直近履歴（HANDOVER.md追記、モバイルヒーロー調整等）は本セッション開始前からの既存の別セッションの正当な作業で、今回の対象コミットとは無関係
+  - 変更ファイルは4件（MAKER_STATE.md, STATE.md, src/components/stat-counter.tsx, src/components/stat-spotlight.tsx）で、今回のテーマ（実績カウントアップの検証リング演出）に一貫。無関係な変更の混入なし。STATE.md側の差分はCheckerの前回(13回目)ログの追記であり、Maker側からの改変ではない
+  - メンバー紹介文・実績のlabel/sub/value/suffix等の既存事実情報は一切変更なし。stat-counter.tsxの変更は新規`onProgress`任意コールバック追加のみでデフォルト`undefined`のため既存呼び出し側の挙動・シグネチャは後方互換。stat-spotlight.tsxの変更は数字下にカウントアップと同期する検証リング(SVG、ref経由の直接DOM更新)を追加しただけで、文言・数値の改変なし
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(stat-counter.tsx, stat-spotlight.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `657002d24a4ab54c72c3d8116dae18945b647506`）
