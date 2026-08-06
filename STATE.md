@@ -107,3 +107,14 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: `intro-loader.tsx`・`scramble-text.tsx`・`sound-toggle.tsx`・`video-modal.tsx`の`react-hooks/set-state-in-effect`計4件のみで失敗。`intro-loader.tsx`は今回のdiffに含まれないファイルだが未知のエラーだったため、前回検証済みコミット`de3acfd`でも同じエラーが再現するかを個別に確認し、pre-existingであることを検証済み（今回の変更由来ではない）。新規/変更ファイル(nav-mood-preview.tsx, page.tsx)にlintエラーなし。上記「既知の問題」セクションを4ファイルに更新した
   - **判定: PASS**（対象コミット: `348cd5f`）
+- **2026-08-06 (Checker 9回目実行)**: 前回チェック済み以降の新規コミット `b9f58c0`（Uncommon Studio(Awwwards SOTD+Developer Award/FWA SOTD/CSSDA Special Kudos)を参考に実績グリッドへ意図的な崩しを追加）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/mainの直近履歴は本セッション開始前からの既存の別セッションの正当な作業（HANDOVER.md追記、モバイルヒーロー調整等）で、今回の対象コミットとは無関係。origin/main...origin/site-brushupは引き続き`no merge base`（既知の無関係な履歴分岐）
+  - 変更ファイルは2件（MAKER_STATE.md, src/app/page.tsx）で、今回のテーマ（実績グリッドの先頭カードをワイドバナー型に崩す）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績のlabel/sub/icon/tone等の既存事実情報は一切変更なし。`achievements`配列自体は不変で、`isFlagship`はindex 0から導出するローカル変数のみ。先頭カード(YouTube Creator Awards 銀の盾)のレイアウト（アスペクト比・縦積み→横並び）のみ変更
+  - `AchievementIcon`への`className`prop追加呼び出しは既存コンポーネント定義（`className?: string`）で既にサポート済みであることを確認
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(page.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `b9f58c0f9ec1c4153cef9fe73d4f336eafb0da7b`）
