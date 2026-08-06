@@ -11,6 +11,7 @@ import { FadeIn } from "@/components/fade-in";
 import { GiantTitle } from "@/components/giant-title";
 import { HeroPhoto } from "@/components/hero-photo";
 import { HeroStickers } from "@/components/hero-stickers";
+import { MobileHeroCarousel } from "@/components/mobile-hero-carousel";
 import { LogoMark } from "@/components/logo-mark";
 import { MemberCard } from "@/components/member-card";
 import { OpArtRings } from "@/components/op-art-rings";
@@ -277,31 +278,17 @@ export default async function Home() {
           YouTube → World
         </span>
 
-        <div className="relative h-[100dvh] w-full sm:absolute sm:inset-0 sm:h-auto sm:w-full">
+        <div className="relative h-[100dvh] w-full sm:h-auto sm:min-h-0 sm:max-h-none sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
           <div className="absolute inset-0 overflow-hidden sm:hidden">
-            <HeroPhoto
-              src="/hero-mobile.png"
-              alt="今日ポケ メンバー3人"
-              objectPosition="object-[50%_10%]"
-              parallax
-            />
-            {/* モバイル写真下端を次セクションへとスムーズに繋ぐグラデーション */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-white via-white/80 to-transparent" />
+            <MobileHeroCarousel />
           </div>
           <div className="absolute inset-0 hidden overflow-hidden sm:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
           </div>
           {/* sm以上は写真が全画面のため、下端を白へ落として次セクションへ繋ぐ */}
           <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-white via-transparent to-transparent sm:block" />
-          <HeroStickers />
-
-          {/* モバイル: タイトル・Scrollを写真下部に直接重ねる */}
-          <div className="absolute inset-x-0 bottom-8 z-10 flex flex-col items-center px-6 sm:hidden">
-            <GiantTitle>KYOU POKE</GiantTitle>
-            <div className="pointer-events-none relative mt-4 flex flex-col items-center gap-2 text-neutral-600">
-              <span className="text-[10px] font-bold tracking-widest uppercase">Scroll</span>
-              <span className="h-6 w-px animate-pulse bg-neutral-400" />
-            </div>
+          <div className="hidden sm:block">
+            <HeroStickers />
           </div>
         </div>
 
