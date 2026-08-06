@@ -288,8 +288,6 @@ export default async function Home() {
         </div>
 
         <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
-          <div className="pointer-events-none absolute inset-x-[-10vw] top-1/2 h-[130%] -translate-y-1/2 bg-white/70 blur-3xl" />
-
           <FadeIn y={12}>
             <a
               href="#videos"
