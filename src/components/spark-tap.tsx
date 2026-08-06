@@ -12,15 +12,18 @@ export function SparkTap({
   children,
   className,
   sparkCount = 10,
+  tone = 1,
 }: {
   children: ReactNode;
   className?: string;
   sparkCount?: number;
+  /** playPopに渡す音高倍率。カードごとに異なる値を渡すと固有の音になる */
+  tone?: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   function burst(originX: number, originY: number) {
-    playPop();
+    playPop(tone);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const container = containerRef.current;
     if (!container) return;

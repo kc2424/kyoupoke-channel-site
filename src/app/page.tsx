@@ -87,6 +87,9 @@ const achievements = [
   { label: "Pokémon TCG Pocket", sub: "コラボイベント開催", tone: "brand", icon: "cards" },
 ] as const;
 
+// 実績カードをタップした時の音高倍率（ペンタトニックスケール）。カードごとに固有の音を鳴らす
+const achievementTones = [1, 9 / 8, 5 / 4, 3 / 2, 5 / 3, 2] as const;
+
 const growthMilestones = [
   { date: "2021.08.08", label: "活動開始" },
   { date: "2022", label: "登録者10万人・銀の盾" },
@@ -308,6 +311,7 @@ export default function Home() {
                 return (
                   <SparkTap
                     key={a.label}
+                    tone={achievementTones[i % achievementTones.length]}
                     className={cn(
                       "flex cursor-pointer rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
                       isFlagship

@@ -38,7 +38,7 @@ function getAudioContext() {
   return audioCtx;
 }
 
-export function playPop() {
+export function playPop(pitch = 1) {
   if (!enabled) return;
   const ctx = getAudioContext();
   if (!ctx) return;
@@ -48,8 +48,8 @@ export function playPop() {
   const gain = ctx.createGain();
 
   osc.type = "sine";
-  osc.frequency.setValueAtTime(880, now);
-  osc.frequency.exponentialRampToValueAtTime(220, now + 0.12);
+  osc.frequency.setValueAtTime(880 * pitch, now);
+  osc.frequency.exponentialRampToValueAtTime(220 * pitch, now + 0.12);
 
   gain.gain.setValueAtTime(0.0001, now);
   gain.gain.exponentialRampToValueAtTime(0.28, now + 0.01);
