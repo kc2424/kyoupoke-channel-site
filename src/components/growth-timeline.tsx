@@ -6,12 +6,21 @@ import gsap from "gsap";
 import { useRef } from "react";
 
 import { cn } from "@/lib/utils";
+import { StatCounter } from "@/components/stat-counter";
 
 gsap.registerPlugin(ScrollTrigger);
+
+type LiveStat = {
+  value: number;
+  suffix: string;
+  caption: string;
+};
 
 type Milestone = {
   date: string;
   label: string;
+  /** 指定すると、この節目のラベルを静的な文字列の代わりにカウントアップする単一指標として表示する */
+  live?: LiveStat[];
 };
 
 export function GrowthTimeline({
@@ -105,9 +114,33 @@ export function GrowthTimeline({
             <span className="text-xs font-bold tracking-widest uppercase lg:text-sm">
               {m.date}
             </span>
-            <span className="mt-1 text-xs leading-snug font-bold lg:text-base">
-              {m.label}
-            </span>
+            {m.live ? (
+              <span
+                className={cn(
+                  "mt-1 flex flex-col gap-1",
+                  i === 0 && "items-start",
+                  i > 0 && i < milestones.length - 1 && "items-center",
+                  i === milestones.length - 1 && "items-end"
+                )}
+              >
+                {m.live.map((s) => (
+                  <span key={s.caption} className="flex items-baseline gap-1">
+                    <StatCounter
+                      value={s.value}
+                      suffix={s.suffix}
+                      className="font-display text-lg leading-none text-neutral-900 lg:text-2xl"
+                    />
+                    <span className="text-[10px] leading-none font-bold text-neutral-400 lg:text-xs">
+                      {s.caption}
+                    </span>
+                  </span>
+                ))}
+              </span>
+            ) : (
+              <span className="mt-1 text-xs leading-snug font-bold lg:text-base">
+                {m.label}
+              </span>
+            )}
           </div>
         ))}
       </div>

@@ -95,7 +95,14 @@ const achievementTones = [1, 9 / 8, 5 / 4, 3 / 2, 5 / 3, 2] as const;
 const growthMilestones = [
   { date: "2021.08.08", label: "活動開始" },
   { date: "2022", label: "登録者10万人・銀の盾" },
-  { date: "NOW", label: "登録者58万人+ / 再生10億回+" },
+  {
+    date: "NOW",
+    label: "登録者58万人+ / 再生10億回+",
+    live: [
+      { value: 58, suffix: "万人+", caption: "登録者" },
+      { value: 10, suffix: "億回+", caption: "再生" },
+    ],
+  },
 ];
 
 // TODO: 実際のおすすめ動画のIDに差し替えてください
