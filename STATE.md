@@ -6,11 +6,14 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
 
 ## 既知の問題・回避策
 
-- **lint: `react-hooks/set-state-in-effect`（4件）**: `src/components/scramble-text.tsx`・
-  `src/components/sound-toggle.tsx`・`src/components/video-modal.tsx` で `npm run lint` が
-  エラーになる。2026-08-05のChecker初回実行時点で、直近のMaker変更（f9d3e8f, 7576296）が
-  触れていないファイルであり、それより前の `fc13e9a` 時点でも同じ4件が再現することを確認済み。
-  今回の変更が原因ではない既知の技術的負債として扱う。将来のChecker実行でもこの3ファイル由来の
+- **lint: `react-hooks/set-state-in-effect`（4件）**: `src/components/intro-loader.tsx`・
+  `src/components/scramble-text.tsx`・`src/components/sound-toggle.tsx`・
+  `src/components/video-modal.tsx` で `npm run lint` がエラーになる。2026-08-05のChecker初回実行
+  時点で、直近のMaker変更（f9d3e8f, 7576296）が触れていないファイルであり、それより前の
+  `fc13e9a` 時点でも同じ4件が再現することを確認済み。2026-08-06のChecker実行（8回目）で
+  `intro-loader.tsx` も同じエラー種別で既に含まれていたことを確認し（前回検証済みコミット
+  `de3acfd` 時点で再現、今回のMaker変更 `348cd5f` 由来ではない）、リストを4ファイルに更新した。
+  今回の変更が原因ではない既知の技術的負債として扱う。将来のChecker実行でもこの4ファイル由来の
   同じ4件はビルド判定のブロッカーにしない（新しいファイル・別のエラー内容が増えていないかは
   毎回確認すること）。
 - **`npm run build`（Turbopack）がサンドボックスでGoogle Fonts取得に失敗することがある**:
@@ -94,3 +97,13 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(frame-scrub.tsx, page.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `9b8c5cbc8cd5b2bdbdaff416a8a0cf84e1b4ffa5`）
+- **2026-08-06 (Checker 8回目実行)**: 前回チェック済み以降の新規コミット `348cd5f`（Serotoninn(Awwwards SOTD)を参考にヘッダーナビへセクション先出しのムードプレビューを追加）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/mainの直近3件は本セッション開始前からの既存の別セッションの正当な作業（モバイルヒーロー調整等）で、今回の対象コミットとは無関係
+  - 変更ファイルは3件（MAKER_STATE.md, src/app/page.tsx, src/components/nav-mood-preview.tsx新規）で、いずれも今回のテーマ（ヘッダーナビのムードプレビュー）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし。`navMoodItems`は既存`navItems`のlabel/hrefをそのまま展開し、トーンは既存`acts`配列と一致。キャプション文言は新規の要約のみ
+  - public/icon.png・public/hero-mascots.png等のブランド素材ファイル自体の差し替えはなし（既存パスを`<Image>`で参照しているのみ）
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: `intro-loader.tsx`・`scramble-text.tsx`・`sound-toggle.tsx`・`video-modal.tsx`の`react-hooks/set-state-in-effect`計4件のみで失敗。`intro-loader.tsx`は今回のdiffに含まれないファイルだが未知のエラーだったため、前回検証済みコミット`de3acfd`でも同じエラーが再現するかを個別に確認し、pre-existingであることを検証済み（今回の変更由来ではない）。新規/変更ファイル(nav-mood-preview.tsx, page.tsx)にlintエラーなし。上記「既知の問題」セクションを4ファイルに更新した
+  - **判定: PASS**（対象コミット: `348cd5f`）
