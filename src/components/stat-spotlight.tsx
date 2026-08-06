@@ -16,6 +16,9 @@ type Stat = {
   label: string;
 };
 
+const RING_RADIUS = 15;
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+
 export function StatSpotlight({
   stats,
   className,
@@ -25,6 +28,20 @@ export function StatSpotlight({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const ringRefs = useRef<(SVGCircleElement | null)[]>([]);
+  const checkRefs = useRef<(SVGPathElement | null)[]>([]);
+
+  const handleProgress = (i: number) => (progress: number) => {
+    const clamped = Math.min(1, Math.max(0, progress));
+    const ring = ringRefs.current[i];
+    const check = checkRefs.current[i];
+    if (ring) {
+      ring.style.strokeDashoffset = `${RING_CIRCUMFERENCE * (1 - clamped)}`;
+    }
+    if (check) {
+      check.style.opacity = clamped >= 1 ? "1" : "0";
+    }
+  };
 
   useGSAP(
     () => {
@@ -77,11 +94,57 @@ export function StatSpotlight({
           }}
         >
           <p className="font-display text-4xl text-brand tabular-nums sm:text-5xl lg:text-7xl">
-            <StatCounter value={s.value} suffix={s.suffix} />
+            <StatCounter value={s.value} suffix={s.suffix} onProgress={handleProgress(i)} />
           </p>
-          <p className="mt-2 text-xs font-bold tracking-widest text-white/50 uppercase lg:text-sm">
-            {s.label}
-          </p>
+          <div className="mt-2 flex items-center gap-2">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 36 36"
+              className="-rotate-90 shrink-0 lg:h-5 lg:w-5"
+              aria-hidden="true"
+            >
+              <circle
+                cx="18"
+                cy="18"
+                r={RING_RADIUS}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="text-white/10"
+              />
+              <circle
+                ref={(el) => {
+                  ringRefs.current[i] = el;
+                }}
+                cx="18"
+                cy="18"
+                r={RING_RADIUS}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeDasharray={RING_CIRCUMFERENCE}
+                strokeDashoffset={RING_CIRCUMFERENCE}
+                className="text-brand"
+              />
+              <path
+                ref={(el) => {
+                  checkRefs.current[i] = el;
+                }}
+                d="M11 18l4.5 4.5L25 13"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-brand opacity-0 transition-opacity duration-300"
+              />
+            </svg>
+            <p className="text-xs font-bold tracking-widest text-white/50 uppercase lg:text-sm">
+              {s.label}
+            </p>
+          </div>
         </div>
       ))}
     </div>

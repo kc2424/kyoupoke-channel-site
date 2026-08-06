@@ -12,11 +12,13 @@ export function StatCounter({
   suffix = "",
   decimals = 0,
   className,
+  onProgress,
 }: {
   value: number;
   suffix?: string;
   decimals?: number;
   className?: string;
+  onProgress?: (progress: number) => void;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -33,6 +35,7 @@ export function StatCounter({
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         el.textContent = `${format(value)}${suffix}`;
+        onProgress?.(1);
         return;
       }
 
@@ -48,6 +51,7 @@ export function StatCounter({
             ease: "power2.out",
             onUpdate: () => {
               el.textContent = `${format(counter.n)}${suffix}`;
+              onProgress?.(value === 0 ? 1 : counter.n / value);
             },
           }),
       });
