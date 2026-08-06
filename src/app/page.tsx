@@ -570,9 +570,9 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section id="links" className="scroll-mt-24 bg-brand-dark py-20 lg:py-32">
+        <section id="links" className="scroll-mt-24 bg-gradient-to-b from-white via-[#fff5ed] to-[#ffebdd] py-16 sm:py-24 lg:py-32 border-t border-neutral-200/80">
           <div className={CONTAINER}>
-            <SectionHeading index={5} label="Links" heading="リンク" tone="brand" />
+            <SectionHeading index={5} label="Links" heading="リンク" tone="light" />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {mainLinks.map((l) => {
                 const Icon = linkIconMap[l.icon];
@@ -580,23 +580,23 @@ export default async function Home() {
                   <WipeLink
                     key={l.href}
                     href={l.href}
-                    wipeColor="bg-black"
+                    wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="w-full justify-start gap-4 rounded-2xl border-white/30 px-5 py-4 text-left text-white transition-transform duration-300 hover:-translate-y-1 lg:px-6 lg:py-5"
+                    className="w-full justify-start gap-4 rounded-2xl border border-neutral-200/80 bg-white/80 px-5 py-4 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-md lg:px-6 lg:py-5"
                   >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 lg:h-12 lg:w-12">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand lg:h-12 lg:w-12">
                       <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
                     </span>
                     <span className="flex flex-col">
-                      <span className="font-bold lg:text-lg">{l.label}</span>
-                      <span className="text-xs text-white/90 lg:text-sm">{l.sub}</span>
+                      <span className="font-bold lg:text-lg text-neutral-900">{l.label}</span>
+                      <span className="text-xs text-neutral-600 lg:text-sm">{l.sub}</span>
                     </span>
                   </WipeLink>
                 );
               })}
             </div>
 
-            <p className="mt-10 text-xs font-bold tracking-widest text-white uppercase lg:text-sm">
+            <p className="mt-12 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
               Member Channels
             </p>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -606,16 +606,16 @@ export default async function Home() {
                   <WipeLink
                     key={l.href}
                     href={l.href}
-                    wipeColor="bg-black"
+                    wipeColor="bg-brand"
                     cursorLabel="OPEN"
-                    className="w-full justify-start gap-4 rounded-2xl border-white/30 px-5 py-4 text-left text-white transition-transform duration-300 hover:-translate-y-1 lg:px-6 lg:py-5"
+                    className="w-full justify-start gap-4 rounded-2xl border border-neutral-200/80 bg-white/80 px-5 py-4 text-left text-neutral-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-md lg:px-6 lg:py-5"
                   >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 lg:h-12 lg:w-12">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand lg:h-12 lg:w-12">
                       <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
                     </span>
                     <span className="flex flex-col">
-                      <span className="font-bold lg:text-lg">{l.label}</span>
-                      <span className="text-xs text-white/90 lg:text-sm">{l.sub}</span>
+                      <span className="font-bold lg:text-lg text-neutral-900">{l.label}</span>
+                      <span className="text-xs text-neutral-600 lg:text-sm">{l.sub}</span>
                     </span>
                   </WipeLink>
                 );
