@@ -13,6 +13,7 @@ export function CustomCursor() {
   const [hovering, setHovering] = useState(false);
   const [label, setLabel] = useState<string | null>(null);
   const [previewIndex, setPreviewIndex] = useState<string | null>(null);
+  const [playAffordance, setPlayAffordance] = useState(false);
 
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) {
@@ -70,6 +71,9 @@ export function CustomCursor() {
       const labelTarget = (e.target as HTMLElement)?.closest?.("[data-cursor-label]") as HTMLElement | null;
       setLabel(labelTarget?.dataset.cursorLabel ?? null);
       setPreviewIndex(labelTarget?.dataset.cursorIndex ?? null);
+
+      const playTarget = (e.target as HTMLElement)?.closest?.("[data-cursor-play]");
+      setPlayAffordance(Boolean(playTarget));
     };
 
     const handleLeave = () => {
@@ -100,19 +104,34 @@ export function CustomCursor() {
         ref={dotRef}
         aria-hidden
         className="pointer-events-none fixed top-0 left-0 z-[999] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference transition-opacity duration-200"
-        style={{ opacity: active ? 1 : 0 }}
+        style={{ opacity: active && !playAffordance ? 1 : 0 }}
       />
       <div
         ref={ringRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[999] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white mix-blend-difference transition-[width,height,opacity,background-color] duration-200 ease-out"
+        className="pointer-events-none fixed top-0 left-0 z-[999] flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white transition-[width,height,opacity,background-color,border-color] duration-200 ease-out"
         style={{
           opacity: active ? 1 : 0,
-          width: hovering ? 56 : 32,
-          height: hovering ? 56 : 32,
-          backgroundColor: hovering ? "rgba(255, 255, 255, 0.15)" : "transparent",
+          width: playAffordance ? 64 : hovering ? 56 : 32,
+          height: playAffordance ? 64 : hovering ? 56 : 32,
+          backgroundColor: playAffordance
+            ? "var(--brand)"
+            : hovering
+              ? "rgba(255, 255, 255, 0.15)"
+              : "transparent",
+          borderColor: playAffordance ? "transparent" : "white",
+          mixBlendMode: playAffordance ? "normal" : "difference",
         }}
-      />
+      >
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          className="ml-0.5 h-5 w-5 fill-white transition-opacity duration-150"
+          style={{ opacity: playAffordance ? 1 : 0 }}
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
       <div
         ref={labelRef}
         aria-hidden

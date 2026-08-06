@@ -374,11 +374,15 @@ export default function Home() {
             {videos.map((v, i) => (
               <FadeIn key={v.id} delay={i * 0.1}>
                 <TiltCard>
-                  <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="見る">
+                  <Card
+                    className="group/mono overflow-hidden p-0 shadow-sm"
+                    data-cursor-label="見る"
+                    data-cursor-play="true"
+                  >
                     <VideoModal videoId={v.videoId} title={`おすすめ動画${v.id}`}>
                       <MonoReveal className="relative aspect-video">
                         <FrameScrub videoId={v.videoId} alt={`おすすめ動画${v.id}のサムネイル`} />
-                        <span className="absolute inset-0 flex items-center justify-center">
+                        <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 [@media(pointer:fine)]:group-hover/mono:opacity-0">
                           <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-brand shadow-lg transition-transform duration-300 group-hover/mono:scale-110 lg:h-20 lg:w-20">
                             <svg
                               viewBox="0 0 24 24"
