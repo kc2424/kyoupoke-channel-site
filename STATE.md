@@ -128,3 +128,15 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(sound.ts, spark-tap.tsx, page.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `14da195350a1eeba6b15e5c8289b88d7f2c4ddfd`）
+- **2026-08-06 (Checker 11回目実行)**: 前回チェック済み以降の新規コミット `a2a3d52`（Spectral Field(CSS Design Awards WOTD)を参考に実績カードのタップ音を視覚化するスペクトラムバー演出を追加）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/mainの直近履歴は本セッション開始前からの既存の別セッションの正当な作業（HANDOVER.md追記、モバイルヒーロー調整等）で、今回の対象コミットとは無関係。a2a3d52はsite-brushupブランチのみから到達可能であることを確認（mainには含まれない）
+  - 変更ファイルは3件（MAKER_STATE.md, src/components/spark-tap.tsx, src/lib/sound.ts）で、いずれも今回のテーマ（タップ音のスペクトラムバー視覚化）に一貫。無関係な変更の混入なし。page.tsxの変更なし
+  - メンバー紹介文・実績のlabel/sub/icon/tone等の既存事実情報は一切変更なし。`achievements`配列自体は不変
+  - `playPop()`の周波数スイープ定数(880Hz→220Hz)を`SWEEP_START_HZ`/`SWEEP_END_HZ`として明示化した変更のみで、既存呼び出し(`pitch`既定値1)の挙動は不変。新規`popFrequencyProfile()`は既存スイープをサンプリングするだけの追加関数
+  - `SparkTap`への`spectrumBurst`追加は`isSoundEnabled()`がtrueの時のみ発火する追加描画で、既存の放射状スパーク・`playPop(tone)`呼び出し自体は無変更
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(sound.ts, spark-tap.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `a2a3d52`）
