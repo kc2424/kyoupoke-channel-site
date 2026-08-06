@@ -45,7 +45,8 @@
 32. 2xA Studio（2xA制作、Awwwards Site of the Day 2026-07-31、Developer Award、総合スコア7.22）
 33. The Triadic Ballet AI（isaWabi / Isabelle Cuisset制作、CSS Design Awards Website of the Day 2026-08-04）
 34. Motiondeep（John Jattoh制作、CSS Design Awards Website of the Day 2026-08-05受賞）
-35. **Serotoninn**（BL/S® / Blacklead Studio制作、Awwwards Site of the Day 2026-08-05受賞、Developer Award同時受賞、総合スコア7.37）← 今回追加
+35. Serotoninn（BL/S® / Blacklead Studio制作、Awwwards Site of the Day 2026-08-05受賞、Developer Award同時受賞、総合スコア7.37）
+36. **Uncommon Studio**（オーストラリアのデザインスタジオUncommon自身のポートフォリオサイト、Awwwards Site of the Day + Developer Award、FWA Site of the Day、CSS Design Awards Special Kudosの3団体・4冠受賞）← 今回追加
 
 次回以降は必ずこのリストに無い作品を選ぶこと。
 
@@ -60,6 +61,10 @@
 
 ## 直近の実行ログ
 
+- **2026-08-06（36回目）**: Awwwards Site of the Day「Uncommon Studio」（オーストラリアのデザインスタジオUncommon自身のポートフォリオサイト。Awwwards Site of the Day + Developer Award、FWA Site of the Day、CSS Design Awards Special Kudosという3団体・4冠を受賞）を参考に分析。**注記: 今回もWebFetch（awwwards.com/sites/uncommon-website、good-design.org、hontran.dev等）はいずれも403で直接確認できず、WebSearchのスニペット（Awwwards掲載情報、Good Design Awards掲載情報、レビュー記事の要約）から評価点を分析した**。5つの評価ポイント: ①「ちょうど良いタイミングで崩れる、確信を持ったグリッド」——均等なグリッドをただ敷くのではなく、要所だけ意図的に崩して視線を誘導する構成美、②GSAPによるセクション間トランジションが「カメラワークのように感じられる」という、単なるフェードではない演出の質、③「作り込まれたクリエイティブスタジオのサイト＝重くて自己満足的」という思い込みを覆す、演出過多でも軽快さを保つパフォーマンス規律、④Awwwards Typography Honors（2025-01）も受賞するタイポグラフィそのものの完成度、⑤Awwwards SOTD+Developer Award・FWA SOTD・CSSDA Special Kudosという3団体4冠の総合力。今日ポケの軽量なCSS/GSAP構成に対し、②のセクション間トランジション演出は既存の`SectionBlend`/`GenerativeTrace`/`ChapterMark`で既に厚めに実装済みのため重複を避け、③（パフォーマンス規律）は新規ビジュアル要素の追加を伴わない監査的な観点のため見送った。今回は①の本質——「均等なグリッドを、意図的に・要所だけ崩すことで視線の重みを作る」という考え方——を、「実績・出演」セクションの6件が横並びの単調な3列グリッドだった箇所に抽出し独自実装した。
+  - `src/app/page.tsx`: 「実績・出演」の`achievements`グリッド内、配列の先頭（YouTube Creator Awards 銀の盾、既存データそのまま・並び順も不変）の1枚だけを`sm:col-span-3`でグリッド全幅に広げ、アスペクト比をワイドバナー型（`aspect-[16/9]`〜`sm:aspect-[32/9]`）に、内部レイアウトも縦積みから横並び（アイコン+テキスト）に変更した。他の5枚のカードは既存のレイアウト・アスペクト比・並び順のまま。ラベル・サブテキスト・トーン・アイコン種類等の既存事実情報は一切変更していない（新規データフィールドの追加もなし、`isFlagship`はindexから導出するローカル変数のみ）。
+  - ビルド結果: `npm install` → `npm run build`（Turbopack）で成功（Google Fontsの取得も問題なし、修正リトライなしの1回で成功）。型チェック・静的ページ生成まで確認済み。`npm run lint`は既知の問題（本変更と無関係な4ファイル・計4件の`react-hooks/set-state-in-effect`）のみで、変更ファイル（page.tsx）にlintエラーなし。`npm run dev`を起動しHTMLを取得（200応答、`sm:col-span-3`を含むflagshipカードのクラスと既存の実績ラベル文言がSSRで期待通り出力されていることを確認）。Playwrightがこの環境のnpmパッケージとして未インストールのため実ブラウザでの目視スクリーンショット確認は今回省略（変更は既存の`SparkTap`/`AchievementIcon`/`SnapReveal`をそのまま再利用したCSS Grid/Flexboxのレイアウト変更のみでリスクは低いと判断）。
+  - コミットハッシュ: （このコミット自体。`git log -1`参照）
 - **2026-08-05（29回目）**: Awwwards Site of the Day「Hearst Exhibit 2026」（OSMOS PRO制作、HearstCC / Edoardo Lunardi / Daniel Velasquez / Marjoe Bacus。ELLE・Esquire合同のハリウッド写真展を紹介するギャラリーサイト。2026-08-02 SOTD受賞、Developer Award同時受賞、総合スコア7.21）を参考に分析。**注記: WebFetch（awwwards.com）は今回も403で直接確認できず、WebSearchのスニペットから評価点を分析した**。5つの評価ポイント: ①配色の抑制＝わずか2色（#252525のほぼ黒、#E3E3E3のほぼ白）のミニマルパレットに絞り、写真そのものを主役にする哲学、②WebGLギャラリー＝写真展示に本格的なWebGLトランジションを使用、③GSAPによる滑らかなスクロール演出、④マイクロインタラクション＝ホバー・カーソル演出、⑤タイポグラフィと余白＝クリーンで抑制されたギャラリー的な余白の使い方。今日ポケのオレンジ/黒/白3色ルールに合わない本格WebGL（②相当）は見送り、また①はサムネイルに既に`MonoReveal`（グレースケール→カラー）で近い哲学を実装済みのため重複を避けた。今回は⑤の本質——「意味情報（キャプション）は常時表示せず、興味を持って触れた人にだけ差し出す」という展示物解説プレート的な節度——を抽出し独自実装した。
   - `src/components/gallery-caption.tsx`: 新規作成。`group/gallery`を付けた祖先要素にホバー/フォーカスした時だけ、下端から黒グラデーションのスクリムと共に展示キャプション（アイウォッシュラベル＋一言キャプション、ブランドオレンジの区切り線）が`clip-path`でスライドインする薄いラッパーコンポーネント。GSAP不使用の純CSS transition（既存の`MonoReveal`/`UnderlineLink`と同じ設計方針を踏襲）。
   - `src/app/page.tsx`: 「Meet the Members」の実写マスコットバナー（`hero-mascots.png`）にのみ適用。既存の`BlueprintCorners`の常時表示ラベルは変更せず残し、`GalleryCaption`をホバー時だけ追加で現れる第二層の情報として重ねた。他のセクション（実績カード・動画サムネイル等）には適用せず、節度を保った。

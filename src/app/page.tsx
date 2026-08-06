@@ -303,22 +303,46 @@ export default function Home() {
               className="mt-10 border-y border-white/10 py-8 lg:py-10"
             />
             <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
-              {achievements.map((a) => (
-                <SparkTap
-                  key={a.label}
-                  className={cn(
-                    "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
-                    a.tone === "brand" && "bg-brand text-white",
-                    a.tone === "black" && "bg-white/10 text-white"
-                  )}
-                >
-                  <AchievementIcon name={a.icon} tone={a.tone} />
-                  <p className="font-display text-lg leading-tight sm:text-xl lg:text-2xl">
-                    {a.label}
-                  </p>
-                  <p className="mt-1 text-xs font-bold opacity-70 lg:text-sm">{a.sub}</p>
-                </SparkTap>
-              ))}
+              {achievements.map((a, i) => {
+                const isFlagship = i === 0;
+                return (
+                  <SparkTap
+                    key={a.label}
+                    className={cn(
+                      "flex cursor-pointer rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
+                      isFlagship
+                        ? "aspect-[16/9] flex-row items-center gap-5 sm:col-span-3 sm:aspect-[32/9] lg:gap-8"
+                        : "aspect-[4/3] flex-col justify-end",
+                      a.tone === "brand" && "bg-brand text-white",
+                      a.tone === "black" && "bg-white/10 text-white"
+                    )}
+                  >
+                    <AchievementIcon
+                      name={a.icon}
+                      tone={a.tone}
+                      className={isFlagship ? "mb-0 h-12 w-12 shrink-0 lg:h-20 lg:w-20" : undefined}
+                    />
+                    <div>
+                      <p
+                        className={cn(
+                          "font-display leading-tight",
+                          isFlagship ? "text-xl sm:text-2xl lg:text-4xl" : "text-lg sm:text-xl lg:text-2xl"
+                        )}
+                      >
+                        {a.label}
+                      </p>
+                      <p
+                        className={cn(
+                          "mt-1 font-bold opacity-70",
+                          isFlagship ? "text-xs lg:text-base" : "text-xs lg:text-sm"
+                        )}
+                      >
+                        {a.sub}
+                      </p>
+                    </div>
+                  </SparkTap>
+                );
+              })}
             </SnapReveal>
           </div>
         </section>
