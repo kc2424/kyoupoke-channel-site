@@ -341,7 +341,7 @@ export default async function Home() {
       <div aria-hidden className="h-4 w-full bg-gradient-to-b from-white/0 to-white sm:hidden" />
 
       <FadeIn>
-        <section className="relative overflow-hidden border-y border-neutral-200 bg-white py-24 lg:py-32">
+        <section className="relative overflow-hidden py-24 lg:py-32">
           <AmbientMeshBackground variant="matrix" />
           <div className={cn(CONTAINER, "relative z-10 flex flex-col items-start gap-1 lg:gap-2")}>
             <RevealText
@@ -364,7 +364,7 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section className="relative overflow-hidden bg-white pb-24 lg:pb-32">
+        <section className="relative overflow-hidden pb-24 lg:pb-32">
           <AmbientMeshBackground variant="dots" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
@@ -423,14 +423,12 @@ export default async function Home() {
                   )}
                 </div>
               </div>
-
-
             </div>
           </section>
         </FadeIn>
 
-        <section id="members" className="relative overflow-hidden scroll-mt-24 bg-[#faf6f2] py-16 sm:py-24 lg:py-32 border-y border-neutral-200/80">
-          <AmbientMeshBackground variant="stripes" />
+        <section id="members" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
+          <AmbientMeshBackground variant="ring" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading
               index={2}
@@ -481,13 +479,12 @@ export default async function Home() {
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden bg-gradient-to-br from-[#fff7f2] via-[#ffece0] to-[#fff5ed] py-16 sm:py-24 lg:py-32 text-neutral-900 border-b border-neutral-200/80"
+          className="relative scroll-mt-24 overflow-hidden py-16 sm:py-24 lg:py-32 text-neutral-900"
         >
-          {/* 飽きさせない幾何学ドットグリッド ＆ 静かに漂うオーラ粒子背景 */}
-          <AmbientMeshBackground />
+          <AmbientMeshBackground variant="waves" />
 
-          {/* カード群と重ならないよう、右上にアンビエントリングを配置 */}
-          <OpArtRings className="top-0 right-0 h-[180px] w-[180px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px] opacity-40 z-0" />
+          {/* 右上にアンビエントリングを配置 */}
+          <OpArtRings className="top-0 right-0 h-[180px] w-[180px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px] opacity-35 z-0" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="light" />
             <StatSpotlight
@@ -537,7 +534,7 @@ export default async function Home() {
         </section>
       </FadeIn>
       <FadeIn>
-        <section id="videos" className="relative overflow-hidden scroll-mt-24 bg-white py-16 sm:py-24 lg:py-32 border-b border-neutral-200/80">
+        <section id="videos" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
           <AmbientMeshBackground variant="cinematic" />
           <div className={cn(CONTAINER, "relative z-10")}>
           <SectionHeading index={4} label="Videos" heading="おすすめ動画" />
