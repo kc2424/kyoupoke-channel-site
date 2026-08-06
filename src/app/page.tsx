@@ -1,4 +1,5 @@
 import { BlueprintCorners } from "@/components/blueprint-corners";
+import { AmbientMeshBackground } from "@/components/ambient-mesh-background";
 import {
   InstagramIcon,
   ShopIcon,
@@ -471,13 +472,19 @@ export default async function Home() {
           </div>
         </section>
 
+      {/* メンバー紹介 ➔ 実績・出演: 境目が1pxも切れない完全シームレスなマルチストップ・ロングフェード帯 */}
+      <div className="h-32 w-full bg-gradient-to-b from-white via-[#fff9f4] via-[#ffefe3] to-[#fff5ed]" />
+
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#fff5ed] via-[#fff0e6] to-white py-14 sm:py-24 lg:py-32 text-neutral-900 border-y border-neutral-200/80"
+          className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#fff5ed] via-[#fff0e6] to-white py-14 sm:py-24 lg:py-32 text-neutral-900 border-b border-neutral-200/80"
         >
+          {/* 飽きさせない幾何学ドットグリッド ＆ 静かに漂うオーラ粒子背景 */}
+          <AmbientMeshBackground />
+
           {/* カード群と重ならないよう、右上にアンビエントリングを配置 */}
-          <OpArtRings className="top-0 right-0 h-[180px] w-[180px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px] opacity-40" />
+          <OpArtRings className="top-0 right-0 h-[180px] w-[180px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px] opacity-40 z-0" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="light" />
             <StatSpotlight
