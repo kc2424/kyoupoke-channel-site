@@ -15,6 +15,7 @@ import { LogoMark } from "@/components/logo-mark";
 import { Magnetic } from "@/components/magnetic";
 import { MemberCard } from "@/components/member-card";
 import { MonoReveal } from "@/components/mono-reveal";
+import { NavMoodPreview, type NavMoodItem } from "@/components/nav-mood-preview";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
@@ -25,7 +26,6 @@ import { SoundToggle } from "@/components/sound-toggle";
 import { SparkTap } from "@/components/spark-tap";
 import { StatSpotlight } from "@/components/stat-spotlight";
 import { TiltCard } from "@/components/tilt-card";
-import { UnderlineLink } from "@/components/underline-link";
 import { VideoModal } from "@/components/video-modal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -106,6 +106,19 @@ const links = [
   { label: "今日ポケ SHOP", href: "https://kyoupoke.shop" },
 ];
 
+const navMoodItems: NavMoodItem[] = [
+  { ...navItems[0], tone: "light", image: "/icon.png", caption: "3人の相棒たちのプロフィール" },
+  { ...navItems[1], tone: "light", image: "/hero-mascots.png", caption: "バンビー・いろは・くろこ" },
+  {
+    ...navItems[2],
+    tone: "dark",
+    icon: <AchievementIcon name="award" tone="black" className="mb-0 h-14 w-14 lg:h-14 lg:w-14" />,
+    caption: "銀の盾から公式番組出演まで",
+  },
+  { ...navItems[3], tone: "light", image: `https://img.youtube.com/vi/${videos[0].videoId}/hqdefault.jpg`, caption: "おすすめの対戦動画" },
+  { ...navItems[4], tone: "brand", icon: <LogoMark className="h-12 w-12" />, caption: "SNS・SHOPへのリンク集" },
+];
+
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-neutral-100">
@@ -116,18 +129,7 @@ export default function Home() {
           <span className="font-wordmark text-2xl text-brand lg:text-4xl">KYOU POKE</span>
           <Badge className="bg-brand text-white lg:px-4 lg:py-1.5 lg:text-sm">FAN SITE</Badge>
         </div>
-        <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-700 md:flex lg:gap-8 lg:text-base">
-          {navItems.map((item, i) => (
-            <UnderlineLink
-              key={item.href}
-              href={item.href}
-              cursorLabel={item.label}
-              cursorIndex={`${String(i + 1).padStart(2, "0")} / ${String(navItems.length).padStart(2, "0")}`}
-            >
-              {item.label}
-            </UnderlineLink>
-          ))}
-        </nav>
+        <NavMoodPreview items={navMoodItems} />
         <div className="flex items-center gap-3 lg:gap-4">
           <WipeLink
             href="https://www.youtube.com/@KYOUPOKE"
