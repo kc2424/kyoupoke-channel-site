@@ -334,11 +334,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* モバイル: ヒーロー写真下端の暗いスクリムから、次の白背景セクションへ
-          継ぎ目なく繋ぐ静的なグラデーション帯（PC版は既にヒーロー内で
-          白へフェードしているため不要）。SectionBlendはスクロール連動で
-          色が変わる仕組みのため、初回表示時は単色に見えてしまい不向き。 */}
-      <div aria-hidden className="h-20 w-full bg-gradient-to-b from-black/70 to-white sm:hidden" />
+      {/* モバイル: ヒーロー写真下端から、次の白背景Featuredセクションへ継ぎ目なく繋ぐ純白のグラデーション帯 */}
+      <div aria-hidden className="h-20 w-full bg-gradient-to-b from-white/0 via-white/80 to-white sm:hidden" />
 
       <FadeIn>
         <section className="bg-white pt-16 pb-10 lg:pt-20">

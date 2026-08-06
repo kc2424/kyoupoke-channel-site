@@ -6,7 +6,7 @@ import { WipeLink } from "@/components/wipe-link";
 
 export function MobileHeroCarousel() {
   return (
-    <div className="relative w-full h-[100dvh] flex flex-col justify-between overflow-hidden bg-neutral-950 text-neutral-900 sm:hidden">
+    <div className="relative w-full h-[100dvh] flex flex-col justify-end overflow-hidden bg-white text-neutral-900 sm:hidden">
       {/* 画面いっぱいに敷き詰める大判ヒーロー画像（100dvhフル表示） */}
       <div className="absolute inset-0">
         <img
@@ -14,20 +14,8 @@ export function MobileHeroCarousel() {
           alt="今日ポケ メンバー"
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
-        {/* 下部：ホワイト（白）グラデーションオーバーレイ */}
-        <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none" />
-      </div>
-
-      {/* 上部ヘッダーバッジ */}
-      <div className="relative z-10 flex items-center justify-between p-4 pt-16">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/50 bg-[#b8431f]/90 px-3.5 py-1 text-xs font-mono font-bold text-white backdrop-blur-md shadow-lg">
-          <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-          <span>登録者 67万人突破</span>
-        </span>
-
-        <span className="rounded-full bg-[#d9552e] border border-amber-300/40 px-3 py-1 font-mono text-xs font-bold text-white shadow-md">
-          FAN SITE
-        </span>
+        {/* 下部：黒ではなく純白（ホワイト）のなめらかなグラデーションオーバーレイ */}
+        <div className="absolute inset-x-0 bottom-0 h-[50%] bg-gradient-to-t from-white via-white/85 to-transparent pointer-events-none" />
       </div>
 
       {/* 下部：白グラデーション上のタイトグラフィック・コピー・スクロール案内 */}
