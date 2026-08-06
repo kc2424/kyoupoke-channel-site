@@ -140,3 +140,14 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(sound.ts, spark-tap.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `a2a3d52`）
+- **2026-08-06 (Checker 12回目実行)**: 前回チェック済み以降の新規コミット `52d01e3`（Seunghyuk Kim Interactive Portfolio(CSSDA SOTD)を参考にカスタムカーソルへ非対称ぼかしの方向性トレイルを追加）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/mainの直近履歴（モバイルヒーロー調整、HANDOVER.md追記）は本セッション開始前からの既存の別セッションの正当な作業で、今回の対象コミットとは無関係
+  - Checker自身の前回コミット(`3a77fb6`)からのMaker差分のみを`git diff 3a77fb6..52d01e3`で分離して確認。変更ファイルは2件（MAKER_STATE.md, src/components/custom-cursor.tsx）で、いずれも今回のテーマ（カスタムカーソルへの非対称ぼかしトレイル追加）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし。page.tsxの変更なし
+  - custom-cursor.tsxの変更は既存ring/dot/labelの追従ロジックに新規trail要素(`trailRef`)を追加し、移動速度・向きからCSS transform(`rotation`/`scaleX`)とmask-imageのみで非対称な軌跡を描く実装。既存の`active`/`prefers-reduced-motion`/`pointer: coarse`ガードは無変更
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず（Checker自身の前回コミット以降、Makerの新規コミットにSTATE.md差分なし）、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(custom-cursor.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `52d01e3`）
