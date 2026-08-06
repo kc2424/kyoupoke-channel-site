@@ -1,8 +1,8 @@
 "use client";
 
-import { Sparkles, ChevronDown, Play } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { GiantTitle } from "@/components/giant-title";
-import { WipeLink } from "@/components/wipe-link";
+import { HeroStickers } from "@/components/hero-stickers";
 
 export function MobileHeroCarousel() {
   return (
@@ -15,25 +15,25 @@ export function MobileHeroCarousel() {
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
         {/* 下部：黒ではなく純白（ホワイト）のなめらかなグラデーションオーバーレイ */}
-        <div className="absolute inset-x-0 bottom-0 h-[50%] bg-gradient-to-t from-white via-white/85 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-white via-white/85 to-transparent pointer-events-none" />
       </div>
 
-      {/* 下部：白グラデーション上のタイトグラフィック・コピー・スクロール案内 */}
-      <div className="relative z-10 p-6 pb-8 flex flex-col items-center text-center">
-        <GiantTitle>KYOU POKE</GiantTitle>
+      {/* ヒーロー画面に浮いてるふわふわステッカー */}
+      <HeroStickers />
 
-
-
-        <div className="mt-6 flex items-center gap-3 w-full max-w-xs">
-          <WipeLink
-            href="#videos"
-            wipeColor="bg-black"
-            className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9552e] to-[#b8431f] border border-amber-400/40 px-5 py-3.5 text-xs font-bold text-white shadow-2xl hover:scale-105 transition-transform"
-          >
-            <Play className="h-3.5 w-3.5 fill-current text-amber-300" />
-            <span>最新動画を見る</span>
-          </WipeLink>
+      {/* 下部：白グラデーション上のタイトグラフィック・PC版文言・スクロール案内 */}
+      <div className="relative z-10 p-6 pb-12 flex flex-col items-center text-center">
+        {/* KYOU POKE タイトル：位置を少し上に持って行き、文字サイズを大きく強調 */}
+        <div className="mb-3 scale-110 sm:scale-100">
+          <GiantTitle>KYOU POKE</GiantTitle>
         </div>
+
+        {/* PC版の文言（タグラインテキスト） */}
+        <p className="mt-2 max-w-xs text-xs leading-relaxed font-bold text-neutral-800 whitespace-pre-line">
+          世界トップクラスの対戦理論と、笑えるバラエティ企画を届ける
+          {"\n"}
+          ポケモン対戦YouTuberグループ。
+        </p>
 
         {/* Scroll 指示 */}
         <a href="#profile" className="mt-6 flex flex-col items-center gap-1 text-[#d9552e] hover:text-[#b8431f] transition-colors">
