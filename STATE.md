@@ -193,3 +193,13 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(custom-cursor.tsx, page.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `754f7f0`）
+- **2026-08-06 (Checker 17回目実行)**: 前回チェック済み以降の新規コミット `159292a`（実績カードへ「訪れたことを示すスタンプ」演出を追加。参考: The Tuscan Journey Begins（MONOGRID / Weekend Max Mara、CSS Design Awards Website of the Day））を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/main...origin/site-brushupは引き続き`no merge base`（既知の無関係な履歴分岐）
+  - Checker自身の前回コミット(`78be50c`)からのMaker差分のみを`git diff 78be50c..159292a`で分離して確認。変更ファイルは3件（MAKER_STATE.md, src/app/page.tsx, src/components/journey-stamp.tsx新規）で、いずれも今回のテーマ（実績カードのスタンプ演出）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績のlabel/sub/value/tone/icon等の`achievements`配列自体は不変。journey-stamp.tsxはindex/totalから決定論的に算出した回転角とSVGバッジを`ScrollTrigger`（once: true）で一度だけ着地させる新規独立コンポーネントで、既存の`AchievementIcon`やカードレイアウトには手を加えていない。page.tsxの変更は`<JourneyStamp .../>`を1行追加しただけ
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 失敗（Google Fontsの取得に失敗する既知のサンドボックス環境問題）。ベースコミット`754f7f0`でも同一worktreeのnode_modulesを使い同じエラーが再現することを確認済みのため、今回の変更が原因ではないと判断
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(journey-stamp.tsx, page.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `159292a`）
