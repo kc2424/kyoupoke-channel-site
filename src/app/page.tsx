@@ -424,7 +424,7 @@ export default async function Home() {
           </section>
         </FadeIn>
 
-        <section id="members" className="scroll-mt-24 pb-24 lg:pb-32">
+        <section id="members" className="scroll-mt-24 bg-[#faf6f2] py-16 sm:py-24 lg:py-32 border-y border-neutral-200/80">
           <div className={CONTAINER}>
             <SectionHeading
               index={2}
@@ -475,7 +475,7 @@ export default async function Home() {
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-white via-[#fff5ed] via-[#fff0e6] to-white py-16 sm:py-24 lg:py-32 text-neutral-900 border-y border-neutral-200/80"
+          className="relative scroll-mt-24 overflow-hidden bg-gradient-to-br from-[#fff7f2] via-[#ffece0] to-[#fff5ed] py-16 sm:py-24 lg:py-32 text-neutral-900 border-b border-neutral-200/80"
         >
           {/* 飽きさせない幾何学ドットグリッド ＆ 静かに漂うオーラ粒子背景 */}
           <AmbientMeshBackground />
@@ -531,7 +531,7 @@ export default async function Home() {
         </section>
       </FadeIn>
       <FadeIn>
-        <section id="videos" className="scroll-mt-24 bg-gradient-to-b from-white via-[#fff7f2] to-white py-14 sm:py-24 lg:py-32 border-b border-neutral-200/80">
+        <section id="videos" className="scroll-mt-24 bg-white py-16 sm:py-24 lg:py-32 border-b border-neutral-200/80">
           <div className={CONTAINER}>
           <SectionHeading index={4} label="Videos" heading="おすすめ動画" />
           <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
@@ -570,7 +570,7 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section id="links" className="scroll-mt-24 bg-gradient-to-b from-white via-[#fff5ed] to-[#ffebdd] py-16 sm:py-24 lg:py-32 border-t border-neutral-200/80">
+        <section id="links" className="scroll-mt-24 bg-[#fdf8f4] py-16 sm:py-24 lg:py-32 border-b border-neutral-200/80">
           <div className={CONTAINER}>
             <SectionHeading index={5} label="Links" heading="リンク" tone="light" />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -626,7 +626,8 @@ export default async function Home() {
       </FadeIn>
       </main>
 
-      <footer className="relative overflow-hidden bg-black py-24">
+      {/* フッター: 真っ黒を廃止し、今日ポケのブランドディープブラウン（暖かみのある濃褐色）へ刷新 */}
+      <footer className="relative overflow-hidden bg-gradient-to-b from-[#3b180e] via-[#2a0e06] to-[#1c0803] py-20 text-white border-t border-brand/20">
         <div className="flex select-none whitespace-nowrap">
           {[0, 1].map((row) => (
             <div
