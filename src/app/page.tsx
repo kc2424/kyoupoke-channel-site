@@ -565,12 +565,11 @@ export default async function Home() {
         </section>
       </FadeIn>
 
-      <SectionBlend from="#ffffff" to="#b8431f" />
+      {/* おすすめ動画 ➔ リンク: 急な切り替えを完全に排除し、ブランドオレンジへスーッと溶け込むグラデーション */}
+      <div className="h-28 w-full bg-gradient-to-b from-white via-[#ffebd9] via-[#d9552e] to-[#b8431f]" />
 
       <FadeIn>
-        {/* 白文字を載せるためオレンジは brand-dark(#b8431f)。brand(#d9552e)では
-            白文字とのコントラストが3.97でAA基準(4.5)に届かない。 */}
-        <section id="links" className="scroll-mt-24 bg-brand-dark py-24 lg:py-32">
+        <section id="links" className="scroll-mt-24 bg-brand-dark py-20 lg:py-32">
           <div className={CONTAINER}>
             <SectionHeading index={5} label="Links" heading="リンク" tone="brand" />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -626,7 +625,8 @@ export default async function Home() {
       </FadeIn>
       </main>
 
-      <SectionBlend from="#b8431f" to="#000000" />
+      {/* リンク ➔ フッター: 急な黒の切り替えを排除し、黒へと滑らかに落ちるグラデーション帯 */}
+      <div className="h-28 w-full bg-gradient-to-b from-[#b8431f] via-[#521b0a] to-black" />
 
       <footer className="relative overflow-hidden bg-black py-24">
         <div className="flex select-none whitespace-nowrap">
