@@ -263,33 +263,33 @@ export default async function Home() {
       <SiteHeader navItems={navItems} />
 
       <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 lg:px-16">
+      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 landscape-compact:min-h-[100svh] landscape-compact:bg-white landscape-compact:bg-none landscape-compact:px-10 lg:px-16">
         {/* モバイル構成 */}
-        <span className="pointer-events-none absolute top-1/2 left-6 z-20 hidden -translate-y-1/2 -rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block lg:text-sm">
+        <span className="pointer-events-none absolute top-1/2 left-6 z-20 hidden -translate-y-1/2 -rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block landscape-compact:block lg:text-sm">
           Unofficial Fan Site
         </span>
-        <span className="pointer-events-none absolute top-1/2 right-6 z-20 hidden -translate-y-1/2 rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block lg:text-sm">
+        <span className="pointer-events-none absolute top-1/2 right-6 z-20 hidden -translate-y-1/2 rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block landscape-compact:block lg:text-sm">
           YouTube → World
         </span>
 
-        <div className="relative h-[100dvh] w-full sm:h-auto sm:min-h-0 sm:max-h-none sm:absolute sm:inset-0 sm:aspect-auto sm:w-full">
-          <div className="absolute inset-0 overflow-hidden sm:hidden">
+        <div className="relative h-[100dvh] w-full sm:h-auto sm:min-h-0 sm:max-h-none sm:absolute sm:inset-0 sm:aspect-auto sm:w-full landscape-compact:h-auto landscape-compact:min-h-0 landscape-compact:max-h-none landscape-compact:absolute landscape-compact:inset-0 landscape-compact:aspect-auto">
+          <div className="absolute inset-0 overflow-hidden sm:hidden landscape-compact:hidden">
             <MobileHeroCarousel />
           </div>
-          <div className="absolute inset-0 hidden overflow-hidden sm:block">
+          <div className="absolute inset-0 hidden overflow-hidden sm:block landscape-compact:block">
             <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
           </div>
-          <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-white via-transparent to-transparent sm:block" />
-          <div className="hidden sm:block">
+          <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-white via-transparent to-transparent sm:block landscape-compact:block" />
+          <div className="hidden sm:block landscape-compact:block">
             <HeroStickers />
           </div>
         </div>
 
-        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
+        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[8vh] landscape-compact:mt-auto landscape-compact:flex landscape-compact:flex-col landscape-compact:items-center landscape-compact:px-0 landscape-compact:pb-3 lg:pb-[10vh]">
           <GiantTitle>KYOU POKE</GiantTitle>
 
           <FadeIn delay={0.3} y={12}>
-            <p className="relative mt-6 max-w-lg text-center text-base text-balance whitespace-pre-line text-neutral-600 lg:max-w-xl lg:text-lg">
+            <p className="relative mt-6 max-w-lg text-center text-base text-balance whitespace-pre-line text-neutral-600 landscape-compact:mt-2 landscape-compact:max-w-sm landscape-compact:text-xs lg:max-w-xl lg:text-lg">
               {texts.hero_tagline.includes("届ける")
                 ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
                     <span key={i}>
@@ -302,7 +302,7 @@ export default async function Home() {
           </FadeIn>
         </div>
 
-        <div className="pointer-events-none absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-neutral-600 sm:flex">
+        <div className="pointer-events-none absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-neutral-600 sm:flex landscape-compact:hidden">
           <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
             Scroll
           </span>
