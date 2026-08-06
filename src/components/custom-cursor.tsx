@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  const trailRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
@@ -20,15 +21,22 @@ export function CustomCursor() {
 
     const ring = ringRef.current;
     const dot = dotRef.current;
+    const trail = trailRef.current;
     const labelEl = labelRef.current;
-    if (!ring || !dot || !labelEl) return;
+    if (!ring || !dot || !trail || !labelEl) return;
 
     const ringX = gsap.quickTo(ring, "x", { duration: 0.45, ease: "power3.out" });
     const ringY = gsap.quickTo(ring, "y", { duration: 0.45, ease: "power3.out" });
     const dotX = gsap.quickTo(dot, "x", { duration: 0.12, ease: "power3.out" });
     const dotY = gsap.quickTo(dot, "y", { duration: 0.12, ease: "power3.out" });
+    const trailX = gsap.quickTo(trail, "x", { duration: 0.18, ease: "power3.out" });
+    const trailY = gsap.quickTo(trail, "y", { duration: 0.18, ease: "power3.out" });
     const labelX = gsap.quickTo(labelEl, "x", { duration: 0.45, ease: "power3.out" });
     const labelY = gsap.quickTo(labelEl, "y", { duration: 0.45, ease: "power3.out" });
+
+    let lastX = 0;
+    let lastY = 0;
+    let lastT = 0;
 
     const handleMove = (e: MouseEvent) => {
       if (!active) setActive(true);
@@ -36,8 +44,25 @@ export function CustomCursor() {
       ringY(e.clientY);
       dotX(e.clientX);
       dotY(e.clientY);
+      trailX(e.clientX);
+      trailY(e.clientY);
       labelX(e.clientX);
       labelY(e.clientY);
+
+      // 移動速度・向きから「先端はくっきり、後端はぼける」非対称な軌跡を描く
+      const dt = Math.max(e.timeStamp - lastT, 1);
+      if (lastT > 0) {
+        const speed = Math.min(Math.hypot(e.clientX - lastX, e.clientY - lastY) / dt, 2);
+        const angle = Math.atan2(e.clientY - lastY, e.clientX - lastX) * (180 / Math.PI);
+        gsap.set(trail, {
+          rotation: angle + 180,
+          scaleX: Math.min(1 + speed * 5, 6),
+          opacity: Math.min(speed * 0.5, 0.45),
+        });
+      }
+      lastX = e.clientX;
+      lastY = e.clientY;
+      lastT = e.timeStamp;
 
       const target = (e.target as HTMLElement)?.closest?.("a, button, [role='button']");
       setHovering(Boolean(target));
@@ -47,7 +72,10 @@ export function CustomCursor() {
       setPreviewIndex(labelTarget?.dataset.cursorIndex ?? null);
     };
 
-    const handleLeave = () => setActive(false);
+    const handleLeave = () => {
+      setActive(false);
+      gsap.to(trail, { opacity: 0, duration: 0.3, overwrite: true });
+    };
 
     document.documentElement.classList.add("cursor-none");
     window.addEventListener("mousemove", handleMove);
@@ -62,6 +90,12 @@ export function CustomCursor() {
 
   return (
     <>
+      <div
+        ref={trailRef}
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-[998] h-[3px] w-5 -translate-y-1/2 rounded-full bg-white opacity-0 blur-[2.5px] mix-blend-difference [mask-image:linear-gradient(to_right,black,transparent)] [-webkit-mask-image:linear-gradient(to_right,black,transparent)]"
+        style={{ transformOrigin: "left center" }}
+      />
       <div
         ref={dotRef}
         aria-hidden
