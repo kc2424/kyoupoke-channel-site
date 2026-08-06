@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { LogoMark } from "@/components/logo-mark";
@@ -9,8 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { WipeLink } from "@/components/wipe-link";
 import { cn } from "@/lib/utils";
 
-// ヒーローの上では透明のまま。少しでもスクロールしたら白の下地をごく薄く敷く。
-// 実績(黒)・リンク(オレンジ)セクションの上でもナビが読めるようにするための処置。
 const SCROLL_THRESHOLD = 40;
 
 export function SiteHeader({
@@ -19,6 +18,7 @@ export function SiteHeader({
   navItems: { label: string; href: string }[];
 }) {
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
@@ -27,19 +27,31 @@ export function SiteHeader({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (window.scrollY > 0) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      router.refresh();
+    }
+  };
+
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300 ease-out",
-        scrolled ? "bg-white/50" : "bg-transparent"
+        scrolled ? "bg-white/70 backdrop-blur-md shadow-sm" : "bg-transparent"
       )}
     >
       <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-2 px-6 py-3 sm:px-10 sm:py-4 lg:px-16 lg:py-5">
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- ロゴクリックで実際にページを再読み込みしてトップへ戻すための意図的なネイティブ遷移 */}
-        <a href="/" className="flex min-w-0 items-center gap-2 sm:gap-3 lg:gap-4">
+        <a
+          href="/"
+          onClick={handleLogoClick}
+          className="flex min-w-0 items-center gap-2 cursor-pointer sm:gap-3 lg:gap-4 group"
+        >
           <LogoMark
             animated
-            className="h-9 w-9 shrink-0 drop-shadow-md sm:h-12 sm:w-12 lg:h-14 lg:w-14"
+            className="h-9 w-9 shrink-0 drop-shadow-md sm:h-12 sm:w-12 lg:h-14 lg:w-14 transition-transform duration-300 group-hover:scale-110"
           />
           <span className="font-wordmark text-brand truncate text-lg sm:text-2xl lg:text-3xl">
             KYOU POKE

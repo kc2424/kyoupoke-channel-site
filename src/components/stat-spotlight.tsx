@@ -34,7 +34,7 @@ export function StatSpotlight({
             <StatCounter value={s.value} suffix={s.suffix} decimals={s.decimals} />
           </p>
 
-          <p className="mt-2 text-xs font-extrabold tracking-widest text-neutral-800 uppercase sm:text-sm lg:text-base border-t border-neutral-200/80 pt-2.5 w-full">
+          <p className="mt-2 text-xs font-extrabold tracking-widest text-neutral-800 uppercase sm:text-sm lg:text-base">
             {s.label}
           </p>
         </motion.div>
