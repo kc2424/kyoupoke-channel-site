@@ -334,18 +334,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* モバイル: ヒーロー写真下端から、次の白背景Featuredセクションへ継ぎ目なく繋ぐ純白のグラデーション帯 */}
-      <div aria-hidden className="h-20 w-full bg-gradient-to-b from-white/0 via-white/80 to-white sm:hidden" />
-
-      <FadeIn>
-        <section className="bg-white pt-16 pb-10 lg:pt-20">
-          <div className={CONTAINER}>
-            <div className="border-t border-neutral-200 pt-4 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
-              Featured
-            </div>
-          </div>
-        </section>
-      </FadeIn>
+      {/* モバイル: ヒーロー写真下端から次のセクションへの短い繋ぎ */}
+      <div aria-hidden className="h-4 w-full bg-gradient-to-b from-white/0 to-white sm:hidden" />
 
       <FadeIn>
         <section className="border-y border-neutral-200 bg-white py-24 lg:py-32">
@@ -428,31 +418,7 @@ export default async function Home() {
                 </div>
               </div>
 
-              <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-                {[
-                  { href: "#members", label: "メンバー紹介", desc: "バンビー・いろは・くろこ、3人それぞれの実績と人柄。" },
-                  { href: "#achievements", label: "実績・出演", desc: "登録者数や再生回数、受賞歴をまとめて紹介。" },
-                  { href: "#videos", label: "おすすめ動画", desc: "まずはここから見てほしいおすすめの3本。" },
-                  { href: "#links", label: "リンク", desc: "SNSやショップ、メンバー個人チャンネルへ。" },
-                ].map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    data-cursor-label="VIEW"
-                    className="group flex flex-col justify-between gap-6 rounded-2xl border border-neutral-200 p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand hover:shadow-lg lg:p-6"
-                  >
-                    <div>
-                      <p className="font-display text-lg text-neutral-900 group-hover:text-brand lg:text-xl">
-                        {item.label}
-                      </p>
-                      <p className="mt-2 text-sm text-neutral-600 lg:text-base">{item.desc}</p>
-                    </div>
-                    <span className="text-xs font-bold tracking-widest text-neutral-600 uppercase transition-colors group-hover:text-brand">
-                      View →
-                    </span>
-                  </a>
-                ))}
-              </div>
+
             </div>
           </section>
         </FadeIn>
@@ -505,20 +471,18 @@ export default async function Home() {
           </div>
         </section>
 
-      <SectionBlend from="#ffffff" to="#000000" />
-
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden bg-black py-24 lg:py-32"
+          className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#fff5ed] via-[#fff0e6] to-white py-14 sm:py-24 lg:py-32 text-neutral-900 border-y border-neutral-200/80"
         >
-          {/* カード群(実カード背景は不透明)と重ならないよう、見出し行の高さに合わせて右上に配置する */}
-          <OpArtRings className="top-0 right-0 h-[220px] w-[220px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px]" />
+          {/* カード群と重ならないよう、右上にアンビエントリングを配置 */}
+          <OpArtRings className="top-0 right-0 h-[180px] w-[180px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px] opacity-40" />
           <div className={cn(CONTAINER, "relative z-10")}>
-            <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="dark" />
+            <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="light" />
             <StatSpotlight
               stats={stats}
-              className="mt-10 border-y border-white/10 py-8 lg:py-10"
+              className="mt-8 border-y border-brand/20 py-6 sm:py-8 lg:py-10 text-neutral-900"
             />
             <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
               {achievements.map((a) => {
@@ -528,10 +492,8 @@ export default async function Home() {
                     key={a.label}
                     className={cn(
                       "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
-                      // 白文字を載せるオレンジは brand-dark(#b8431f)。brand(#d9552e)だと
-                      // 白文字とのコントラストが3.97しか出ずAA基準(4.5)を満たさない。
                       a.tone === "brand" && "bg-brand-dark text-white",
-                      a.tone === "black" && "bg-white/10 text-white"
+                      a.tone === "black" && "bg-neutral-900 text-white"
                     )}
                   >
                     {image && (
@@ -564,10 +526,8 @@ export default async function Home() {
           </div>
         </section>
       </FadeIn>
-
-      <SectionBlend from="#000000" to="#ffffff" />
-
-        <section id="videos" className="scroll-mt-24 py-24 lg:py-32">
+      <FadeIn>
+        <section id="videos" className="scroll-mt-24 bg-gradient-to-b from-white via-[#fff7f2] to-white py-14 sm:py-24 lg:py-32 border-b border-neutral-200/80">
           <div className={CONTAINER}>
           <SectionHeading index={4} label="Videos" heading="おすすめ動画" />
           <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
@@ -603,6 +563,7 @@ export default async function Home() {
           </WipeLink>
           </div>
         </section>
+      </FadeIn>
 
       <SectionBlend from="#ffffff" to="#b8431f" />
 

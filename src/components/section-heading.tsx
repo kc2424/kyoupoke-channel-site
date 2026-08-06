@@ -11,17 +11,13 @@ const TONE_STYLES = {
 } as const;
 
 export function SectionHeading({
-  index,
-  total = 5,
-  label,
   heading,
-  note,
   tone = "light",
   className,
 }: {
-  index: number;
+  index?: number;
   total?: number;
-  label: string;
+  label?: string;
   heading: string;
   note?: string;
   tone?: keyof typeof TONE_STYLES;
@@ -30,36 +26,15 @@ export function SectionHeading({
   const styles = TONE_STYLES[tone];
 
   return (
-    <div
-      className={cn(
-        "flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between lg:gap-10",
-        className
-      )}
-    >
-      <div>
-        <div className="flex items-center gap-3">
-          <ChapterMark index={index} total={total} tone={tone} />
-          <span
-            className={cn(
-              "text-xs font-bold tracking-widest uppercase lg:text-sm",
-              styles.label
-            )}
-          >
-            {label}
-          </span>
-        </div>
-        <RevealText
-          as="h2"
-          text={heading}
-          className={cn(
-            "font-display mt-3 text-3xl sm:text-4xl lg:text-5xl",
-            styles.heading
-          )}
-        />
-      </div>
-      {note && (
-        <p className={cn("text-sm lg:text-right lg:text-base", styles.note)}>{note}</p>
-      )}
+    <div className={cn("flex flex-col gap-2", className)}>
+      <RevealText
+        as="h2"
+        text={heading}
+        className={cn(
+          "font-display text-3xl sm:text-4xl lg:text-5xl",
+          styles.heading
+        )}
+      />
     </div>
   );
 }
