@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import { BlueprintCorners } from "@/components/blueprint-corners";
 import { AmbientMeshBackground } from "@/components/ambient-mesh-background";
 import {
@@ -21,6 +22,7 @@ import { PopReveal } from "@/components/pop-reveal";
 import { RevealText } from "@/components/reveal-text";
 import { SectionBlend } from "@/components/section-blend";
 import { SectionHeading } from "@/components/section-heading";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteHeader } from "@/components/site-header";
 import { SnapReveal } from "@/components/snap-reveal";
 import { SparkTap } from "@/components/spark-tap";
@@ -339,8 +341,9 @@ export default async function Home() {
       <div aria-hidden className="h-4 w-full bg-gradient-to-b from-white/0 to-white sm:hidden" />
 
       <FadeIn>
-        <section className="border-y border-neutral-200 bg-white py-24 lg:py-32">
-          <div className={cn(CONTAINER, "flex flex-col items-start gap-1 lg:gap-2")}>
+        <section className="relative overflow-hidden border-y border-neutral-200 bg-white py-24 lg:py-32">
+          <AmbientMeshBackground variant="matrix" />
+          <div className={cn(CONTAINER, "relative z-10 flex flex-col items-start gap-1 lg:gap-2")}>
             <RevealText
               as="p"
               text={texts.catchcopy_line1}
@@ -361,8 +364,9 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section className="bg-white pb-24 lg:pb-32">
-          <div className={CONTAINER}>
+        <section className="relative overflow-hidden bg-white pb-24 lg:pb-32">
+          <AmbientMeshBackground variant="dots" />
+          <div className={cn(CONTAINER, "relative z-10")}>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
               <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
             </div>
@@ -384,8 +388,9 @@ export default async function Home() {
       </FadeIn>
 
         <FadeIn>
-          <section id="profile" className="scroll-mt-24 pb-24 lg:pb-32">
-            <div className={CONTAINER}>
+          <section id="profile" className="relative overflow-hidden scroll-mt-24 pb-24 lg:pb-32">
+            <AmbientMeshBackground variant="aurora" />
+            <div className={cn(CONTAINER, "relative z-10")}>
               {/* 見出しを左列に固定し、本文は右列でコンテナ右端まで広げる。 */}
               <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
                 <SectionHeading
@@ -424,8 +429,9 @@ export default async function Home() {
           </section>
         </FadeIn>
 
-        <section id="members" className="scroll-mt-24 bg-[#faf6f2] py-16 sm:py-24 lg:py-32 border-y border-neutral-200/80">
-          <div className={CONTAINER}>
+        <section id="members" className="relative overflow-hidden scroll-mt-24 bg-[#faf6f2] py-16 sm:py-24 lg:py-32 border-y border-neutral-200/80">
+          <AmbientMeshBackground variant="stripes" />
+          <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading
               index={2}
               label="Members"
@@ -531,8 +537,9 @@ export default async function Home() {
         </section>
       </FadeIn>
       <FadeIn>
-        <section id="videos" className="scroll-mt-24 bg-white py-16 sm:py-24 lg:py-32 border-b border-neutral-200/80">
-          <div className={CONTAINER}>
+        <section id="videos" className="relative overflow-hidden scroll-mt-24 bg-white py-16 sm:py-24 lg:py-32 border-b border-neutral-200/80">
+          <AmbientMeshBackground variant="cinematic" />
+          <div className={cn(CONTAINER, "relative z-10")}>
           <SectionHeading index={4} label="Videos" heading="おすすめ動画" />
           <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {videos.map((v, i) => (
@@ -574,7 +581,7 @@ export default async function Home() {
           <AmbientMeshBackground variant="dots" />
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading index={5} label="Links" heading="リンク" tone="light" />
-            <div className="mt-10 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {mainLinks.map((l) => {
                 const Icon = linkIconMap[l.icon];
                 return (
