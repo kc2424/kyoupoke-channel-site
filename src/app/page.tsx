@@ -19,6 +19,7 @@ import { NavMoodPreview, type NavMoodItem } from "@/components/nav-mood-preview"
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { RevealText } from "@/components/reveal-text";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { ScrollWeight } from "@/components/scroll-weight";
 import { SectionBlend } from "@/components/section-blend";
 import { SnapReveal } from "@/components/snap-reveal";
@@ -125,6 +126,7 @@ const navMoodItems: NavMoodItem[] = [
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-neutral-100">
+      <ScrollProgress sections={acts} />
       <ActIndex acts={acts} />
       <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 lg:px-10 lg:py-6">
         <div className="flex items-center gap-3 lg:gap-4">
