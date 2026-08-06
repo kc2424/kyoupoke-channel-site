@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { FullscreenMenu } from "@/components/fullscreen-menu";
@@ -44,7 +45,7 @@ export function SiteHeader({
       )}
     >
       <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-2 px-6 py-3 sm:px-10 sm:py-4 lg:px-16 lg:py-5">
-        <a
+        <Link
           href="/"
           onClick={handleLogoClick}
           className="flex min-w-0 items-center gap-2 cursor-pointer sm:gap-3 lg:gap-4 group"
@@ -59,7 +60,7 @@ export function SiteHeader({
           <Badge className="bg-brand-dark hidden shrink-0 text-white sm:inline-flex lg:px-4 lg:py-1.5 lg:text-sm">
             FAN SITE
           </Badge>
-        </a>
+        </Link>
         <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-800 md:flex lg:gap-8 lg:text-base">
           {navItems.map((item) => (
             <UnderlineLink key={item.href} href={item.href}>

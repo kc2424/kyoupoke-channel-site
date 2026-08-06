@@ -67,11 +67,6 @@ function number(prop: unknown): number {
   return p?.number ?? 0;
 }
 
-function checkbox(prop: unknown): boolean {
-  const p = prop as { checkbox?: boolean } | undefined;
-  return p?.checkbox ?? false;
-}
-
 function select(prop: unknown): string {
   const p = prop as { select?: { name: string } | null } | undefined;
   return p?.select?.name ?? "";

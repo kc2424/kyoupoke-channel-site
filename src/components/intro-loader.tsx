@@ -20,14 +20,9 @@ export function IntroLoader() {
   }, []);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setPhase("done");
-      return;
-    }
-
-    const toReveal = setTimeout(() => setPhase("reveal"), 1200);
-    const toDone = setTimeout(() => setPhase("done"), 2000);
-    const failsafe = setTimeout(() => setPhase("done"), 3500);
+    const toReveal = setTimeout(() => setPhase("reveal"), prefersReducedMotion ? 0 : 1200);
+    const toDone = setTimeout(() => setPhase("done"), prefersReducedMotion ? 0 : 2000);
+    const failsafe = setTimeout(() => setPhase("done"), prefersReducedMotion ? 0 : 3500);
 
     return () => {
       clearTimeout(toReveal);

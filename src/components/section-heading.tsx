@@ -1,4 +1,3 @@
-import { ChapterMark } from "@/components/chapter-mark";
 import { RevealText } from "@/components/reveal-text";
 import { cn } from "@/lib/utils";
 

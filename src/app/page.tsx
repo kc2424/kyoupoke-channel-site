@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { BlueprintCorners } from "@/components/blueprint-corners";
 import { AmbientMeshBackground } from "@/components/ambient-mesh-background";
 import {
@@ -20,7 +19,6 @@ import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
 import { PopReveal } from "@/components/pop-reveal";
 import { RevealText } from "@/components/reveal-text";
-import { SectionBlend } from "@/components/section-blend";
 import { SectionHeading } from "@/components/section-heading";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteHeader } from "@/components/site-header";
