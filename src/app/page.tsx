@@ -286,19 +286,6 @@ export default async function Home() {
         </div>
 
         <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[8vh] lg:pb-[10vh]">
-          <FadeIn y={12}>
-            <a
-              href="#videos"
-              data-cursor-label="VIEW"
-              className="group relative mb-6 inline-flex items-center gap-2.5 rounded-full border border-neutral-300/80 bg-white/80 px-4.5 py-1.5 text-xs font-bold tracking-wide text-neutral-800 backdrop-blur-md shadow-sm transition-all duration-300 hover:border-brand hover:text-brand hover:shadow-md lg:text-sm"
-            >
-              <span className="flex h-2 w-2 rounded-full bg-brand animate-pulse" />
-              <span className="text-brand font-extrabold">New</span>
-              最新動画公開中
-              <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-            </a>
-          </FadeIn>
-
           <GiantTitle>KYOU POKE</GiantTitle>
 
           <FadeIn delay={0.3} y={12}>
