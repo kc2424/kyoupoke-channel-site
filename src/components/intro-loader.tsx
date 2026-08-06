@@ -7,15 +7,15 @@ export function IntroLoader() {
   const [phase, setPhase] = useState<"hold" | "reveal" | "done">("hold");
   const prefersReducedMotion = useReducedMotion();
 
-  // 100個のダイナミック・アイコン大群データを生成（パフォーマンス最適化のためmemo化）
+  // 70個のダイナミック・アイコン大群データを生成（パフォーマンス最適化のためmemo化）
   const iconsStream = useMemo(() => {
-    return Array.from({ length: 100 }).map((_, i) => ({
+    return Array.from({ length: 70 }).map((_, i) => ({
       id: i,
-      size: 32 + (i * 7) % 60, // 32px 〜 92px
-      top: `${(i * 1.02) % 98}%`, // 0% 〜 98% の画面全域
-      duration: 0.9 + (i % 8) * 0.12, // 0.9s 〜 1.8s
-      delay: (i % 12) * 0.05, // 0s 〜 0.6s
-      rotate: ((i * 17) % 60) - 30, // -30deg 〜 +30deg
+      size: 36 + (i * 9) % 56, // 36px 〜 92px
+      top: `${(i * 1.45) % 96}%`, // 0% 〜 96% の画面全域
+      duration: 1.0 + (i % 7) * 0.14, // 1.0s 〜 1.84s
+      delay: (i % 10) * 0.06, // 0s 〜 0.54s
+      rotate: ((i * 19) % 60) - 30, // -30deg 〜 +30deg
     }));
   }, []);
 

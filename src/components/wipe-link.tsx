@@ -28,11 +28,11 @@ export function WipeLink({
     >
       <span
         className={cn(
-          "absolute inset-0 -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0",
+          "absolute inset-0 -translate-x-full transition-transform duration-[1000ms] ease-out group-hover:translate-x-0",
           wipeColor
         )}
       />
-      <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+      <span className="relative z-10 transition-colors duration-[1000ms] group-hover:text-white">
         {children}
       </span>
     </a>
