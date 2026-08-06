@@ -151,3 +151,14 @@ Maker役はこのファイルを編集しません。Checkerは自身の判定�
   - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
   - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(custom-cursor.tsx)にlintエラーなし
   - **判定: PASS**（対象コミット: `52d01e3`）
+- **2026-08-06 (Checker 13回目実行)**: 前回チェック済み以降の新規コミット `3439891`（ヘッダー上部にLenis連動のスクロール進捗バーを追加。参考: Bogdan Kolomiyets – Portfolio）を検証対象とした。
+  - mainブランチへの変更なし（読み取りのみ確認）。origin/mainの直近履歴（HANDOVER.md追記、モバイルヒーロー調整等）は本セッション開始前からの既存の別セッションの正当な作業で、今回の対象コミットとは無関係。origin/main...origin/site-brushupは引き続き`no merge base`（既知の無関係な履歴分岐）
+  - 変更ファイルは4件（MAKER_STATE.md, src/app/layout.tsx, src/components/scroll-progress.tsx新規, src/lib/lenis.ts）で、今回のテーマ（スクロール進捗バー）に一貫。無関係な変更の混入なし
+  - メンバー紹介文・実績数値・リンクURL等の事実情報は変更なし。page.tsxの変更なし
+  - lenis.tsの変更は新規関数`onLenisReady()`の追加のみで、既存の`setLenis`/`scrollToHash`のシグネチャ・挙動は無変更であることをdiffで確認。scroll-progress.tsxは`lenis.on("scroll", ...)`を購読しCSS transformを直接更新するだけの新規独立コンポーネントで、smooth-scroll.tsx側の既存`ScrollTrigger.update`連携には手を加えていない。layout.tsxは`<ScrollProgress />`を1行追加しただけ
+  - public/icon.png・public/hero-mascots.png等のブランド素材は変更なし
+  - package.json / package-lock.json は変更なし
+  - STATE.md自体はMaker側で改変されておらず、Maker専用のMAKER_STATE.mdへの追記のみ
+  - `npm install` → `npm run build`（Turbopack、`git worktree`で隔離した作業ツリーで実行）: 成功
+  - `npm run lint`: 既知の問題（intro-loader.tsx/scramble-text.tsx/sound-toggle.tsx/video-modal.tsxの`react-hooks/set-state-in-effect`計4件）のみで失敗。新規/変更ファイル(lenis.ts, scroll-progress.tsx, layout.tsx)にlintエラーなし
+  - **判定: PASS**（対象コミット: `3439891f9798f626aba5c877544a62b4cb7d236c`）
