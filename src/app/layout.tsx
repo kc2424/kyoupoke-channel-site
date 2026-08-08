@@ -6,6 +6,8 @@ import { GrainOverlay } from "@/components/grain-overlay";
 import { IntroLoader } from "@/components/intro-loader";
 import { NavTransition } from "@/components/nav-transition";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { JsonLd } from "@/components/json-ld";
+import { SITE_URL, buildMetadata, websiteJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -33,10 +35,11 @@ const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
 });
 
+// メタ情報は src/lib/seo.ts に一本化している。
+// robotsのnoindexも同ファイルの SITE_INDEXABLE フラグで一括制御する。
 export const metadata: Metadata = {
-  title: "今日ポケ ファンサイト",
-  description: "今日ポケ（KYOUPOKE）の非公式ファンサイト",
-  robots: "noindex, nofollow",
+  metadataBase: new URL(SITE_URL),
+  ...buildMetadata(),
 };
 
 export default function RootLayout({
@@ -57,6 +60,7 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-screen bg-neutral-100 text-neutral-900 antialiased">
+        <JsonLd data={websiteJsonLd()} />
         <IntroLoader />
         <CustomCursor />
         <GrainOverlay />

@@ -1,5 +1,13 @@
+import Link from "next/link";
 import { BlueprintCorners } from "@/components/blueprint-corners";
 import { AmbientMeshBackground } from "@/components/ambient-mesh-background";
+import { BentoCard } from "@/components/bento-card";
+import { ContactForm } from "@/components/contact-form";
+import { JsonLd } from "@/components/json-ld";
+import { MobileCtaBar } from "@/components/mobile-cta-bar";
+import { SiteFooter } from "@/components/site-footer";
+import { formatNewsDate, getLatestNews } from "@/content/news";
+import { videoJsonLd } from "@/lib/seo";
 import {
   InstagramIcon,
   ShopIcon,
@@ -13,7 +21,6 @@ import { GiantTitle } from "@/components/giant-title";
 import { HeroPhoto } from "@/components/hero-photo";
 import { HeroStickers } from "@/components/hero-stickers";
 import { MobileHeroCarousel } from "@/components/mobile-hero-carousel";
-import { LogoMark } from "@/components/logo-mark";
 import { MemberCard } from "@/components/member-card";
 import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
@@ -57,14 +64,6 @@ export const revalidate = 300;
 // ページ全体で共有する横方向のグリッド。
 // ヘッダーからフッターまで左端が1本の線で揃うよう、余白は必ずここに一本化する。
 const CONTAINER = "mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16";
-
-const navItems = [
-  { label: "プロフィール", href: "#profile" },
-  { label: "メンバー", href: "#members" },
-  { label: "実績", href: "#achievements" },
-  { label: "動画", href: "#videos" },
-  { label: "リンク", href: "#links" },
-];
 
 // Notion未接続時、またはNotion側にメンバーが未登録の場合のフォールバック。
 const fallbackMembers = [
@@ -214,6 +213,69 @@ function VideoCard({ video, index, labelPrefix }: { video: { videoId: string; ti
   );
 }
 
+// SNSリンク・メンバーチャンネル共通のカード。
+// モバイルは縦に積むと8枚で画面を占有しすぎるため、アイコン+テキストの横1行に畳む。
+// sm以上ではBentoグリッドらしい縦積みの大きめカードに戻す。
+function LinkCard({
+  link,
+  Icon,
+  feature = false,
+}: {
+  link: { label: string; sub: string; href: string };
+  Icon: typeof YouTubeIcon;
+  feature?: boolean;
+}) {
+  return (
+    <BentoCard
+      href={link.href}
+      cursorLabel="OPEN"
+      tone={feature ? "brand" : "light"}
+      className="h-full flex-row items-center gap-4 p-4 sm:flex-col sm:items-stretch sm:justify-between sm:gap-0 sm:p-6 lg:p-8"
+    >
+      <span
+        className={cn(
+          "flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-transform duration-300 ease-out group-hover:scale-110 sm:h-12 sm:w-12 lg:h-14 lg:w-14",
+          feature ? "bg-white text-brand" : "bg-brand text-white"
+        )}
+      >
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />
+      </span>
+
+      <span className="flex min-w-0 flex-1 flex-col sm:mt-6 sm:flex-none">
+        <span
+          className={cn(
+            "font-display truncate text-base sm:text-lg lg:text-2xl",
+            feature ? "text-white" : "text-neutral-900"
+          )}
+        >
+          {link.label}
+        </span>
+        <span
+          className={cn(
+            "truncate text-xs font-semibold sm:mt-1 lg:text-sm",
+            feature ? "text-white/80" : "text-neutral-600"
+          )}
+        >
+          {link.sub}
+        </span>
+      </span>
+
+      {/* モバイルは矢印だけに省略し、sm以上で「ひらく →」を出す */}
+      <span
+        className={cn(
+          "flex shrink-0 items-center gap-2 text-sm font-bold sm:mt-5",
+          feature ? "text-white" : "text-brand"
+        )}
+      >
+        <span className="hidden sm:inline">ひらく</span>
+        <span className="transition-transform duration-300 group-hover:translate-x-1">
+          →
+        </span>
+      </span>
+    </BentoCard>
+  );
+}
+
 export default async function Home() {
   const [
     notionMembers,
@@ -254,13 +316,15 @@ export default async function Home() {
       ? notionLinks.memberLinks
       : fallbackMemberLinks;
   const texts = { ...fallbackTexts, ...notionTexts };
+  const latestNews = getLatestNews(3);
 
   return (
     // overflow-x-clip: LiveGlowFrame の回転するグロー枠が回転位相によって
     // 数px はみ出し、モバイルで横スクロールが出るのを止める。
     // clip は hidden と違いスクロールコンテナを作らないので sticky は効いたまま。
     <div className="flex min-h-screen flex-col overflow-x-clip bg-white">
-      <SiteHeader navItems={navItems} />
+      <JsonLd data={videoJsonLd([...videos, ...(latestVideos ?? [])])} />
+      <SiteHeader />
 
       <main>
       <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 landscape-compact:min-h-[100svh] landscape-compact:bg-white landscape-compact:bg-none landscape-compact:px-10 lg:px-16">
@@ -546,28 +610,19 @@ export default async function Home() {
       <FadeIn>
         <section id="links" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
           <div className={cn(CONTAINER, "relative z-10")}>
-            <SectionHeading index={5} label="Links" heading="リンク" tone="light" />
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {mainLinks.map((l) => {
-                const Icon = linkIconMap[l.icon];
+            <SectionHeading index={5} label="Links" heading="SNS・リンク" tone="light" />
+            {/* Bentoグリッド: 先頭のYouTubeを2マス分に広げて主役にする */}
+            <div className="mt-10 grid auto-rows-[minmax(0,1fr)] gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {mainLinks.map((l, i) => {
+                const isFeature = i === 0;
                 return (
-                  <WipeLink
+                  <FadeIn
                     key={l.href}
-                    href={l.href}
-                    wipeColor="bg-brand"
-                    cursorLabel="OPEN"
-                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-white p-5 text-left text-neutral-900 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1.5 hover:bg-[#ffe8d6] hover:border-brand hover:shadow-md active:bg-[#ffe8d6] active:border-brand sm:duration-[1000ms] lg:p-6"
+                    delay={i * 0.06}
+                    className={cn("h-full", isFeature && "sm:col-span-2")}
                   >
-                    <div className="flex items-center gap-4">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-all duration-200 ease-out group-hover:scale-105 group-hover:bg-white group-hover:text-brand group-active:scale-105 group-active:bg-white group-active:text-brand sm:duration-[1000ms] lg:h-12 lg:w-12">
-                        <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
-                      </span>
-                      <span className="flex flex-col">
-                        <span className="font-display font-extrabold text-base text-neutral-900 lg:text-lg">{l.label}</span>
-                        <span className="text-xs font-semibold text-neutral-700 lg:text-sm">{l.sub}</span>
-                      </span>
-                    </div>
-                  </WipeLink>
+                    <LinkCard link={l} Icon={linkIconMap[l.icon]} feature={isFeature} />
+                  </FadeIn>
                 );
               })}
             </div>
@@ -575,63 +630,131 @@ export default async function Home() {
             <p className="mt-12 text-xs font-bold tracking-widest text-neutral-700 uppercase lg:text-sm">
               Member Channels
             </p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-3">
-              {memberLinks.map((l) => {
-                const Icon = linkIconMap[l.icon];
-                return (
-                  <WipeLink
-                    key={l.href}
-                    href={l.href}
-                    wipeColor="bg-brand"
-                    cursorLabel="OPEN"
-                    className="group relative w-full justify-start gap-4 rounded-2xl border-2 border-[#d9552e]/40 bg-white p-5 text-left text-neutral-900 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1.5 hover:bg-[#ffe8d6] hover:border-brand hover:shadow-md active:bg-[#ffe8d6] active:border-brand sm:duration-[1000ms] lg:p-6"
+            {/* メインのSNSカードと同じ見た目・同じ折り畳み方（モバイルは横1行）で揃える */}
+            <div className="mt-4 grid gap-3 sm:gap-4 sm:grid-cols-3">
+              {memberLinks.map((l, i) => (
+                <FadeIn key={l.href} delay={i * 0.06} className="h-full">
+                  <LinkCard link={l} Icon={linkIconMap[l.icon]} />
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      </FadeIn>
+
+      {/* お知らせ抜粋（詳細は /news 以下の別階層） */}
+      <FadeIn>
+        <section id="news" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
+          <AmbientMeshBackground variant="bubbles" />
+          <div className={cn(CONTAINER, "relative z-10")}>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading index={6} label="News" heading="お知らせ" />
+              <Link
+                href="/news"
+                data-cursor-label="MORE"
+                className="group inline-flex items-center gap-2 text-sm font-bold text-brand transition-colors duration-200 hover:text-brand-dark lg:text-base"
+              >
+                すべてのお知らせ
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {latestNews.map((article, i) => (
+                <FadeIn key={article.slug} delay={i * 0.08} className="h-full">
+                  <BentoCard
+                    href={`/news/${article.slug}`}
+                    cursorLabel="READ"
+                    className="h-full"
                   >
-                    <div className="flex items-center gap-4">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-all duration-200 ease-out group-hover:scale-105 group-hover:bg-white group-hover:text-brand group-active:scale-105 group-active:bg-white group-active:text-brand sm:duration-[1000ms] lg:h-12 lg:w-12">
-                        <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
+                    <span className="flex items-center gap-3">
+                      <span className="rounded-full bg-brand px-3 py-1 text-[11px] font-bold text-white lg:text-xs">
+                        {article.category}
                       </span>
-                      <span className="flex flex-col">
-                        <span className="font-display font-extrabold text-base text-neutral-900 lg:text-lg">{l.label}</span>
-                        <span className="text-xs font-semibold text-neutral-700 lg:text-sm">{l.sub}</span>
+                      <time
+                        dateTime={article.date}
+                        className="text-xs font-bold text-neutral-500 lg:text-sm"
+                      >
+                        {formatNewsDate(article.date)}
+                      </time>
+                    </span>
+                    <span className="font-display mt-4 block text-lg leading-snug text-neutral-900 transition-colors duration-300 group-hover:text-brand lg:text-xl">
+                      {article.title}
+                    </span>
+                    <span className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-neutral-600">
+                      {article.summary}
+                    </span>
+                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand">
+                      詳しく見る
+                      <span className="transition-transform duration-300 group-hover:translate-x-1">
+                        →
                       </span>
-                    </div>
-                  </WipeLink>
-                );
-              })}
+                    </span>
+                  </BentoCard>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      </FadeIn>
+
+      {/* お問い合わせ（ファンサイト運営者宛） */}
+      <FadeIn>
+        <section
+          id="contact"
+          className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32"
+        >
+          <div className={cn(CONTAINER, "relative z-10")}>
+            <SectionHeading index={7} label="Contact" heading="お問い合わせ" />
+
+            <div className="mt-10 grid gap-4 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-6">
+              <BentoCard interactive={false} tone="warm" className="h-full justify-start">
+                <p className="text-xs font-bold tracking-widest text-brand-dark uppercase">
+                  Before you write
+                </p>
+                <p className="font-display mt-3 text-xl leading-snug text-neutral-900 lg:text-2xl">
+                  本サイトは非公式の
+                  <br />
+                  ファンサイトです
+                </p>
+                <p className="mt-5 text-sm leading-relaxed text-neutral-700">
+                  こちらの窓口は<strong className="font-bold text-brand-dark">当ファンサイトの運営者宛</strong>です。
+                  今日ポケ本人・所属先への連絡窓口ではありません。
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-neutral-700">
+                  出演依頼・スポンサーシップ・タイアップなど
+                  <strong className="font-bold text-brand-dark">お仕事のご相談は、必ず公式チャンネルおよび公式SNSに記載の連絡先</strong>
+                  へお願いします。当サイトから取り次ぐことはできません。
+                </p>
+                <a
+                  href="https://www.youtube.com/@KYOUPOKE/about"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand transition-colors duration-200 hover:text-brand-dark"
+                >
+                  公式チャンネルの概要欄を見る
+                  <span>→</span>
+                </a>
+              </BentoCard>
+
+              <BentoCard interactive={false} className="h-full">
+                <ContactForm />
+              </BentoCard>
             </div>
           </div>
         </section>
       </FadeIn>
       </main>
 
-      {/* フッター */}
-      <footer className="relative overflow-hidden bg-gradient-to-b from-[#3b180e] via-[#2a0e06] to-[#1c0803] py-20 text-white border-t border-brand/20">
-        <div className="flex select-none whitespace-nowrap">
-          {[0, 1].map((row) => (
-            <div
-              key={row}
-              aria-hidden={row === 1}
-              className="animate-marquee flex shrink-0 items-center gap-10 pr-10"
-            >
-              {Array.from({ length: 6 }).map((_, i) => (
-                <span key={i} className="flex items-center gap-4">
-                  <span className="font-wordmark text-brand text-4xl sm:text-6xl lg:text-8xl">
-                    KYOU POKE
-                  </span>
-                  <LogoMark className="h-8 w-8 sm:h-12 sm:w-12 lg:h-16 lg:w-16" />
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-
-        <p className={cn(CONTAINER, "relative mt-12 text-center text-sm text-white/70 lg:text-base")}>
-          このページは非公式のファンサイトです。今日ポケの活動を応援しています。
-        </p>
-      </footer>
+      <SiteFooter isHome />
 
       {/* 画面右下のトップに戻るフローティングボタン */}
       <ScrollToTop />
+
+      {/* モバイル下部固定のチャンネル登録CTA */}
+      <MobileCtaBar />
     </div>
   );
 }

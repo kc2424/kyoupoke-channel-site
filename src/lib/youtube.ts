@@ -1,6 +1,12 @@
 const CHANNEL_ID = "UCmnZL4tFRl4sm-uJOxTLHmg";
 
-export type LatestVideo = { id: number; videoId: string; title: string };
+export type LatestVideo = {
+  id: number;
+  videoId: string;
+  title: string;
+  /** ISO8601の公開日時。VideoObject構造化データのuploadDateに使う。 */
+  publishedAt?: string;
+};
 
 function decodeXmlEntities(text: string): string {
   return text
@@ -28,7 +34,13 @@ export async function fetchLatestVideos(limit = 3): Promise<LatestVideo[] | null
       const block = match[1];
       const videoId = block.match(/<yt:videoId>(.*?)<\/yt:videoId>/)?.[1] ?? "";
       const rawTitle = block.match(/<title>(.*?)<\/title>/)?.[1] ?? "";
-      return { id: index + 1, videoId, title: decodeXmlEntities(rawTitle) };
+      const publishedAt = block.match(/<published>(.*?)<\/published>/)?.[1];
+      return {
+        id: index + 1,
+        videoId,
+        title: decodeXmlEntities(rawTitle),
+        publishedAt,
+      };
     });
 
     return videos.filter((v) => v.videoId) as LatestVideo[];

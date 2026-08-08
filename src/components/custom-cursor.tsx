@@ -2,7 +2,9 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+import { onNativeCursorChange } from "@/lib/native-cursor";
 
 export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
@@ -11,6 +13,22 @@ export function CustomCursor() {
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [label, setLabel] = useState<string | null>(null);
+  // 動画モーダルなどiframeを開いている間はカスタムカーソルを引っ込め、
+  // OS標準のカーソルに主導権を渡す。
+  const [nativeCursor, setNativeCursor] = useState(false);
+
+  useEffect(() => onNativeCursorChange(setNativeCursor), []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (nativeCursor) {
+      root.classList.remove("cursor-none");
+    } else if (
+      !window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches
+    ) {
+      root.classList.add("cursor-none");
+    }
+  }, [nativeCursor]);
 
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) {
@@ -64,14 +82,14 @@ export function CustomCursor() {
         ref={dotRef}
         aria-hidden
         className="pointer-events-none fixed top-0 left-0 z-[999] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference transition-opacity duration-200"
-        style={{ opacity: active ? 1 : 0 }}
+        style={{ opacity: active && !nativeCursor ? 1 : 0 }}
       />
       <div
         ref={ringRef}
         aria-hidden
         className="pointer-events-none fixed top-0 left-0 z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-difference transition-[width,height,opacity] duration-200 ease-out"
         style={{
-          opacity: active && hovering ? 1 : 0,
+          opacity: active && hovering && !nativeCursor ? 1 : 0,
           width: hovering ? 40 : 32,
           height: hovering ? 40 : 32,
         }}
@@ -85,7 +103,7 @@ export function CustomCursor() {
         ref={labelRef}
         aria-hidden
         className="font-display pointer-events-none fixed top-0 left-0 z-[999] ml-8 -translate-x-1/2 -translate-y-1/2 text-lg font-bold tracking-wide text-white uppercase mix-blend-difference transition-opacity duration-200"
-        style={{ opacity: active && label ? 1 : 0 }}
+        style={{ opacity: active && label && !nativeCursor ? 1 : 0 }}
       >
         {label}
       </span>

@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 import { LetterboxReveal } from "@/components/letterbox-reveal";
+import { requestNativeCursor } from "@/lib/native-cursor";
 import { cn } from "@/lib/utils";
 
 /**
@@ -33,12 +34,17 @@ export function VideoModal({
     if (!open) return;
 
     document.body.style.overflow = "hidden";
+    // YouTubeのiframe上ではmousemoveが親に届かずカスタムカーソルが追従できないため、
+    // 開いている間は素のカーソルに戻す。
+    const releaseCursor = requestNativeCursor();
+
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
     }
     window.addEventListener("keydown", handleKey);
     return () => {
       document.body.style.overflow = "";
+      releaseCursor();
       window.removeEventListener("keydown", handleKey);
     };
   }, [open]);
@@ -71,7 +77,7 @@ export function VideoModal({
             onClick={() => setOpen(false)}
           >
             <div
-              className="relative w-full max-w-4xl transition-transform duration-300 ease-out"
+              className="relative w-full max-w-5xl transition-transform duration-300 ease-out"
               style={{
                 transform: open ? "scale(1) translateY(0)" : "scale(0.92) translateY(16px)",
               }}

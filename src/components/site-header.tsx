@@ -2,24 +2,23 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { FullscreenMenu } from "@/components/fullscreen-menu";
 import { LogoMark } from "@/components/logo-mark";
 import { UnderlineLink } from "@/components/underline-link";
 import { Badge } from "@/components/ui/badge";
 import { WipeLink } from "@/components/wipe-link";
+import { navItems, resolveNavHref } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 
 const SCROLL_THRESHOLD = 40;
 
-export function SiteHeader({
-  navItems,
-}: {
-  navItems: { label: string; href: string }[];
-}) {
+export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
@@ -28,7 +27,10 @@ export function SiteHeader({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // トップページにいるときだけ「先頭へスクロール」に差し替える。
+  // 下層ページではふつうに / へ遷移させる。
   const handleLogoClick = (e: React.MouseEvent) => {
+    if (!isHome) return;
     e.preventDefault();
     if (window.scrollY > 0) {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -61,9 +63,10 @@ export function SiteHeader({
             FAN SITE
           </Badge>
         </Link>
-        <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-800 md:flex lg:gap-8 lg:text-base">
+        {/* 項目数が増えたため、横並びはlg以上に限定してlg未満はハンバーガーに寄せる */}
+        <nav className="hidden items-center gap-5 text-sm font-bold text-neutral-800 lg:flex lg:gap-6">
           {navItems.map((item) => (
-            <UnderlineLink key={item.href} href={item.href}>
+            <UnderlineLink key={item.href} href={resolveNavHref(item.href, isHome)}>
               {item.label}
             </UnderlineLink>
           ))}

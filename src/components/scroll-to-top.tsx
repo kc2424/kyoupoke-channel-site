@@ -38,7 +38,7 @@ export function ScrollToTop() {
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
           aria-label="ページ最上部へ戻る"
-          className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/80 bg-gradient-to-r from-[#d9552e] to-[#b8431f] text-white shadow-[0_4px_14px_0_rgba(217,85,46,0.39)] backdrop-blur-md focus:outline-none"
+          className="fixed bottom-24 right-6 z-50 flex h-12 w-12 items-center justify-center lg:bottom-6 rounded-full border-2 border-white/80 bg-gradient-to-r from-[#d9552e] to-[#b8431f] text-white shadow-[0_4px_14px_0_rgba(217,85,46,0.39)] backdrop-blur-md focus:outline-none"
         >
           <ChevronUp className="h-6 w-6 stroke-[3] text-amber-200 animate-pulse" />
         </motion.button>
