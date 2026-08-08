@@ -1,62 +1,115 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import { useEffect, useState } from "react";
-
-const COLS = 8;
-const ROWS = 5;
-const TILE_COUNT = COLS * ROWS;
-
-function tileContent(i: number) {
-  if (i % 7 === 0) return "今";
-  if (i % 11 === 0) return "⚡";
-  return null;
-}
-
-function tileColor(i: number) {
-  const palette = ["#d9552e", "#111111", "#f4ede4", "#b8431f"];
-  return palette[i % palette.length];
-}
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState, useMemo } from "react";
 
 export function IntroLoader() {
-  const [visible, setVisible] = useState(true);
+  const [phase, setPhase] = useState<"hold" | "reveal" | "done">("hold");
   const prefersReducedMotion = useReducedMotion();
 
+  // 70個のダイナミック・アイコン大群データを生成（パフォーマンス最適化のためmemo化）
+  const iconsStream = useMemo(() => {
+    return Array.from({ length: 70 }).map((_, i) => ({
+      id: i,
+      size: 36 + (i * 9) % 56, // 36px 〜 92px
+      top: `${(i * 1.45) % 96}%`, // 0% 〜 96% の画面全域
+      duration: 1.0 + (i % 7) * 0.14, // 1.0s 〜 1.84s
+      delay: (i % 10) * 0.06, // 0s 〜 0.54s
+      rotate: ((i * 19) % 60) - 30, // -30deg 〜 +30deg
+    }));
+  }, []);
+
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setVisible(false);
-      return;
-    }
-    const timer = setTimeout(() => setVisible(false), 1400);
-    return () => clearTimeout(timer);
+    const toReveal = setTimeout(() => setPhase("reveal"), prefersReducedMotion ? 0 : 1200);
+    const toDone = setTimeout(() => setPhase("done"), prefersReducedMotion ? 0 : 2000);
+    const failsafe = setTimeout(() => setPhase("done"), prefersReducedMotion ? 0 : 3500);
+
+    return () => {
+      clearTimeout(toReveal);
+      clearTimeout(toDone);
+      clearTimeout(failsafe);
+    };
   }, [prefersReducedMotion]);
 
-  if (!visible) return null;
+  if (phase === "done") return null;
 
   return (
-    <div
-      className="pointer-events-none fixed inset-0 z-[9999] grid"
-      style={{
-        gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-        gridTemplateRows: `repeat(${ROWS}, 1fr)`,
+    <motion.div
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-brand text-white"
+      initial={{ opacity: 1 }}
+      animate={{
+        opacity: phase === "reveal" ? 0 : 1,
+        scale: phase === "reveal" ? 1.05 : 1,
       }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
     >
-      {Array.from({ length: TILE_COUNT }).map((_, i) => (
+      {/* 背景パターン・水玉アクセント */}
+      <div className="pointer-events-none absolute inset-0 opacity-15 bg-[radial-gradient(#fff_2px,transparent_2px)] [background-size:24px_24px]" />
+
+      {/* 左から100個の今日ポケアイコンの大群が駆け抜ける圧巻のパレード（嵐） */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {iconsStream.map((item) => (
+          <motion.div
+            key={item.id}
+            initial={{ x: "-20vw", opacity: 0, scale: 0.6, rotate: item.rotate }}
+            animate={{
+              x: "125vw",
+              opacity: [0, 1, 1, 0],
+              scale: [0.6, 1.1, 1, 0.7],
+              y: [0, -12, 12, 0],
+            }}
+            transition={{
+              duration: item.duration,
+              delay: item.delay,
+              ease: "easeInOut",
+            }}
+            style={{ top: item.top, position: "absolute", willChange: "transform" }}
+            className="flex items-center justify-center"
+          >
+            <span
+              style={{ width: item.size, height: item.size }}
+              className="relative block overflow-hidden rounded-full border-2 border-white shadow-xl bg-white shrink-0"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/icon.png"
+                alt="今日ポケ"
+                className="h-full w-full object-cover"
+              />
+            </span>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* 中央ポップなブランドタイトル ＆ バウンスアイコン */}
+      <motion.div
+        className="relative z-10 flex flex-col items-center gap-4 text-center"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+      >
         <motion.div
-          key={i}
-          className="flex items-center justify-center font-logo text-2xl text-white"
-          style={{ backgroundColor: tileColor(i) }}
-          initial={{ scale: 1, rotate: 0, opacity: 1 }}
-          animate={{ scale: 0, rotate: (i % 2 === 0 ? 1 : -1) * 35, opacity: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.2 + (i % COLS) * 0.03 + Math.floor(i / COLS) * 0.05,
-            ease: "backIn",
-          }}
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
+          className="relative block h-24 w-24 overflow-hidden rounded-full border-4 border-white shadow-2xl bg-white sm:h-28 sm:w-28"
         >
-          {tileContent(i)}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/icon.png"
+            alt="今日ポケ"
+            className="h-full w-full object-cover"
+          />
         </motion.div>
-      ))}
-    </div>
+
+        <div className="flex flex-col items-center gap-1">
+          <span className="font-wordmark text-4xl text-white drop-shadow-md sm:text-6xl">
+            KYOU POKE
+          </span>
+          <span className="rounded-full bg-white px-4 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-md sm:text-sm">
+            WELCOME !
+          </span>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }

@@ -3,6 +3,10 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
+/* スマホを横向きにした際（高さが極端に低い横画面）専用のバリアント。
+   sm:のブレークポイントは幅だけを見るため、横向きスマホ（幅は640px超でも高さ160〜500px程度）を
+   デスクトップと誤認してレイアウトが崩れる（文字の重なり）のを防ぐために使う。 */
+@custom-variant landscape-compact (@media (orientation: landscape) and (max-height: 500px));
 
 :root {
   --brand: #d9552e;

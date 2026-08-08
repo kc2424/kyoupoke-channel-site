@@ -30,7 +30,7 @@ export function FullscreenMenu() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-full border-2 border-black px-5 py-2.5 text-sm font-bold text-black lg:px-6 lg:py-3 lg:text-base"
+        className="rounded-full border-2 border-black px-5 py-2.5 text-sm font-bold text-black md:hidden"
       >
         Menu
       </button>
@@ -60,7 +60,7 @@ export function FullscreenMenu() {
             </button>
           </div>
 
-          <nav className="flex flex-col gap-2">
+          <nav className="flex min-h-0 flex-1 flex-col justify-center gap-1 overflow-y-auto py-4 sm:flex-none sm:gap-2 sm:py-0">
             {navItems.map((item, i) => (
               <a
                 key={item.href}
@@ -73,7 +73,7 @@ export function FullscreenMenu() {
                 }}
                 onMouseEnter={() => setHovered(item.href)}
                 onMouseLeave={() => setHovered(null)}
-                className="font-display flex items-center gap-4 text-[13vw] leading-[1.05] text-white transition-transform duration-300 sm:text-6xl"
+                className="font-display flex items-center gap-2 text-[11vw] leading-[1.1] text-white transition-transform duration-300 sm:gap-4 sm:text-6xl"
                 style={{
                   transitionDelay: open ? `${i * 60}ms` : "0ms",
                   transform: open ? "translateX(0)" : "translateX(-40px)",
@@ -82,7 +82,7 @@ export function FullscreenMenu() {
               >
                 <ScrambleText text={item.label} active={hovered === item.href} />
                 <span
-                  className="text-brand text-3xl transition-opacity duration-200 sm:text-5xl"
+                  className="text-brand hidden text-3xl transition-opacity duration-200 sm:inline sm:text-5xl"
                   style={{ opacity: hovered === item.href ? 1 : 0 }}
                 >
                   →
@@ -93,7 +93,7 @@ export function FullscreenMenu() {
 
           <div className="flex flex-col gap-4 text-sm font-bold sm:flex-row sm:items-end sm:justify-between lg:text-base">
             <div>
-              <p className="text-white/40 uppercase">Links</p>
+              <p className="text-white/70 uppercase">Links</p>
               <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
                 {socialLinks.map((s) => (
                   <a
@@ -108,7 +108,7 @@ export function FullscreenMenu() {
                 ))}
               </div>
             </div>
-            <p className="text-white/40">非公式ファンサイト</p>
+            <p className="text-white/70">非公式ファンサイト</p>
           </div>
         </div>
       </div>

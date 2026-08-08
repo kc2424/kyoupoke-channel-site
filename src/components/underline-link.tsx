@@ -35,10 +35,10 @@ export function UnderlineLink({
       data-cursor-index={cursorIndex}
       className={cn("group relative inline-block pb-1", className)}
     >
-      <span className="inline-block font-bold transition-[font-weight] duration-300 ease-out group-hover:font-black">
+      <span className="inline-block font-bold transition-colors duration-300 ease-out group-hover:text-brand">
         {children}
       </span>
-      <span className="pointer-events-none absolute inset-x-0 bottom-0 h-[1.5px] origin-left scale-x-0 bg-current transition-transform duration-500 ease-out group-hover:scale-x-100" />
+      <span className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-brand transition-transform duration-300 ease-out group-hover:scale-x-100" />
     </a>
   );
 }

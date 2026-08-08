@@ -18,7 +18,6 @@ export function ScrambleText({ text, active, className }: ScrambleTextProps) {
 
   useEffect(() => {
     if (!active || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplay(text);
       return;
     }
 
@@ -48,5 +47,5 @@ export function ScrambleText({ text, active, className }: ScrambleTextProps) {
     };
   }, [active, text]);
 
-  return <span className={className}>{display}</span>;
+  return <span className={className}>{active ? display : text}</span>;
 }

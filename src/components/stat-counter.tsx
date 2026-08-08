@@ -1,68 +1,52 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useEffect, useRef } from "react";
+import { useInView, useMotionValue, useSpring } from "framer-motion";
 
 export function StatCounter({
   value,
   suffix = "",
   decimals = 0,
   className,
-  onProgress,
 }: {
   value: number;
   suffix?: string;
   decimals?: number;
   className?: string;
-  onProgress?: (progress: number) => void;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
 
-  const format = (n: number) =>
-    n.toLocaleString("ja-JP", {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    });
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, {
+    stiffness: 70,
+    damping: 18,
+    restDelta: 0.001,
+  });
 
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
+  useEffect(() => {
+    if (isInView) {
+      motionValue.set(value);
+    }
+  }, [isInView, motionValue, value]);
 
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        el.textContent = `${format(value)}${suffix}`;
-        onProgress?.(1);
-        return;
-      }
-
-      const counter = { n: 0 };
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 90%",
-        once: true,
-        onEnter: () =>
-          gsap.to(counter, {
-            n: value,
-            duration: 1.6,
-            ease: "power2.out",
-            onUpdate: () => {
-              el.textContent = `${format(counter.n)}${suffix}`;
-              onProgress?.(value === 0 ? 1 : counter.n / value);
-            },
-          }),
+  useEffect(() => {
+    const format = (n: number) =>
+      n.toLocaleString("ja-JP", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
       });
-    },
-    { scope: ref }
-  );
+
+    return springValue.on("change", (latest) => {
+      if (ref.current) {
+        ref.current.textContent = `${format(latest)}${suffix}`;
+      }
+    });
+  }, [springValue, decimals, suffix]);
 
   return (
     <span ref={ref} className={className}>
-      {format(0)}
-      {suffix}
+      0{suffix}
     </span>
   );
 }

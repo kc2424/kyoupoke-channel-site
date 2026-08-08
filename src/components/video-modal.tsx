@@ -23,6 +23,9 @@ export function VideoModal({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // createPortal(document.body)はSSR時に存在しないため、クライアントマウント後
+    // 一度だけ切り替える。mounted判定に代わる手段がないため意図的な直接setState。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
