@@ -20,7 +20,7 @@ export const SITE_INDEXABLE = true;
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://kyoupoke-channel-site.vercel.app";
 
-export const SITE_NAME = "今日ポケ ファンサイト";
+export const SITE_NAME = "今日ポケ 公認ファンサイト";
 export const SITE_DESCRIPTION =
   "ポケモン対戦YouTuberグループ「今日ポケ（KYOUPOKE）」の非公式ファンサイト。メンバー紹介、最新動画、SNSリンク、お知らせをまとめています。";
 
