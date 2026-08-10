@@ -3,23 +3,22 @@ import type { Metadata } from "next";
 /**
  * このサイトを検索エンジンにインデックスさせるかどうかの唯一のスイッチ。
  *
- * 現在は非公式ファンサイトであり一般公開していないため `false`（= noindex, nofollow）。
- * 公式サイトとして採用され公開する段階になったら、ここを `true` にするだけで
- * 以下がまとめて有効になる:
- *   - <meta name="robots"> が index, follow に変わる（layout.tsx）
+ * 今日ポケch.運営から公認ファンサイトとして公開の許諾を得たため `true`（= index, follow）。
+ * 以下がまとめて有効になっている:
+ *   - <meta name="robots"> が index, follow になる（layout.tsx）
  *   - /sitemap.xml が全URLを出力する（app/sitemap.ts）
  *   - /robots.txt が Allow: / と sitemap 参照を出力する（app/robots.ts）
  * OGP・Twitter Card・JSON-LD構造化データはフラグに関係なく常に出力しているので、
  * SNSでURLを共有したときのカード表示は現時点でも正しく機能する。
  */
-export const SITE_INDEXABLE = false;
+export const SITE_INDEXABLE = true;
 
 /**
- * 本番URL。公開時に実際のドメインへ差し替える。
+ * 本番URL。独自ドメイン取得後はここを差し替える。
  * OGPの画像URLやcanonical、sitemapの絶対URL生成に使う。
  */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://kyoupoke-fansite.example.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://kyoupoke-channel-site.vercel.app";
 
 export const SITE_NAME = "今日ポケ ファンサイト";
 export const SITE_DESCRIPTION =
