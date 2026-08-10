@@ -40,6 +40,9 @@ const notoSansJP = Noto_Sans_JP({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   ...buildMetadata(),
+  verification: {
+    google: "nifgD416wfIdzToYwTxhxnTzknA6dKu1ardId5AMk_g",
+  },
 };
 
 export default function RootLayout({
