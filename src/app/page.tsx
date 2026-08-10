@@ -294,7 +294,7 @@ export default async function Home() {
     fetchVideos(),
     fetchLinks(),
     fetchSiteTexts(),
-    fetchLatestVideos(3),
+    fetchLatestVideos(6),
   ]);
 
   const members =
@@ -327,7 +327,7 @@ export default async function Home() {
       <SiteHeader />
 
       <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:min-h-[100svh] sm:bg-white sm:bg-none sm:px-10 sm:pt-0 sm:pb-0 landscape-compact:min-h-[100svh] landscape-compact:bg-white landscape-compact:bg-none landscape-compact:px-10 lg:px-16">
+      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:aspect-[4/3] sm:px-10 sm:pt-0 sm:pb-0 landscape-compact:min-h-[100svh] landscape-compact:bg-white landscape-compact:bg-none landscape-compact:px-10 lg:aspect-auto lg:min-h-[100svh] lg:bg-white lg:bg-none lg:px-16">
         {/* モバイル構成 */}
         <span className="pointer-events-none absolute top-1/2 left-6 z-20 hidden -translate-y-1/2 -rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block landscape-compact:block lg:text-sm">
           Unofficial Fan Site
@@ -349,11 +349,11 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-32 landscape-compact:mt-auto landscape-compact:flex landscape-compact:flex-col landscape-compact:items-center landscape-compact:px-0 landscape-compact:pb-3 lg:pb-36">
+        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[88px] landscape-compact:mt-auto landscape-compact:flex landscape-compact:flex-col landscape-compact:items-center landscape-compact:px-0 landscape-compact:pb-3 lg:pb-[104px]">
           <GiantTitle>KYOU POKE</GiantTitle>
 
           <FadeIn delay={0.3} y={12}>
-            <p className="relative mt-6 max-w-lg text-center text-base text-balance whitespace-pre-line text-neutral-600 landscape-compact:mt-2 landscape-compact:max-w-sm landscape-compact:text-xs lg:max-w-xl lg:text-lg">
+            <p className="relative mt-6 max-w-lg text-center text-sm leading-snug text-balance whitespace-pre-line text-neutral-600 landscape-compact:mt-2 landscape-compact:max-w-sm landscape-compact:text-xs lg:max-w-xl lg:text-base">
               {texts.hero_tagline.includes("届ける")
                 ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
                     <span key={i}>
@@ -366,11 +366,11 @@ export default async function Home() {
           </FadeIn>
         </div>
 
-        <div className="pointer-events-none absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-neutral-600 sm:flex landscape-compact:hidden">
+        <div className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-neutral-600 sm:flex landscape-compact:hidden">
           <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
             Scroll
           </span>
-          <span className="h-8 w-px animate-pulse bg-neutral-400" />
+          <span className="h-6 w-px animate-pulse bg-neutral-400" />
         </div>
       </section>
 
@@ -588,7 +588,7 @@ export default async function Home() {
                 <h3 className="font-display mt-2 text-2xl text-neutral-900 lg:text-3xl">最新動画</h3>
                 <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
                   {latestVideos.map((v, i) => (
-                    <FadeIn key={v.videoId} delay={i * 0.1}>
+                    <FadeIn key={v.videoId} delay={i * 0.1} className={i >= 3 ? "hidden sm:block" : undefined}>
                       <VideoCard video={v} index={i} labelPrefix="最新動画" />
                     </FadeIn>
                   ))}
