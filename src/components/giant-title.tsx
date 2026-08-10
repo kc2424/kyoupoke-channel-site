@@ -185,7 +185,7 @@ export function GiantTitle({ children }: { children: string }) {
   return (
     <h1
       ref={containerRef}
-      className="font-wordmark flex w-full justify-center overflow-hidden text-[17vw] leading-[0.85] drop-shadow-[3px_5px_0_rgba(90,30,10,0.18)] sm:text-[clamp(3.5rem,13.5vw,10.5rem)] landscape-compact:text-[11vh]"
+      className="font-wordmark flex w-full justify-center overflow-hidden text-[17vw] leading-[0.85] drop-shadow-[3px_5px_0_rgba(90,30,10,0.18)] sm:text-[clamp(3.5rem,min(13.5vw,14vh),8.5rem)] landscape-compact:text-[11vh]"
     >
       <div
         ref={rowRef}

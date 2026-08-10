@@ -349,7 +349,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[8vh] landscape-compact:mt-auto landscape-compact:flex landscape-compact:flex-col landscape-compact:items-center landscape-compact:px-0 landscape-compact:pb-3 lg:pb-[10vh]">
+        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[15vh] landscape-compact:mt-auto landscape-compact:flex landscape-compact:flex-col landscape-compact:items-center landscape-compact:px-0 landscape-compact:pb-3 lg:pb-[17vh]">
           <GiantTitle>KYOU POKE</GiantTitle>
 
           <FadeIn delay={0.3} y={12}>
