@@ -6,6 +6,7 @@ const STATS_DATA_SOURCE_ID = "777541f2-088b-460b-9bfe-9b8b8308e6aa";
 const VIDEOS_DATA_SOURCE_ID = "70745038-6c0e-41bc-8307-e2c456676d02";
 const LINKS_DATA_SOURCE_ID = "6b2c8532-e222-44b8-a5ac-bfba572411ee";
 const SITE_TEXT_DATA_SOURCE_ID = "a816d703-edc6-42ab-a2fe-58a35d7c48b6";
+const NEWS_DATA_SOURCE_ID = "de43ee17-f9cb-47a3-b6f0-47f4b0e86b22";
 
 export type NotionMember = {
   name: string;
@@ -50,6 +51,18 @@ export type NotionLink = {
   icon: NotionLinkIcon;
 };
 
+export type NotionNewsCategory = "お知らせ" | "イベント" | "メディア" | "動画";
+
+export type NotionNewsArticle = {
+  slug: string;
+  date: string;
+  category: NotionNewsCategory;
+  title: string;
+  summary: string;
+  body: string[];
+  link?: { label: string; href: string };
+};
+
 type Properties = Record<string, unknown>;
 
 function richText(prop: unknown): string {
@@ -75,6 +88,11 @@ function select(prop: unknown): string {
 function url(prop: unknown): string {
   const p = prop as { url?: string | null } | undefined;
   return p?.url ?? "";
+}
+
+function dateStart(prop: unknown): string {
+  const p = prop as { date?: { start?: string } | null } | undefined;
+  return p?.date?.start ?? "";
 }
 
 function pageProperties(page: unknown): Properties {
@@ -221,6 +239,36 @@ export async function fetchLinks(): Promise<
     mainLinks: links.filter((l) => l.kind === "メインリンク"),
     memberLinks: links.filter((l) => l.kind === "メンバーチャンネル"),
   };
+}
+
+// ステータスが「公開」のお知らせ記事のみ、公開日の新しい順で返す。
+export async function fetchNews(): Promise<NotionNewsArticle[] | null> {
+  const notion = getClient();
+  if (!notion) return null;
+
+  const response = await notion.dataSources.query({
+    data_source_id: NEWS_DATA_SOURCE_ID,
+    filter: { property: "公開", checkbox: { equals: true } },
+    sorts: [{ property: "公開日", direction: "descending" }],
+  });
+
+  return response.results.map((page) => {
+    const properties = pageProperties(page);
+    const linkLabel = richText(properties["リンクラベル"]);
+    const linkHref = url(properties["リンクURL"]);
+    return {
+      slug: richText(properties["スラッグ"]),
+      date: dateStart(properties["公開日"]),
+      category: (select(properties["カテゴリ"]) || "お知らせ") as NotionNewsCategory,
+      title: title(properties["タイトル"]),
+      summary: richText(properties["要約"]),
+      body: richText(properties["本文"])
+        .split("\n\n")
+        .map((p) => p.trim())
+        .filter(Boolean),
+      link: linkLabel && linkHref ? { label: linkLabel, href: linkHref } : undefined,
+    };
+  });
 }
 
 // キー・値形式の単発テキスト（ヒーローのキャッチコピーなど）をまとめて取得する。

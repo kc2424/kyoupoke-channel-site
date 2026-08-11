@@ -15,8 +15,9 @@ const CONTAINER = "mx-auto w-full max-w-[900px] px-6 sm:px-10";
 type Params = { slug: string };
 
 // 記事はビルド時に全て静的生成する。
-export function generateStaticParams(): Params[] {
-  return getAllNews().map((article) => ({ slug: article.slug }));
+export async function generateStaticParams(): Promise<Params[]> {
+  const news = await getAllNews();
+  return news.map((article) => ({ slug: article.slug }));
 }
 
 export async function generateMetadata({
@@ -25,7 +26,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getNewsBySlug(slug);
+  const article = await getNewsBySlug(slug);
   if (!article) return buildMetadata({ title: "お知らせ" });
 
   return buildMetadata({
@@ -43,10 +44,10 @@ export default async function NewsArticlePage({
   params: Promise<Params>;
 }) {
   const { slug } = await params;
-  const article = getNewsBySlug(slug);
+  const article = await getNewsBySlug(slug);
   if (!article) notFound();
 
-  const others = getAllNews()
+  const others = (await getAllNews())
     .filter((a) => a.slug !== article.slug)
     .slice(0, 3);
 

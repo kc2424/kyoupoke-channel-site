@@ -316,7 +316,7 @@ export default async function Home() {
       ? notionLinks.memberLinks
       : fallbackMemberLinks;
   const texts = { ...fallbackTexts, ...notionTexts };
-  const latestNews = getLatestNews(3);
+  const latestNews = await getLatestNews(3);
 
   return (
     // overflow-x-clip: LiveGlowFrame の回転するグロー枠が回転位相によって

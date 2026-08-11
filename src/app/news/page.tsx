@@ -19,8 +19,8 @@ export const metadata: Metadata = buildMetadata({
   path: "/news",
 });
 
-export default function NewsIndexPage() {
-  const news = getAllNews();
+export default async function NewsIndexPage() {
+  const news = await getAllNews();
 
   return (
     <div className="flex min-h-screen flex-col overflow-x-clip bg-white">

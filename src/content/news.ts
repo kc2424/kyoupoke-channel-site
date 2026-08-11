@@ -1,6 +1,8 @@
 // お知らせ/ニュースのデータソース。
-// Notion側にニュース用のDBが無いため、当面はこのファイルを直接編集して記事を追加する。
-// 追加するときは配列の先頭に足すのではなく、`date` を正しく入れれば取得側で新しい順に並ぶ。
+// NotionのDB(お知らせ)を優先して取得し、未接続または0件のときだけ
+// このファイル内のfallbackArticlesを表示する。
+
+import { fetchNews } from "@/lib/notion";
 
 export type NewsCategory = "お知らせ" | "イベント" | "メディア" | "動画";
 
@@ -19,7 +21,7 @@ export type NewsArticle = {
   link?: { label: string; href: string };
 };
 
-const articles: NewsArticle[] = [
+const fallbackArticles: NewsArticle[] = [
   {
     slug: "kyoupoke-gym-2026",
     date: "2026-07-20",
@@ -78,18 +80,20 @@ const articles: NewsArticle[] = [
   },
 ];
 
-/** 新しい順に並べたお知らせ一覧を返す。 */
-export function getAllNews(): NewsArticle[] {
+/** 新しい順に並べたお知らせ一覧を返す。Notion未接続/0件時はfallbackArticlesを使う。 */
+export async function getAllNews(): Promise<NewsArticle[]> {
+  const notionNews = await fetchNews();
+  const articles = notionNews && notionNews.length > 0 ? notionNews : fallbackArticles;
   return [...articles].sort((a, b) => b.date.localeCompare(a.date));
 }
 
 /** トップページのお知らせ抜粋で使う、先頭 limit 件。 */
-export function getLatestNews(limit = 3): NewsArticle[] {
-  return getAllNews().slice(0, limit);
+export async function getLatestNews(limit = 3): Promise<NewsArticle[]> {
+  return (await getAllNews()).slice(0, limit);
 }
 
-export function getNewsBySlug(slug: string): NewsArticle | undefined {
-  return articles.find((a) => a.slug === slug);
+export async function getNewsBySlug(slug: string): Promise<NewsArticle | undefined> {
+  return (await getAllNews()).find((a) => a.slug === slug);
 }
 
 /** 「2026年7月20日」のような日本語表記に整形する。 */
