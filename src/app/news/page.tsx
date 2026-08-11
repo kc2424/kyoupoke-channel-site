@@ -12,6 +12,9 @@ import { cn } from "@/lib/utils";
 
 const CONTAINER = "mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16";
 
+// Notion側の公開/非公開切り替えを反映するため、トップページと同じ間隔で再取得する。
+export const revalidate = 300;
+
 export const metadata: Metadata = buildMetadata({
   title: "お知らせ",
   description:

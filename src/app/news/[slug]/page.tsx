@@ -12,6 +12,9 @@ import { breadcrumbJsonLd, buildMetadata, newsArticleJsonLd } from "@/lib/seo";
 
 const CONTAINER = "mx-auto w-full max-w-[900px] px-6 sm:px-10";
 
+// Notion側の公開/非公開切り替えを反映するため、トップページと同じ間隔で再取得する。
+export const revalidate = 300;
+
 type Params = { slug: string };
 
 // 記事はビルド時に全て静的生成する。
