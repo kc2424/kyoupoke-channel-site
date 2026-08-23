@@ -134,34 +134,42 @@ const fallbackStats = [
   { value: 10, decimals: 0, suffix: "万人", label: "銀の盾を達成（2022年）" },
 ];
 
+// 新しい実績ほど先頭に並べる（Notion側の「表示順」と同じ並び）。
 const fallbackAchievements = [
-  { label: "YouTube Creator Awards", sub: "銀の盾（登録者10万人）", tone: "brand" as const },
-  { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演（2024年5月27日〜7月1日放映）", tone: "black" as const },
   {
-    label: "PJCS / WCS 2年連続出場",
-    sub: "いろは選手が2025・2026年と連続で日本代表・世界大会出場権獲得",
+    label: "REJECT杯 優勝",
+    sub: "チームくろこが「はじまりの王者」獲得（2026年8月）",
     tone: "brand" as const,
   },
-  { label: "KYOUPOKE GYM", sub: "対戦イベントを開催", tone: "brand" as const },
   {
     label: "REJECT パートナーシップ",
     sub: "プロeスポーツチームと提携（2026年8月）",
     tone: "black" as const,
   },
   {
-    label: "REJECT杯 優勝",
-    sub: "チームくろこが「はじまりの王者」獲得（2026年8月）",
+    label: "PJCS / WCS 2年連続出場",
+    sub: "いろは選手が2025・2026年と連続で日本代表・世界大会出場権獲得",
     tone: "brand" as const,
   },
+  { label: "KYOUPOKE GYM", sub: "対戦イベントを開催", tone: "brand" as const },
+  { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演（2024年5月27日〜7月1日放映）", tone: "black" as const },
+  { label: "YouTube Creator Awards", sub: "銀の盾（登録者10万人）", tone: "brand" as const },
 ];
 
 // 実績の見出しに一致する場合、カード背景に写真を敷く。
-const achievementImages: Record<string, string> = {
-  "YouTube Creator Awards": "/achievements/youtube-award.jpg",
-  "テレビ東京「バトオフ」": "/achievements/tv-tokyo-battle-of.jpg",
-  "PJCS / WCS 2年連続出場": "/achievements/wcs-logo.png",
-  "KYOUPOKE GYM": "/achievements/kyoupoke-gym.jpg",
-  "REJECT パートナーシップ": "/achievements/reject-partnership.jpg",
+// position は 4:3 に切り抜くときの寄せ方（未指定なら中央）。
+// カードは下端に見出しを重ねるので、被写体やロゴが下部にある画像は
+// object-top 側に寄せて文字と衝突させない。
+const achievementImages: Record<string, { src: string; position?: string }> = {
+  "YouTube Creator Awards": { src: "/achievements/youtube-award.jpg" },
+  "テレビ東京「バトオフ」": { src: "/achievements/tv-tokyo-battle-of.jpg" },
+  "PJCS / WCS 2年連続出場": { src: "/achievements/wcs-logo.png" },
+  "KYOUPOKE GYM": { src: "/achievements/kyoupoke-gym.jpg" },
+  "REJECT パートナーシップ": { src: "/achievements/reject-partnership.jpg" },
+  "REJECT杯 優勝": {
+    src: "/achievements/reject-cup-victory.jpg",
+    position: "object-top",
+  },
 };
 
 const fallbackVideos = [
@@ -560,10 +568,13 @@ export default async function Home() {
                     {image && (
                       <>
                         <Image
-                          src={image}
+                          src={image.src}
                           alt={a.label}
                           fill
-                          className="object-cover object-center"
+                          className={cn(
+                            "object-cover",
+                            image.position ?? "object-center"
+                          )}
                         />
                         <div
                           className={cn(
