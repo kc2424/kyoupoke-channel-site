@@ -129,16 +129,30 @@ const staffMembers = [
 ];
 
 const fallbackStats = [
-  { value: 67.3, decimals: 1, suffix: "万人+", label: "チャンネル登録者数" },
+  { value: 68.3, decimals: 1, suffix: "万人+", label: "チャンネル登録者数" },
   { value: 12.5, decimals: 1, suffix: "億回+", label: "総再生回数" },
   { value: 10, decimals: 0, suffix: "万人", label: "銀の盾を達成（2022年）" },
 ];
 
 const fallbackAchievements = [
   { label: "YouTube Creator Awards", sub: "銀の盾（登録者10万人）", tone: "brand" as const },
-  { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演", tone: "black" as const },
-  { label: "PJCS / WCS 2年連続出場", sub: "いろは選手が出場権獲得", tone: "brand" as const },
+  { label: "テレビ東京「バトオフ」", sub: "公式番組へ出演（2024年5月27日〜7月1日放映）", tone: "black" as const },
+  {
+    label: "PJCS / WCS 2年連続出場",
+    sub: "いろは選手が2025・2026年と連続で日本代表・世界大会出場権獲得",
+    tone: "brand" as const,
+  },
   { label: "KYOUPOKE GYM", sub: "対戦イベントを開催", tone: "brand" as const },
+  {
+    label: "REJECT パートナーシップ",
+    sub: "プロeスポーツチームと提携（2026年8月）",
+    tone: "black" as const,
+  },
+  {
+    label: "REJECT杯 優勝",
+    sub: "チームくろこが「はじまりの王者」獲得（2026年8月）",
+    tone: "brand" as const,
+  },
 ];
 
 // 実績の見出しに一致する場合、カード背景に写真を敷く。
@@ -147,6 +161,7 @@ const achievementImages: Record<string, string> = {
   "テレビ東京「バトオフ」": "/achievements/tv-tokyo-battle-of.jpg",
   "PJCS / WCS 2年連続出場": "/achievements/wcs-logo.png",
   "KYOUPOKE GYM": "/achievements/kyoupoke-gym.jpg",
+  "REJECT パートナーシップ": "/achievements/reject-partnership.jpg",
 };
 
 const fallbackVideos = [
@@ -306,6 +321,10 @@ export default async function Home() {
     notionAchievements && notionAchievements.length > 0
       ? notionAchievements
       : fallbackAchievements;
+  // 実績カードは6カラムグリッド上で通常2カラム分（＝1行3枚）。
+  // 枚数が3の倍数+2のときだけ、余った2枚を3カラム分に広げて最終行の穴を埋める。
+  const achievementWideFrom =
+    achievements.length % 3 === 2 ? achievements.length - 2 : -1;
   const videos = notionVideos && notionVideos.length > 0 ? notionVideos : fallbackVideos;
   const mainLinks =
     notionLinks && notionLinks.mainLinks.length > 0
@@ -524,14 +543,16 @@ export default async function Home() {
               stats={stats}
               className="mt-8 py-6 sm:py-8 lg:py-10 text-neutral-900"
             />
-            <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-3 lg:gap-5">
-              {achievements.map((a) => {
+            <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-6 lg:gap-5">
+              {achievements.map((a, i) => {
                 const image = achievementImages[a.label];
+                const wide = achievementWideFrom >= 0 && i >= achievementWideFrom;
                 return (
                   <SparkTap
                     key={a.label}
                     className={cn(
                       "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
+                      wide ? "sm:col-span-3 sm:aspect-[2/1]" : "sm:col-span-2",
                       a.tone === "brand" && "bg-brand-dark text-white",
                       a.tone === "black" && "bg-neutral-900 text-white"
                     )}
