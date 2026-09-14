@@ -5,7 +5,7 @@
 ## 構成と公開先
 
 - 本番Vercelを稼働させたまま、同じアプリをCloudflare Workersへ試験公開。
-- URL: https://kyoupoke-channel-site-preview.kc2424-buzz.workers.dev
+- URL: https://kyoupoke-channel-site-preview.kc2424.workers.dev
 - Cloudflare account: `6a1c26f4f8db3df8d5647d6e4f1ccf00`
 - Worker: `kyoupoke-channel-site-preview`
 - [Cloudflare管理画面](https://dash.cloudflare.com/6a1c26f4f8db3df8d5647d6e4f1ccf00/workers/services/view/kyoupoke-channel-site-preview/production)

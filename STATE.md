@@ -82,3 +82,10 @@
 -->
 
 （2026-09-15以前の実装履歴はHANDOVER.md / MAKER_STATE.md / Git履歴を参照。）
+
+### 2026-09-15（ユーザー承認: Cloudflareサブドメイン変更）
+
+- アカウント共通のサブドメインを `kc2424-buzz.workers.dev` から `kc2424.workers.dev` に変更。既存3 Workersすべてへの影響と旧URL停止を説明し、ユーザー承認後に確定。
+- 新しい今日ポケ試験URL: https://kyoupoke-channel-site-preview.kc2424.workers.dev
+- `buzz-style` と `buzz-style-poll` も新サブドメインへ移動。各Worker名・コードは変更していない。
+- Cloudflare管理画面で3 Workersの新URLとアカウント設定反映を確認。引き継ぎ資料のリンクを更新。

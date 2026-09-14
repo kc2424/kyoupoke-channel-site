@@ -8,7 +8,7 @@ Next.js / TypeScript / Tailwind CSSで制作し、Notionでコンテンツを管
 | 用途 | URL | 更新方法 |
 |---|---|---|
 | 本番・既存URL | https://kyoupoke-channel-site.vercel.app | GitHub main → Vercel |
-| Cloudflare試験版 | https://kyoupoke-channel-site-preview.kc2424-buzz.workers.dev | 下記のCloudflareデプロイコマンド |
+| Cloudflare試験版 | https://kyoupoke-channel-site-preview.kc2424.workers.dev | 下記のCloudflareデプロイコマンド |
 
 Cloudflare試験版は検索除外とし、canonicalは本番URLを維持しています。
 `vercel.app`はVercelのドメインなのでCloudflareへ移管できません。Cloudflare本番化にはworkers.devのURLを正式採用するか、独自ドメインを用意します。

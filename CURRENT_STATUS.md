@@ -8,7 +8,7 @@
 - Mac向けに依存パッケージを再インストール済み。Windows由来の旧node_modulesは `/private/tmp/kyoupoke-windows-node-modules-20260915` に一時退避。追跡ファイルの改行形式だけを正規化し、既存コンテンツに差分が出ないことを確認。
 - Vercel CLIを既存プロジェクトへリンク済み。Cloudflare Wranglerのログインも完了。
 - VercelのNOTION_TOKENはSensitiveで取り出せなかったため、ユーザー入力の元のキーを利用。`.env.local`、`.dev.vars`、Cloudflare Workerのシークレットを設定し、公開記事8件の取得を確認。秘密の値はGitに保存していない。
-- Cloudflare試験URL: https://kyoupoke-channel-site-preview.kc2424-buzz.workers.dev
+- Cloudflare試験URL: https://kyoupoke-channel-site-preview.kc2424.workers.dev
 - 既存Vercel本番URLは維持。Cloudflare試験版は検索除外で、canonicalはVercelを指す。独自ドメイン購入、有料プランへの変更、本番URLの切替は未実施。
 - vinextとWranglerの設定、型生成・ビルド・公開コマンドを追加。詳細は [CLOUDFLARE.md](CLOUDFLARE.md)。次回の入口は [README.md](README.md)。
 - CloudflareのGitHub自動デプロイは未接続。更新時は `npm run deploy:cloudflare` を実行する。

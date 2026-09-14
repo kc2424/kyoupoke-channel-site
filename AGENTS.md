@@ -3,7 +3,7 @@
 ## 現在の作業入口（2026-09-15更新）
 
 - まず `CURRENT_STATUS.md` と `README.md` を読む。Cloudflare作業は `CLOUDFLARE.md` も参照。
-- 本番はVercelの `kyoupoke-channel-site.vercel.app`。Cloudflareの `kyoupoke-channel-site-preview.kc2424-buzz.workers.dev` は検索除外の試験版。
+- 本番はVercelの `kyoupoke-channel-site.vercel.app`。Cloudflareの `kyoupoke-channel-site-preview.kc2424.workers.dev` は検索除外の試験版。
 - 今回の引き継ぎ・試験公開ブランチは `chore/mac-handoff-cloudflare`。`site-brushup` は過去の作業ブランチなので、新規作業の起点にしない。
 - `HANDOVER.md` は歴史資料。現在はサイト・GitHubとも公開で、旧資料の「非公開」は現状と異なる。
 - `.env.local` と `.dev.vars` は秘密情報。値を出力・コミットしない。VercelのSensitiveキーは再取得できない。
