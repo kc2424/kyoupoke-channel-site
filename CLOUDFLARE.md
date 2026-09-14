@@ -104,3 +104,9 @@ npm run cf:secret
 - [Workers料金・制限](https://developers.cloudflare.com/workers/platform/pricing/)
 - [Wrangler](https://developers.cloudflare.com/workers/wrangler/)
 - [Workersシークレット](https://developers.cloudflare.com/workers/configuration/secrets/)
+
+## Codex MCP接続（2026-09-15）
+
+- このMacのCodexに `cloudflare-api`（https://mcp.cloudflare.com/mcp）を登録し、OAuth認可完了。Wranglerの認証とは別。
+- この会話からMCP経由でWorkers一覧3件とサブドメイン `kc2424` を取得し、いずれもHTTP 200を確認。
+- 接続設定・認証情報はCodexのユーザー環境で管理し、リポジトリには保存しない。別PCではそのPCのCodexで接続・認可が必要。

@@ -89,3 +89,8 @@
 - 新しい今日ポケ試験URL: https://kyoupoke-channel-site-preview.kc2424.workers.dev
 - `buzz-style` と `buzz-style-poll` も新サブドメインへ移動。各Worker名・コードは変更していない。
 - Cloudflare管理画面で3 Workersの新URLとアカウント設定反映を確認。引き継ぎ資料のリンクを更新。
+
+### 2026-09-15（ユーザー依頼: Cloudflare MCP接続）
+
+- CodexにCloudflare公式MCPを登録し、ユーザーによるOAuth認可後、MCP経由のWorkers一覧・サブドメイン取得が成功。
+- 登録名 `cloudflare-api`、認証状態 `o_auth`、有効化済み。現在の会話でMCPツールが利用可能になった。
