@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   allowedDevOrigins: ["192.168.11.20", "192.168.11.20:3000", "localhost:3000"],
   images: {
     remotePatterns: [
@@ -10,6 +10,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
+} satisfies NextConfig;
 
 export default nextConfig;

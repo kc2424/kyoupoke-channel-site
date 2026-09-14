@@ -1,41 +1,68 @@
-# 🎮 今日ポケ ファンサイト
+# 今日ポケch. ファンサイト
 
-今日ポケ（[@KYOUPOKE](https://www.youtube.com/@KYOUPOKE)）の**非公式**ファンサイトです。
-Next.js + Tailwind CSS で作られています。
+今日ポケ（[@KYOUPOKE](https://www.youtube.com/@KYOUPOKE)）の非公式ファンサイト。
+Next.js / TypeScript / Tailwind CSSで制作し、Notionでコンテンツを管理しています。
 
-## 📁 ファイル構成
+## 現在の公開先
 
-```
-kyoupoke-channel-site/
-├── src/app/page.tsx     ページの中身（文章・動画・リンク）
-├── src/app/layout.tsx   フォント・メタデータなど全体の設定
-├── src/app/globals.css  ブランドカラーなどのテーマ設定
-└── README.md            このファイル
-```
+| 用途 | URL | 更新方法 |
+|---|---|---|
+| 本番・既存URL | https://kyoupoke-channel-site.vercel.app | GitHub main → Vercel |
+| Cloudflare試験版 | https://kyoupoke-channel-site-preview.kc2424-buzz.workers.dev | 下記のCloudflareデプロイコマンド |
 
-## ✏️ 編集する場所
+Cloudflare試験版は検索除外とし、canonicalは本番URLを維持しています。
+`vercel.app`はVercelのドメインなのでCloudflareへ移管できません。Cloudflare本番化にはworkers.devのURLを正式採用するか、独自ドメインを用意します。
 
-`src/app/page.tsx` の中の `TODO` コメント箇所が、書き換えるべき場所です。
+**引き継ぎは [CURRENT_STATUS.md](CURRENT_STATUS.md) と [CLOUDFLARE.md](CLOUDFLARE.md) から読んでください。**
+`HANDOVER.md` / `MAKER_STATE.md` は過去の作業記録です。
 
-- **プロフィール文**: `id="profile"` セクションの文章
-- **メンバー紹介**: ファイル先頭の `members` 配列
-- **おすすめ動画**: `id="videos"` セクションの `iframe` の `src="https://www.youtube.com/embed/動画ID"` の「動画ID」部分
-  - 動画URL `https://www.youtube.com/watch?v=XXXXXXXXXXX` の `XXXXXXXXXXX` が動画IDです
-- **SNSリンク**: ファイル先頭の `links` 配列に追加すると増やせます
+## このMacでの開発
 
-## 👀 確認方法（ローカル）
+Node.js 24とnpmを使用します。別OSのnode_modulesをコピーせず、各PCでインストールしてください。
 
-初回のみ依存パッケージのインストールが必要です。
-
-```
-npm install
+```sh
+npm ci
+cp .env.example .env.local
+# .env.local の NOTION_TOKEN を設定する（既に設定済みならコピー不要）
 npm run dev
 ```
 
-その後 `http://localhost:3000` をブラウザで開くと確認できます。
+http://localhost:3000 を開きます。Notion未設定時はコード内の代替コンテンツが表示されるため、本番と同じ内容を確認するにはキーが必要です。
+このMacでは `.env.local` 設定済みです。秘密の値はGitに登録しません。
 
-## 🚀 公開方法（Vercel・自分だけに非公開で）
+```sh
+npm run lint
+npm run build
+```
 
-1. `git push` すると GitHub 経由で Vercel が自動的にビルド・デプロイします
-2. Vercel プロジェクトの **Settings → Deployment Protection** で **Vercel Authentication** が有効になっています
-   - URLを知っている人でも Vercel アカウントでログインしていないと中身を見られません
+## Cloudflareの試験・更新
+
+```sh
+npx wrangler login               # このMacでは認証済み
+npm run cf:typegen
+npm run build:vinext
+npm run start:vinext             # http://localhost:8787
+```
+
+Cloudflareローカル実行では `.dev.vars` にNOTION_TOKENを設定します。雛形は `.dev.vars.example`。このMacでは設定済みです。
+
+```sh
+npm run cf:dry-run               # ビルド済み成果物を検査（公開しない）
+npm run deploy:cloudflare        # 再ビルドして試験Workerへ公開
+```
+
+Notionキーを変更したときだけ `npm run cf:secret` でCloudflareへ登録し直します。接続先は試験Workerに限定しています。
+Cloudflare側のGitHub自動デプロイは未接続です。GitHubへpushしただけではCloudflareは更新されません。
+
+## 主な編集箇所
+
+- `src/app/page.tsx`: トップのレイアウト・Notion未接続時の代替コンテンツ
+- `src/app/globals.css`: ブランドカラー・全体スタイル
+- `src/lib/notion.ts`: Notion取得とデータソースID
+- `src/content/news.ts`: お知らせ取得・代替記事
+- `src/lib/seo.ts`: メタデータ・canonical・検索設定
+- `vite.config.ts` / `wrangler.jsonc`: Cloudflare試験版の設定
+
+紹介文・実績・通常のお知らせ更新はNotionを編集します。トップ・お知らせの再検証間隔は300秒です。
+問い合わせフォームの宛先は仮アドレスのままです（`src/components/contact-form.tsx`）。
+mainへの直接変更・force pushは行わず、作業ブランチで確認します。詳細は [AGENTS.md](AGENTS.md) を参照してください。

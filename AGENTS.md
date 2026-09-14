@@ -1,12 +1,21 @@
-# CLAUDE.md — プロジェクト運用ルール（Loop Engineering）
+# AGENTS.md — プロジェクト運用ルール（Loop Engineering）
 
-> 現在の作業入口は `AGENTS.md`、`CURRENT_STATUS.md`、`README.md`。2026-09-15にMacのGit/依存関係を復旧し、Cloudflare試験版を追加した。詳細は `CLOUDFLARE.md`。以下のループ説明と旧Vaultパスは過去の運用情報を含む。
+## 現在の作業入口（2026-09-15更新）
 
-今日ポケ（KYOUPOKE）非公式ファンサイト。詳細な背景・技術スタック・作業ログはObsidian Vault（`kyoupoke_site/MOC.md`）を参照。このファイルはClaude Codeが自動/半自動でこのリポジトリを触るときの安全ルールを定義する。
+- まず `CURRENT_STATUS.md` と `README.md` を読む。Cloudflare作業は `CLOUDFLARE.md` も参照。
+- 本番はVercelの `kyoupoke-channel-site.vercel.app`。Cloudflareの `kyoupoke-channel-site-preview.kc2424-buzz.workers.dev` は検索除外の試験版。
+- 今回の引き継ぎ・試験公開ブランチは `chore/mac-handoff-cloudflare`。`site-brushup` は過去の作業ブランチなので、新規作業の起点にしない。
+- `HANDOVER.md` は歴史資料。現在はサイト・GitHubとも公開で、旧資料の「非公開」は現状と異なる。
+- `.env.local` と `.dev.vars` は秘密情報。値を出力・コミットしない。VercelのSensitiveキーは再取得できない。
+- 既存Next.jsの `npm run build` とCloudflareの `npm run build:vinext` の双方を検証する。
+- Cloudflareへのpush自動デプロイは未接続。公開手順はREADME参照。
+- 専用Obsidian Vaultの旧パスはこのMacで見つかっていない。発見済み資料のパスはCURRENT_STATUS参照。
+
+今日ポケ（KYOUPOKE）非公式ファンサイト。詳細な背景・技術スタック・作業ログはObsidian Vault（`kyoupoke_site/MOC.md`）を参照。このファイルはCodexが自動/半自動でこのリポジトリを触るときの安全ルールを定義する。
 
 ## 自動ブラッシュアップループについて
 
-`site-brushup`ブランチは、クラウドルーティン「今日ポケ サイト ブラッシュアップ」が1時間おきにWebデザイン賞受賞作品を参考にした改善を1件ずつ実装・pushする仕組み（現在は無効化中。有効化はclaude.aiのルーティン管理画面から）。このループは以下の3原則で運用する。詳細な設計思想は Obsidian Vault の `claude_code_loop.md` を参照。
+`site-brushup`ブランチは、クラウドルーティン「今日ポケ サイト ブラッシュアップ」が1時間おきにWebデザイン賞受賞作品を参考にした改善を1件ずつ実装・pushする仕組み（現在は無効化中。有効化はCodex.aiのルーティン管理画面から）。このループは以下の3原則で運用する。詳細な設計思想は Obsidian Vault の `claude_code_loop.md` を参照。
 
 ### 1. Maker / Checker分離
 - **Maker**（実装役）: `site-brushup`ブランチ上で1回1変更を実装し、`npm run build`が通ることを確認してpushする。自分の実装を自分で「良し」と最終判断させない。
@@ -15,7 +24,7 @@
 ### 2. サーキットブレーカー（暴走防止）
 - 1回の実行につき変更は1件のみ。ビルド修正の試行は最大2回まで（3回失敗したら変更を取り消して終了、無限リトライしない）。
 - mainブランチには絶対に触れない。force pushは絶対にしない。
-- ローカルでheadless実行（`claude -p`等）を使う場合は必ず`--max-turns`と`--max-budget-usd`を指定する。
+- ローカルでheadless実行（`Codex -p`等）を使う場合は必ず`--max-turns`と`--max-budget-usd`を指定する。
 - カスタムStop hookを追加する場合は、入力JSONの`stop_hook_active`フラグを必ず確認し、trueなら即`exit 0`する（無限ブロックループ防止）。クライアント側のデフォルト上限は8回連続ブロックだが、`CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`環境変数で調整可能。
 
 ### 3. State Discipline（状態はセッション外に）

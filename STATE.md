@@ -57,6 +57,16 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-09-15（ユーザー依頼: Mac引き継ぎとCloudflare試験公開）
+
+- 自動ブラッシュアップループとは別の、ユーザーが依頼した環境復旧・移行試験。
+- `origin/main` の `600fe22` を基点に `chore/mac-handoff-cloudflare` を作成。欠落したGit履歴・隠しファイルを復元し、Mac用の依存関係を再導入。main自体の変更・マージ・force pushなし。
+- Cloudflare Workersへvinext版を試験公開。Vercel本番を維持し、試験版のみ検索除外。Notionの公開記事8件・記事詳細・非公開記事404・画像を検証。
+- 最終デプロイversion: `521c5c17-90c3-42ad-af88-5fddb69c9d80`。URL・手順はCLOUDFLARE.md、再開時の入口はREADME.md / CURRENT_STATUS.md。
+- 検証: Next.js build / vinext build / Wrangler dry-run成功。lintは0 errors・既知のimg警告1件。PC/モバイルのブラウザ表示・横はみ出し・実行エラーを確認。
+- 独立Checker `/root/checker`: PASS（試験公開・Mac引継ぎの範囲）。lint / npm ls / diff --checkを独立実行し、ビルド・デプロイは保存ログで確認。src/publicの差分なし、main維持、秘密情報のGit除外、型・lintの生成物除外の妥当性を確認。
+- 未実施: 本番URL切替、Vercel停止、Cloudflare GitHub自動デプロイ、負荷試験。問い合わせ先は引き続き仮アドレス。
+
 <!-- 各実行が1行〜数行で追記していく。例:
 ### 2026-08-06 (Maker実行)
 - 対象: Awwwards SOTD「XXX」
@@ -71,4 +81,4 @@
 - 判定: PASS
 -->
 
-（まだ記録なし。次回のMaker/Checker実行から追記していく）
+（2026-09-15以前の実装履歴はHANDOVER.md / MAKER_STATE.md / Git履歴を参照。）
