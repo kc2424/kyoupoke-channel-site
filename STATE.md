@@ -57,6 +57,16 @@
 
 ## 直近の実行ログ（Checker結果を含む、新しいものが上）
 
+### 2026-09-21（ユーザー依頼: サイト監査の一括改善）
+
+- 自動ループとは別の明示依頼。作業ブランチは `codex/site-audit-remediation`、起点は `8cf4eec`。並列担当はユーザー指定の GPT-5.6 Sol / high。main・事実情報・公式リンク・非公式表記を維持。
+- 画像を102件のレスポンシブWebP＋1200×630 OGPへ派生生成。hero-members.jpgは画素を変えず私的メタデータを除去。日本語フォント先読みを廃止し、Modakのみ1件。初回ローダーと常時演出を整理、JavaScript無効時にも本文を表示。
+- メニュー/動画をnative dialogへ変更し、Tab巡回・Escape・スクロールロック・フォーカス復帰を修正。ヘッダー、アコーディオン、リンク、コントラスト、本文スキップを改善。動画・ニュースを前方へ移動。
+- CMS/RSSの入力検証・失敗と空データの区別、統計数値の共通化、更新日時、JSON-LD、sitemap、404/エラーを修正。CONTACT_EMAIL未設定時は準備中、設定時はmailto。noJSでも本文がGET queryへ漏れないPOST mailtoフォールバック。
+- 検証: npm audit 0件、lint warning 0、unit 12/12、Next.js build/vinext build/Cloudflare dry-run成功。両環境のトップ・一覧・8記事・404・103画像・canonical/OGP/JSON-LDをHTTP検証。配信成果物660ファイルにNotionトークン混入なし。実画面で390px/1024px/1280px/横844px、メニュー、動画、ニュース、noJSを確認。
+- 独立Checker `/root/sol_checker`: PASS。紹介文/ブランド画素、秘密情報、データ境界、CI・テストを確認。発見したフォーカス、不可視CTA、文字色、noJSフォームの問題を修正後に再確認。
+- 公開処理・GitHub CIはこの時点では進行中。完了時のIDと結果はCURRENT_STATUSへ追記。問い合わせ宛先、実ユーザー計測の方針、長期負荷試験は引き続き未設定/未実施。
+
 ### 2026-09-15（ユーザー依頼: Mac引き継ぎとCloudflare試験公開）
 
 - 自動ブラッシュアップループとは別の、ユーザーが依頼した環境復旧・移行試験。

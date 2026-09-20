@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { BlueprintCorners } from "@/components/blueprint-corners";
 import { LiveGlowFrame } from "@/components/live-glow-frame";
 import { LogoMark } from "@/components/logo-mark";
+import Image from "@/components/site-image";
 
 export function MemberCard({
   index,
@@ -25,6 +25,7 @@ export function MemberCard({
   milestones?: { period: string; text: string }[];
 }) {
   const [open, setOpen] = useState(false);
+  const detailsId = useId();
   const hasMilestones = Boolean(milestones && milestones.length > 0);
 
   // 文単位（「。」区切り）で先頭3文だけを要約として常時表示し、
@@ -36,12 +37,7 @@ export function MemberCard({
   const canToggle = hasMilestones || hasDetail;
 
   return (
-    <button
-      type="button"
-      onClick={() => canToggle && setOpen((v) => !v)}
-      data-cursor-label={canToggle ? (open ? "CLOSE" : "MORE") : undefined}
-      className="group mx-auto flex w-full max-w-6xl flex-col gap-6 border-b border-neutral-200 py-8 text-left sm:flex-row sm:items-center lg:max-w-7xl lg:gap-10 lg:py-10"
-    >
+    <article className="group mx-auto flex w-full max-w-6xl flex-col gap-6 border-b border-neutral-200 py-8 text-left sm:flex-row sm:items-center lg:max-w-7xl lg:gap-10 lg:py-10">
       <LiveGlowFrame
         rounded="rounded-xl"
         className="h-[220px] w-full shrink-0 sm:h-[200px] sm:w-[280px] lg:h-[260px] lg:w-[360px]"
@@ -74,12 +70,19 @@ export function MemberCard({
             <p className="mt-1 text-sm font-bold text-neutral-600 lg:text-lg">{role}</p>
           </div>
           {canToggle && (
-            <span
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-neutral-300 transition-transform duration-300"
-              style={{ transform: open ? "rotate(-90deg)" : "rotate(0deg)" }}
+            <button
+              type="button"
+              onClick={() => setOpen((value) => !value)}
+              aria-expanded={open}
+              aria-controls={detailsId}
+              data-cursor-label={open ? "CLOSE" : "MORE"}
+              className="flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full border border-neutral-300 transition-colors duration-200 hover:border-brand-dark hover:text-brand-dark"
             >
-              ↓
-            </span>
+              <span aria-hidden="true" className="transition-transform duration-300" style={{ transform: open ? "rotate(-90deg)" : "rotate(0deg)" }}>
+                ↓
+              </span>
+              <span className="sr-only">{open ? `${name}の詳細を閉じる` : `${name}の詳細を開く`}</span>
+            </button>
           )}
         </div>
         {/* lg:max-w-2xl = 42rem。18pxで約37字/行に収まり、日本語の適正行長を超えない。 */}
@@ -97,11 +100,7 @@ export function MemberCard({
           ))}
         </div>
         {canToggle && (
-          <div
-            className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.785,0.135,0.15,0.86)]"
-            style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
-          >
-            <div className="overflow-hidden">
+          <div id={detailsId} hidden={!open}>
               {hasDetail && (
                 <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-700 lg:text-lg">
                   {detail}
@@ -111,7 +110,7 @@ export function MemberCard({
               <ol className="mt-6 max-w-2xl border-l-2 border-neutral-200 pl-5">
                 {milestones.map((m, i) => (
                   <li key={i} className="relative pb-4 last:pb-0">
-                    <span className="bg-brand absolute top-1.5 -left-[26px] h-2.5 w-2.5 rounded-full" />
+                    <span aria-hidden="true" className="bg-brand-dark absolute top-1.5 -left-[26px] h-2.5 w-2.5 rounded-full" />
                     <p className="font-mono text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
                       {m.period}
                     </p>
@@ -122,10 +121,9 @@ export function MemberCard({
                 ))}
               </ol>
               )}
-            </div>
           </div>
         )}
       </div>
-    </button>
+    </article>
   );
 }

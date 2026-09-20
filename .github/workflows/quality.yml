@@ -1,0 +1,47 @@
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches: [main, 'codex/**', chore/mac-handoff-cloudflare]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
+  NOTION_TOKEN: ''
+  CONTACT_EMAIL: ''
+  NEXT_PUBLIC_CONTACT_EMAIL: ''
+  CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV: 'false'
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Audit, lint, unit tests and both production builds
+        run: npm run check:quality
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+      - name: Run production browser regressions on Next.js and Cloudflare
+        run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-failure-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

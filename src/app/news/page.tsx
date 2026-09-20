@@ -35,10 +35,10 @@ export default async function NewsIndexPage() {
       />
       <SiteHeader />
 
-      <main className="flex-1 pt-28 pb-20 sm:pt-36 lg:pt-44">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-28 pb-20 sm:pt-36 lg:pt-44">
         <div className={CONTAINER}>
           <nav aria-label="パンくずリスト" className="text-xs text-neutral-500 lg:text-sm">
-            <Link href="/" className="transition-colors hover:text-brand">
+            <Link href="/" className="transition-colors hover:text-brand-dark">
               ホーム
             </Link>
             <span className="mx-2">/</span>
@@ -56,6 +56,11 @@ export default async function NewsIndexPage() {
             一次情報は必ず公式のSNS・YouTubeチャンネルをご確認ください。
           </p>
 
+          {news.length === 0 && (
+            <p className="mt-12 rounded-2xl bg-neutral-100 p-6 text-sm leading-relaxed text-neutral-700">
+              現在、公開中のお知らせはありません。
+            </p>
+          )}
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {news.map((article, i) => (
               <li key={article.slug} className="h-full">
@@ -69,7 +74,7 @@ export default async function NewsIndexPage() {
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="rounded-full bg-brand px-3 py-1 text-[11px] font-bold text-white lg:text-xs">
+                      <span className="rounded-full bg-brand-dark px-3 py-1 text-[11px] font-bold text-white lg:text-xs">
                         {article.category}
                       </span>
                       <time
@@ -79,13 +84,13 @@ export default async function NewsIndexPage() {
                         {formatNewsDate(article.date)}
                       </time>
                     </div>
-                    <h2 className="font-display mt-4 text-lg leading-snug text-neutral-900 transition-colors duration-300 group-hover:text-brand lg:text-xl">
+                    <h2 className="font-display mt-4 text-lg leading-snug text-neutral-900 transition-colors duration-300 group-hover:text-brand-dark lg:text-xl">
                       {article.title}
                     </h2>
                     <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-neutral-600">
                       {article.summary}
                     </p>
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand">
+                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand-dark">
                       詳しく見る
                       <span className="transition-transform duration-300 group-hover:translate-x-1">
                         →
