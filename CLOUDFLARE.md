@@ -2,9 +2,11 @@
 
 更新日: 2026-09-21 JST。
 
-## 監査改善ブランチの状況（2026-09-21、ローカル検証済み・公開処理中）
+## 監査改善ブランチの状況（2026-09-21、公開済み）
 
-現在の作業ブランチは `codex/site-audit-remediation`。`main`、既存Vercel本番、Cloudflare試験版の公開内容は変更していない。このブランチのNext.js / vinext両ビルド、実画面確認、公開結果は検証中で、完了後に追記する。
+作業ブランチ `codex/site-audit-remediation` の改善を両公開先へ反映済み。Cloudflare versionは `13aeb2cb-282a-4ca1-9430-967966fc66c3`。検索除外とVercel canonicalを維持。Vercel本番deploymentは `dpl_7QuJ3Uefd9ZJV66GzyyfDht5DEbh`。
+
+単体テスト12件、両ビルド、Wrangler dry-run、両環境のブラウザ回帰テスト24件、独立CheckerがPASS。[CI結果](https://github.com/kc2424/kyoupoke-channel-site/actions/runs/35544119290)。公開URLのトップ・一覧・記事・画像も確認済み。`main` は未変更で、VercelはCLIから直接公開しています。
 
 - Next.js 16.3.5、React / React DOM / React Server Components 19.2.8、vinext 1.0.0-beta.10、`@vinext/cloudflare` 1.0.0-beta.8、Cloudflare Vite plugin 1.54.9、Wrangler 4.131.2を使用。
 - 画像はSharpでレスポンシブWebPを事前生成し、`src/data/image-manifest.json` を通じてVercelとCloudflareの双方から同じファイルを配信する。Cloudflare Imagesへの依存はない。原本のブランド素材は保持する。

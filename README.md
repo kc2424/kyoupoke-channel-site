@@ -16,9 +16,11 @@ Cloudflare試験版は検索除外とし、canonicalは本番URLを維持して�
 **引き継ぎは [CURRENT_STATUS.md](CURRENT_STATUS.md) と [CLOUDFLARE.md](CLOUDFLARE.md) から読んでください。**
 `HANDOVER.md` / `MAKER_STATE.md` は過去の作業記録です。
 
-## 監査改善作業（2026-09-21、ローカル検証済み・公開処理中）
+## 監査改善作業（2026-09-21、公開済み）
 
-現在の作業ブランチは `codex/site-audit-remediation` です。`main` と上記の公開先は変更していません。このブランチの両環境向けビルド、実画面確認、公開結果は検証中で、完了後に追記します。
+現在の作業ブランチは `codex/site-audit-remediation` です。Vercel本番・Cloudflare試験版へ反映済み。依存監査0件、lint警告0件、単体テスト12件、両ビルド、ブラウザ回帰テスト24件が成功しました。[GitHub CI](https://github.com/kc2424/kyoupoke-channel-site/actions/runs/35544119290)。
+
+`main` は未マージです。今回のVercel本番は作業ブランチのコードをCLIで直接公開したため、今後mainからデプロイする前にこの変更を取り込んでください。問い合わせ宛先は未設定です。
 
 - Next.js 16.3.5、React / React DOM / React Server Components 19.2.8、vinext 1.0.0-beta.10、`@vinext/cloudflare` 1.0.0-beta.8へ更新。
 - 元のブランド画像は保持し、`npm run optimize:images` で事前生成したレスポンシブWebPをVercelとCloudflareの両方で配信する構成へ変更。生成済み画像は `public/optimized/`、対応表は `src/data/image-manifest.json` に保存します。

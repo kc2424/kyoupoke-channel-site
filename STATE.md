@@ -65,7 +65,8 @@
 - CMS/RSSの入力検証・失敗と空データの区別、統計数値の共通化、更新日時、JSON-LD、sitemap、404/エラーを修正。CONTACT_EMAIL未設定時は準備中、設定時はmailto。noJSでも本文がGET queryへ漏れないPOST mailtoフォールバック。
 - 検証: npm audit 0件、lint warning 0、unit 12/12、Next.js build/vinext build/Cloudflare dry-run成功。両環境のトップ・一覧・8記事・404・103画像・canonical/OGP/JSON-LDをHTTP検証。配信成果物660ファイルにNotionトークン混入なし。実画面で390px/1024px/1280px/横844px、メニュー、動画、ニュース、noJSを確認。
 - 独立Checker `/root/sol_checker`: PASS。紹介文/ブランド画素、秘密情報、データ境界、CI・テストを確認。発見したフォーカス、不可視CTA、文字色、noJSフォームの問題を修正後に再確認。
-- 公開処理・GitHub CIはこの時点では進行中。完了時のIDと結果はCURRENT_STATUSへ追記。問い合わせ宛先、実ユーザー計測の方針、長期負荷試験は引き続き未設定/未実施。
+- 公開完了: Vercel `dpl_7QuJ3Uefd9ZJV66GzyyfDht5DEbh`、Cloudflare `13aeb2cb-282a-4ca1-9430-967966fc66c3`。GitHub CIの単体12件・ブラウザ24件PASS（https://github.com/kc2424/kyoupoke-channel-site/actions/runs/35544119290）。初回CIのテスト対象navの重複選択を `8419e0f` で修正し、独立Checkerが検証の厳密さ維持を確認。
+- mainは未マージ。VercelはCLI直接公開のため、次回mainからの公開前に作業ブランチの取り込みが必要。問い合わせ宛先、実ユーザー計測の方針、長期負荷試験は引き続き未設定/未実施。
 
 ### 2026-09-15（ユーザー依頼: Mac引き継ぎとCloudflare試験公開）
 

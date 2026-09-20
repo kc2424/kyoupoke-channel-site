@@ -1,17 +1,18 @@
 # 今日ポケch. ファンサイト 現状確認
 
-## サイト監査改善（2026-09-21、ローカル検証済み・公開処理中）
+## サイト監査改善（2026-09-21、公開済み）
 
 **現在はこの節を最優先し、下の2026-09-15以前の節は当時の履歴として参照する。**
 
-- 作業ブランチは `codex/site-audit-remediation`。`main` は変更しておらず、既存Vercel本番 `https://kyoupoke-channel-site.vercel.app` とCloudflare試験版 `https://kyoupoke-channel-site-preview.kc2424.workers.dev` の公開内容も今回まだ変更していない。
-- このブランチのNext.js / vinext両ビルド、実画面、公開結果は検証中。確認完了後に結果を追記する。
+- 作業ブランチは `codex/site-audit-remediation`。実装コミット `0ba8339`、テスト修正 `8419e0f`。Vercel本番とCloudflare試験版へ更新を反映済み。mainは未マージのため、今後mainから公開する前にこのブランチの変更を取り込む。
+- 検証完了: audit 0件、lint警告0件、単体12件、Next.js/vinext build、Wrangler dry-run、ブラウザ回帰24件すべて成功。独立Checker PASS。[GitHub CI](https://github.com/kc2424/kyoupoke-channel-site/actions/runs/35544119290)。
 - 主要依存はNext.js 16.3.5、React / React DOM / React Server Components 19.2.8、vinext 1.0.0-beta.10、`@vinext/cloudflare` 1.0.0-beta.8、Cloudflare Vite plugin 1.54.9、Wrangler 4.131.2、Playwright 1.63.0。
 - 画像原本を保持したまま、SharpでレスポンシブWebPを事前生成する構成へ変更。`public/optimized/` と `src/data/image-manifest.json` をVercel / Cloudflareで共通利用し、Cloudflare Imagesの有料最適化には依存しない。
 - 日本語本文・見出しはシステムフォントを使用。Webフォントは英字ワードマーク用のModakだけに絞った。
 - 品質ゲートを追加。`npm run check:quality` は依存監査、警告0件のlint、単体テスト、Next.js / vinext両ビルド、Wrangler dry-runを直列実行し、`npm run test:browser` は両環境の主要導線、dialog、画面幅、JavaScript無効時、検索除外ヘッダーを検証する。GitHub Actionsも同じ検証を行う。
 - 問い合わせ先は環境変数 `CONTACT_EMAIL` で設定する。未設定またはプレースホルダー値ではフォームを表示せず「お問い合わせ窓口は現在準備中」と案内し、設定済みの場合だけ入力内容を含む `mailto:` を開く。
-- 今回の監査では依存更新、入力データ検証、SEO / JSON-LD、エラー画面、アクセシビリティ、レスポンシブ表示、画像・フォント・演出負荷の改善を進めている。最終的な合否はビルド・実画面・独立Checkerの結果とともに追記する。
+- 公開ID: Vercel `dpl_7QuJ3Uefd9ZJV66GzyyfDht5DEbh`、Cloudflare `13aeb2cb-282a-4ca1-9430-967966fc66c3`。公開URLの新画面・画像配信・検索設定を確認。公開直後のVercelエラーログ照会は0件。
+- 問い合わせ宛先、実ユーザー計測の方針、長期負荷試験は未設定/未実施。Core Web Vitalsの実利用者データは未計測。
 
 ## 引き継ぎ整備・Cloudflare試験公開（2026-09-15）
 
