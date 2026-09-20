@@ -126,7 +126,12 @@ for (const width of [390, 1024, 1440]) {
     const visibleControls = header.locator("a:visible, button:visible");
     for (const control of await visibleControls.all()) await expect(control).toBeInViewport({ ratio: 1 });
     if (width <= 1024) await expect(header.getByRole("button", { name: "メニューを開く" })).toBeVisible();
-    else await expect(header.locator("nav")).toBeVisible();
+    else {
+      // The closed menu also contains a nav. Select the exposed navigation landmark.
+      const navigation = header.getByRole("navigation");
+      await expect(navigation).toHaveCount(1);
+      await expect(navigation).toBeVisible();
+    }
   });
 }
 
