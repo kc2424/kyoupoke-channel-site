@@ -3,7 +3,8 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image, { type ImageProps } from "next/image";
+import type { ImageProps } from "next/image";
+import Image from "@/components/site-image";
 import { useRef } from "react";
 
 import { cn } from "@/lib/utils";

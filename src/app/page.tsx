@@ -18,13 +18,9 @@ import {
 } from "@/components/brand-icons";
 import { FadeIn } from "@/components/fade-in";
 import { GiantTitle } from "@/components/giant-title";
-import { HeroPhoto } from "@/components/hero-photo";
 import { HeroStickers } from "@/components/hero-stickers";
-import { MobileHeroCarousel } from "@/components/mobile-hero-carousel";
 import { MemberCard } from "@/components/member-card";
-import { OpArtRings } from "@/components/op-art-rings";
 import { ParallaxImage } from "@/components/parallax-image";
-import { PopReveal } from "@/components/pop-reveal";
 import { RevealText } from "@/components/reveal-text";
 import { SectionHeading } from "@/components/section-heading";
 import { ScrollToTop } from "@/components/scroll-to-top";
@@ -47,7 +43,9 @@ import {
   type NotionLinkIcon,
 } from "@/lib/notion";
 import { fetchLatestVideos } from "@/lib/youtube";
-import Image from "next/image";
+import Image from "@/components/site-image";
+import { SmoothScroll } from "@/components/smooth-scroll";
+import { imageSource, imageSourceSet } from "@/lib/prepared-images";
 
 const linkIconMap: Record<NotionLinkIcon, typeof YouTubeIcon> = {
   YouTube: YouTubeIcon,
@@ -208,12 +206,13 @@ function VideoCard({ video, index, labelPrefix }: { video: { videoId: string; ti
   return (
     <TiltCard>
       <Card className="group/mono overflow-hidden p-0 shadow-sm" data-cursor-label="WATCH">
-        <VideoModal videoId={video.videoId} title={`${labelPrefix}${index + 1}`}>
+        <VideoModal videoId={video.videoId} title={video.title}>
           <div className="relative aspect-video">
             <Image
               src={`https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`}
               alt={video.title}
               fill
+              sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1279px) 33vw, 480px"
               className="object-cover"
             />
             <span className="absolute inset-0 flex items-center justify-center">
@@ -226,7 +225,7 @@ function VideoCard({ video, index, labelPrefix }: { video: { videoId: string; ti
           </div>
         </VideoModal>
         <CardContent className="flex items-center gap-3 px-4 py-4 lg:px-6 lg:py-5">
-          <span className="font-display text-lg text-brand lg:text-xl">
+          <span aria-label={`${labelPrefix}${index + 1}`} className="font-display text-lg text-brand-dark lg:text-xl">
             {String(index + 1).padStart(2, "0")}
           </span>
           <p className="line-clamp-2 text-sm text-neutral-600 lg:text-base">{video.title}</p>
@@ -309,6 +308,7 @@ export default async function Home() {
     notionLinks,
     notionTexts,
     latestVideos,
+    latestNews,
   ] = await Promise.all([
     fetchPublishedMembers("メインメンバー"),
     fetchPublishedMembers("スタッフ"),
@@ -317,145 +317,163 @@ export default async function Home() {
     fetchVideos(),
     fetchLinks(),
     fetchSiteTexts(),
-    fetchLatestVideos(6),
+    fetchLatestVideos(3),
+    getLatestNews(3).catch(() => null),
   ]);
 
-  const members =
-    notionMembers && notionMembers.length > 0 ? notionMembers : fallbackMembers;
-  const staff =
-    notionStaff && notionStaff.length > 0 ? notionStaff : staffMembers;
-  const stats = notionStats && notionStats.length > 0 ? notionStats : fallbackStats;
-  const achievements =
-    notionAchievements && notionAchievements.length > 0
-      ? notionAchievements
-      : fallbackAchievements;
-  // 実績カードは6カラムグリッド上で通常2カラム分（＝1行3枚）。
-  // 枚数が3の倍数+2のときだけ、余った2枚を3カラム分に広げて最終行の穴を埋める。
-  const achievementWideFrom =
-    achievements.length % 3 === 2 ? achievements.length - 2 : -1;
-  const videos = notionVideos && notionVideos.length > 0 ? notionVideos : fallbackVideos;
-  const mainLinks =
-    notionLinks && notionLinks.mainLinks.length > 0
-      ? notionLinks.mainLinks
-      : fallbackMainLinks;
-  const memberLinks =
-    notionLinks && notionLinks.memberLinks.length > 0
-      ? notionLinks.memberLinks
-      : fallbackMemberLinks;
+  const cmsConfigured = Boolean(process.env.NOTION_TOKEN);
+  const members = notionMembers ?? (cmsConfigured ? [] : fallbackMembers);
+  const staff = notionStaff ?? (cmsConfigured ? [] : staffMembers);
+  const stats = notionStats ?? (cmsConfigured ? [] : fallbackStats);
+  const achievements = notionAchievements ?? (cmsConfigured ? [] : fallbackAchievements);
+  const achievementWideFrom = achievements.length % 3 === 2 ? achievements.length - 2 : -1;
+  const videos = notionVideos ?? (cmsConfigured ? [] : fallbackVideos);
+  const mainLinks = notionLinks?.mainLinks ?? (cmsConfigured ? [] : fallbackMainLinks);
+  const memberLinks = notionLinks?.memberLinks ?? (cmsConfigured ? [] : fallbackMemberLinks);
   const texts = { ...fallbackTexts, ...notionTexts };
-  const latestNews = await getLatestNews(3);
+  const partiallyUnavailable = cmsConfigured && [notionMembers, notionStaff, notionStats, notionAchievements, notionVideos, notionLinks, notionTexts].some((value) => value === null);
+  const subscribers = stats.find((stat) => stat.label === "チャンネル登録者数");
+  const views = stats.find((stat) => stat.label === "総再生回数");
+  const formatStat = (stat: (typeof stats)[number] | undefined) => stat
+    ? stat.value.toLocaleString("ja-JP", { minimumFractionDigits: stat.decimals, maximumFractionDigits: stat.decimals }) + stat.suffix
+    : undefined;
+  const statsUpdatedAt = notionStats?.map((stat) => stat.updatedAt).filter((date): date is string => Boolean(date)).sort().at(-1);
+  const aboutParagraph2 = texts.about_paragraph2
+    .replace(/(現在はチャンネル登録者数\s*約?)[\d.]+万人/, (_, prefix) => subscribers ? prefix + subscribers.value + "万人" : _)
+    .replace(/(総再生回数は)[\d.]+億回/, (_, prefix) => views ? prefix + views.value + "億回" : _);
 
   return (
-    // overflow-x-clip: LiveGlowFrame の回転するグロー枠が回転位相によって
-    // 数px はみ出し、モバイルで横スクロールが出るのを止める。
-    // clip は hidden と違いスクロールコンテナを作らないので sticky は効いたまま。
+    <SmoothScroll>
     <div className="flex min-h-screen flex-col overflow-x-clip bg-white">
       <JsonLd data={videoJsonLd([...videos, ...(latestVideos ?? [])])} />
       <SiteHeader />
-
-      <main>
-      <section className="relative flex flex-col items-center overflow-hidden bg-[radial-gradient(125%_85%_at_18%_0%,#ffeec2_0%,#ffd7a6_45%,#fff3da_100%)] sm:aspect-[4/3] sm:px-10 sm:pt-0 sm:pb-0 landscape-compact:min-h-[100svh] landscape-compact:bg-white landscape-compact:bg-none landscape-compact:px-10 lg:aspect-auto lg:min-h-[100svh] lg:bg-white lg:bg-none lg:px-16">
-        {/* モバイル構成 */}
-        <span className="pointer-events-none absolute top-1/2 left-6 z-20 hidden -translate-y-1/2 -rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block landscape-compact:block lg:text-sm">
-          Unofficial Fan Site
-        </span>
-        <span className="pointer-events-none absolute top-1/2 right-6 z-20 hidden -translate-y-1/2 rotate-90 rounded-full border border-neutral-300/80 bg-white/85 px-3.5 py-1 text-xs font-black tracking-widest text-brand-dark uppercase shadow-sm backdrop-blur-md sm:block landscape-compact:block lg:text-sm">
-          YouTube → World
-        </span>
-
-        <div className="relative h-[100dvh] w-full sm:h-auto sm:min-h-0 sm:max-h-none sm:absolute sm:inset-0 sm:aspect-auto sm:w-full landscape-compact:h-auto landscape-compact:min-h-0 landscape-compact:max-h-none landscape-compact:absolute landscape-compact:inset-0 landscape-compact:aspect-auto">
-          <div className="absolute inset-0 overflow-hidden sm:hidden landscape-compact:hidden">
-            <MobileHeroCarousel />
+      <main id="main-content" tabIndex={-1}>
+        <section className="relative isolate flex min-h-[760px] flex-col justify-end overflow-hidden bg-white sm:min-h-[700px] lg:min-h-[min(850px,100svh)] landscape-compact:min-h-[580px]">
+          <picture className="absolute inset-0 -z-10">
+            <source media="(max-width: 639px) and (orientation: portrait)" srcSet={imageSourceSet("/hero-mobile.png")} sizes="100vw" />
+            {/* A single picture lets the browser request only the matching hero. */}
+            <img src={imageSource("/hero-members.jpg", 1600)} srcSet={imageSourceSet("/hero-members.jpg")} sizes="100vw" width={1601} height={1101} fetchPriority="high" alt="今日ポケ メンバー3人" className="h-full w-full object-cover object-top" />
+          </picture>
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-white via-white/10 to-transparent" />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[45%] bg-gradient-to-t from-white via-white/90 to-transparent" />
+          <HeroStickers subscribers={formatStat(subscribers)} views={formatStat(views)} />
+          <div className="relative z-20 mx-auto flex w-full max-w-6xl flex-col items-center px-6 pt-96 pb-10 text-center sm:px-10 sm:pt-80 lg:pt-64 lg:pb-8">
+            <p className="mb-3 rounded-full border border-brand-dark/20 bg-white/95 px-4 py-1 text-xs font-bold text-brand-dark">今日ポケch. 非公式ファンサイト</p>
+            <GiantTitle>KYOU POKE</GiantTitle>
+            <p className="mt-4 max-w-xl whitespace-pre-line text-sm font-semibold leading-relaxed text-neutral-800 sm:text-base">{texts.hero_tagline}</p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <a href="#videos" className="rounded-full bg-brand-dark px-7 py-3 text-sm font-bold text-white hover:bg-neutral-900">動画を見る ↓</a>
+              <a href="#members" className="rounded-full border-2 border-neutral-900 bg-white/95 px-6 py-3 text-sm font-bold text-neutral-900 hover:bg-neutral-100">メンバーを知る</a>
+            </div>
           </div>
-          <div className="absolute inset-0 hidden overflow-hidden sm:block landscape-compact:block">
-            <HeroPhoto src="/hero-members.jpg" alt="今日ポケ メンバー3人" />
-          </div>
-          <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-white via-transparent to-transparent sm:block landscape-compact:block" />
-          <div className="hidden sm:block landscape-compact:block">
-            <HeroStickers />
-          </div>
-        </div>
-
-        <div className="relative z-10 hidden sm:mt-auto sm:flex sm:flex-col sm:items-center sm:px-0 sm:pb-[88px] landscape-compact:mt-auto landscape-compact:flex landscape-compact:flex-col landscape-compact:items-center landscape-compact:px-0 landscape-compact:pb-3 lg:pb-[104px]">
-          <GiantTitle>KYOU POKE</GiantTitle>
-
-          <FadeIn delay={0.3} y={12}>
-            <p className="relative mt-6 max-w-lg text-center text-sm leading-snug text-balance whitespace-pre-line text-neutral-600 landscape-compact:mt-2 landscape-compact:max-w-sm landscape-compact:text-xs lg:max-w-xl lg:text-base">
-              {texts.hero_tagline.includes("届ける")
-                ? texts.hero_tagline.split(/(?<=届ける)/).map((chunk, i) => (
-                    <span key={i}>
-                      {chunk}
-                      {i === 0 && <br />}
-                    </span>
-                  ))
-                : texts.hero_tagline}
-            </p>
-          </FadeIn>
-        </div>
-
-        <div className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-neutral-600 sm:flex landscape-compact:hidden">
-          <span className="text-[10px] font-bold tracking-widest uppercase lg:text-xs">
-            Scroll
-          </span>
-          <span className="h-6 w-px animate-pulse bg-neutral-400" />
-        </div>
-      </section>
-
-      <div aria-hidden className="h-4 w-full bg-gradient-to-b from-white/0 to-white sm:hidden" />
-
+        </section>
+        {partiallyUnavailable && <p role="status" className="mx-auto max-w-4xl px-6 py-4 text-sm text-neutral-600">一部の情報を読み込めませんでした。時間をおいてもう一度ご覧ください。</p>}
       <FadeIn>
-        <section className="relative overflow-hidden py-24 lg:py-32">
-          <AmbientMeshBackground variant="matrix" />
-          <div className={cn(CONTAINER, "relative z-10 flex flex-col items-start gap-1 lg:gap-2")}>
-            <RevealText
-              as="p"
-              text={texts.catchcopy_line1}
-              className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:text-8xl"
-            />
-            <RevealText
-              as="p"
-              text={texts.catchcopy_line2}
-              className="font-display text-4xl leading-[1.05] text-brand sm:text-6xl lg:self-center lg:text-8xl"
-            />
-            <RevealText
-              as="p"
-              text={texts.catchcopy_line3}
-              className="font-display text-4xl leading-[1.05] text-neutral-900 sm:text-6xl lg:self-end lg:text-8xl"
-            />
+        <section id="videos" className="relative overflow-hidden scroll-mt-24 py-12 sm:py-16 lg:py-20">
+          <AmbientMeshBackground variant="cinematic" />
+          <div className={cn(CONTAINER, "relative z-10")}>
+            <SectionHeading index={1} label="Videos" heading="おすすめ動画" note="企画や対戦、メンバーの掛け合い。気になる1本からお楽しみください。" />
+            <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
+              {videos.map((v, i) => (
+                <FadeIn key={v.id} delay={i * 0.1}>
+                  <VideoCard video={v} index={i} labelPrefix="おすすめ動画" />
+                </FadeIn>
+              ))}
+            </div>
+
+            {latestVideos && latestVideos.length > 0 && (
+              <details className="mt-10 rounded-2xl border border-neutral-200 p-5 sm:p-6">
+                <summary className="cursor-pointer text-lg font-bold text-brand-dark">最新動画をチェックする</summary>
+                <p className="mt-6 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
+                  Latest
+                </p>
+                <h3 className="font-display mt-2 text-2xl text-neutral-900 lg:text-3xl">最新動画</h3>
+                <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
+                  {latestVideos.map((v, i) => (
+                    <FadeIn key={v.videoId} delay={i * 0.1} className={i >= 3 ? "hidden sm:block" : undefined}>
+                      <VideoCard video={v} index={i} labelPrefix="最新動画" />
+                    </FadeIn>
+                  ))}
+                </div>
+              </details>
+            )}
+
+            {!latestVideos && <p className="mt-6 text-sm text-neutral-600">最新動画を読み込めませんでした。チャンネルからご覧ください。</p>}
+
+            <WipeLink
+              href="https://www.youtube.com/@KYOUPOKE"
+              cursorLabel="OPEN"
+              className="mt-10 lg:px-8 lg:py-4 lg:text-base"
+            >
+              チャンネルの動画をもっと見る
+            </WipeLink>
           </div>
         </section>
       </FadeIn>
-
       <FadeIn>
-        <section className="relative overflow-hidden pb-24 lg:pb-32">
+        <section id="news" className="relative overflow-hidden scroll-mt-24 py-12 sm:py-16 lg:py-20">
           <AmbientMeshBackground variant="bubbles" />
           <div className={cn(CONTAINER, "relative z-10")}>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
-              <p className="font-display text-2xl text-brand lg:text-3xl">Meet the Members</p>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading index={2} label="News" heading="お知らせ" />
+              <Link
+                href="/news"
+                data-cursor-label="MORE"
+                className="group inline-flex items-center gap-2 text-sm font-bold text-brand-dark transition-colors duration-200 hover:text-brand-dark lg:text-base"
+              >
+                すべてのお知らせ
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
             </div>
-            <PopReveal className="mt-6 rounded-2xl">
-              <div className="relative">
-                <ParallaxImage
-                  wrapperClassName="h-[220px] w-full rounded-2xl bg-[#df5330] sm:h-[340px] lg:h-[500px]"
-                  className="object-cover"
-                  src="/hero-mascots.png"
-                  alt="今日ポケ マスコットイラスト"
-                  fill
-                  priority
-                />
-                <BlueprintCorners tone="light" label="FIG.01 — MASCOTS" />
-              </div>
-            </PopReveal>
+
+            {!latestNews && <p className="mt-6 text-sm text-neutral-600">お知らせを読み込めませんでした。時間をおいて一覧をご確認ください。</p>}
+            {latestNews?.length === 0 && <p className="mt-6 text-neutral-600">現在、公開中のお知らせはありません。</p>}
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {(latestNews ?? []).map((article, i) => (
+                <FadeIn key={article.slug} delay={i * 0.08} className="h-full">
+                  <BentoCard
+                    href={`/news/${article.slug}`}
+                    cursorLabel="READ"
+                    className="h-full"
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className="rounded-full bg-brand-dark px-3 py-1 text-[11px] font-bold text-white lg:text-xs">
+                        {article.category}
+                      </span>
+                      <time
+                        dateTime={article.date}
+                        className="text-xs font-bold text-neutral-500 lg:text-sm"
+                      >
+                        {formatNewsDate(article.date)}
+                      </time>
+                    </span>
+                    <span className="font-display mt-4 block text-lg leading-snug text-neutral-900 transition-colors duration-300 group-hover:text-brand-dark lg:text-xl">
+                      {article.title}
+                    </span>
+                    <span className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-neutral-600">
+                      {article.summary}
+                    </span>
+                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand-dark">
+                      詳しく見る
+                      <span className="transition-transform duration-300 group-hover:translate-x-1">
+                        →
+                      </span>
+                    </span>
+                  </BentoCard>
+                </FadeIn>
+              ))}
+            </div>
           </div>
         </section>
       </FadeIn>
-
       <FadeIn>
-        <section id="profile" className="relative overflow-hidden scroll-mt-24 pb-24 lg:pb-32">
+        <section id="profile" className="relative overflow-hidden scroll-mt-24 py-12 sm:py-16 lg:py-20">
           <div className={cn(CONTAINER, "relative z-10")}>
             <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
               <SectionHeading
-                index={1}
+                index={3}
                 label="About"
                 heading="プロフィール"
                 className="lg:sticky lg:top-32 lg:self-start"
@@ -467,32 +485,28 @@ export default async function Home() {
                   </p>
                 ) : (
                   <p className="leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                    「今日ポケ」は<span className="text-brand font-bold">2021年8月11日</span>に活動を開始した、『ポケットモンスター』シリーズ的対戦（対戦競技シーン）を専門とする
-                    <span className="text-brand font-bold">3人組</span>YouTuberグループです。
+                    「今日ポケ」は<span className="text-brand-dark font-bold">2021年8月11日</span>に活動を開始した、『ポケットモンスター』シリーズ的対戦（対戦競技シーン）を専門とする
+                    <span className="text-brand-dark font-bold">3人組</span>YouTuberグループです。
                     バンビー・いろは・くろこの3名は、いずれも世界トップクラスの対戦実績を持つプレイヤーでありながら、専門的な対戦理論の解説から視聴者を飽きさせないバラエティ企画まで幅広く発信しています。
                   </p>
                 )}
-                {notionTexts?.about_paragraph2 ? (
-                  <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-            {texts.about_paragraph2}
-                  </p>
-                ) : (
-                  <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg lg:leading-relaxed">
-                    2022年にはチャンネル登録者数<span className="text-brand font-bold">10万人</span>を達成し、YouTube Creator Awardsの銀の盾を受賞。
-                    現在はチャンネル登録者数 約<span className="text-brand font-bold">67万人</span>、総再生回数は<span className="text-brand font-bold">12億回</span>を超える規模まで成長しています。
-                  </p>
-                )}
+                <p className="mt-4 leading-relaxed text-neutral-700 lg:text-lg">{aboutParagraph2}</p>
               </div>
             </div>
           </div>
         </section>
       </FadeIn>
-
+        <div className={cn(CONTAINER, "py-6")}>
+          <div className="relative overflow-hidden rounded-2xl bg-brand">
+            <ParallaxImage src="/hero-mascots.png" alt="今日ポケ マスコットイラスト" fill sizes="(max-width: 639px) calc(100vw - 48px), 1280px" wrapperClassName="h-[160px] sm:h-[260px]" className="object-cover" />
+            <BlueprintCorners tone="light" label="KYOUPOKE" />
+          </div>
+        </div>
       <FadeIn>
-        <section id="members" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
+        <section id="members" className="relative overflow-hidden scroll-mt-24 py-12 sm:py-16 lg:py-20">
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading
-              index={2}
+              index={4}
               label="Members"
               heading="メンバー紹介"
               note="カードをタップすると詳細が開きます"
@@ -537,20 +551,19 @@ export default async function Home() {
           </div>
         </section>
       </FadeIn>
-
       <FadeIn>
         <section
           id="achievements"
-          className="relative scroll-mt-24 overflow-hidden py-16 sm:py-24 lg:py-32 text-neutral-900"
+          className="relative scroll-mt-24 overflow-hidden py-12 sm:py-16 lg:py-20 text-neutral-900"
         >
           <AmbientMeshBackground variant="waves" />
-          <OpArtRings className="top-0 right-0 h-[180px] w-[180px] -translate-y-1/4 translate-x-1/3 sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px] opacity-35 z-0" />
           <div className={cn(CONTAINER, "relative z-10")}>
-            <SectionHeading index={3} label="Recognition" heading="実績・出演" tone="light" />
+            <SectionHeading index={5} label="Recognition" heading="実績・出演" tone="light" />
             <StatSpotlight
               stats={stats}
               className="mt-8 py-6 sm:py-8 lg:py-10 text-neutral-900"
             />
+            {statsUpdatedAt && <p className="text-xs text-neutral-600">掲載データ更新：<time dateTime={statsUpdatedAt}>{formatNewsDate(statsUpdatedAt)}</time></p>}
             <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-6 lg:gap-5">
               {achievements.map((a, i) => {
                 const image = achievementImages[a.label];
@@ -558,8 +571,9 @@ export default async function Home() {
                 return (
                   <SparkTap
                     key={a.label}
+                    celebrationLabel={`${a.label}を祝う`}
                     className={cn(
-                      "flex aspect-[4/3] cursor-pointer flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
+                      "flex aspect-[4/3] flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
                       wide ? "sm:col-span-3 sm:aspect-[2/1]" : "sm:col-span-2",
                       a.tone === "brand" && "bg-brand-dark text-white",
                       a.tone === "black" && "bg-neutral-900 text-white"
@@ -571,6 +585,7 @@ export default async function Home() {
                           src={image.src}
                           alt={a.label}
                           fill
+                          sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1279px) 33vw, 480px"
                           className={cn(
                             "object-cover",
                             image.position ?? "object-center"
@@ -598,51 +613,10 @@ export default async function Home() {
           </div>
         </section>
       </FadeIn>
-
       <FadeIn>
-        <section id="videos" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
-          <AmbientMeshBackground variant="cinematic" />
+        <section id="links" className="relative overflow-hidden scroll-mt-24 py-12 sm:py-16 lg:py-20">
           <div className={cn(CONTAINER, "relative z-10")}>
-            <SectionHeading index={4} label="Videos" heading="おすすめ動画" />
-            <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
-              {videos.map((v, i) => (
-                <FadeIn key={v.id} delay={i * 0.1}>
-                  <VideoCard video={v} index={i} labelPrefix="おすすめ動画" />
-                </FadeIn>
-              ))}
-            </div>
-
-            {latestVideos && latestVideos.length > 0 && (
-              <>
-                <p className="mt-16 text-xs font-bold tracking-widest text-neutral-600 uppercase lg:text-sm">
-                  Latest
-                </p>
-                <h3 className="font-display mt-2 text-2xl text-neutral-900 lg:text-3xl">最新動画</h3>
-                <div className="mt-10 grid gap-6 sm:grid-cols-3 lg:gap-8">
-                  {latestVideos.map((v, i) => (
-                    <FadeIn key={v.videoId} delay={i * 0.1} className={i >= 3 ? "hidden sm:block" : undefined}>
-                      <VideoCard video={v} index={i} labelPrefix="最新動画" />
-                    </FadeIn>
-                  ))}
-                </div>
-              </>
-            )}
-
-            <WipeLink
-              href="https://www.youtube.com/@KYOUPOKE"
-              cursorLabel="OPEN"
-              className="mt-10 lg:px-8 lg:py-4 lg:text-base"
-            >
-              チャンネルの動画をもっと見る
-            </WipeLink>
-          </div>
-        </section>
-      </FadeIn>
-
-      <FadeIn>
-        <section id="links" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
-          <div className={cn(CONTAINER, "relative z-10")}>
-            <SectionHeading index={5} label="Links" heading="SNS・リンク" tone="light" />
+            <SectionHeading index={6} label="Links" heading="SNS・リンク" tone="light" />
             {/* Bentoグリッド: 先頭のYouTubeを2マス分に広げて主役にする */}
             <div className="mt-10 grid auto-rows-[minmax(0,1fr)] gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {mainLinks.map((l, i) => {
@@ -673,70 +647,10 @@ export default async function Home() {
           </div>
         </section>
       </FadeIn>
-
-      {/* お知らせ抜粋（詳細は /news 以下の別階層） */}
-      <FadeIn>
-        <section id="news" className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32">
-          <AmbientMeshBackground variant="bubbles" />
-          <div className={cn(CONTAINER, "relative z-10")}>
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <SectionHeading index={6} label="News" heading="お知らせ" />
-              <Link
-                href="/news"
-                data-cursor-label="MORE"
-                className="group inline-flex items-center gap-2 text-sm font-bold text-brand transition-colors duration-200 hover:text-brand-dark lg:text-base"
-              >
-                すべてのお知らせ
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-            </div>
-
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {latestNews.map((article, i) => (
-                <FadeIn key={article.slug} delay={i * 0.08} className="h-full">
-                  <BentoCard
-                    href={`/news/${article.slug}`}
-                    cursorLabel="READ"
-                    className="h-full"
-                  >
-                    <span className="flex items-center gap-3">
-                      <span className="rounded-full bg-brand px-3 py-1 text-[11px] font-bold text-white lg:text-xs">
-                        {article.category}
-                      </span>
-                      <time
-                        dateTime={article.date}
-                        className="text-xs font-bold text-neutral-500 lg:text-sm"
-                      >
-                        {formatNewsDate(article.date)}
-                      </time>
-                    </span>
-                    <span className="font-display mt-4 block text-lg leading-snug text-neutral-900 transition-colors duration-300 group-hover:text-brand lg:text-xl">
-                      {article.title}
-                    </span>
-                    <span className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-neutral-600">
-                      {article.summary}
-                    </span>
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand">
-                      詳しく見る
-                      <span className="transition-transform duration-300 group-hover:translate-x-1">
-                        →
-                      </span>
-                    </span>
-                  </BentoCard>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-      </FadeIn>
-
-      {/* お問い合わせ（ファンサイト運営者宛） */}
       <FadeIn>
         <section
           id="contact"
-          className="relative overflow-hidden scroll-mt-24 py-16 sm:py-24 lg:py-32"
+          className="relative overflow-hidden scroll-mt-24 py-12 sm:py-16 lg:py-20"
         >
           <div className={cn(CONTAINER, "relative z-10")}>
             <SectionHeading index={7} label="Contact" heading="お問い合わせ" />
@@ -764,7 +678,7 @@ export default async function Home() {
                   href="https://www.youtube.com/@KYOUPOKE/about"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand transition-colors duration-200 hover:text-brand-dark"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand-dark transition-colors duration-200 hover:text-brand-dark"
                 >
                   公式チャンネルの概要欄を見る
                   <span>→</span>
@@ -772,21 +686,17 @@ export default async function Home() {
               </BentoCard>
 
               <BentoCard interactive={false} className="h-full">
-                <ContactForm />
+                <ContactForm address={process.env.CONTACT_EMAIL} />
               </BentoCard>
             </div>
           </div>
         </section>
       </FadeIn>
       </main>
-
       <SiteFooter isHome />
-
-      {/* 画面右下のトップに戻るフローティングボタン */}
       <ScrollToTop />
-
-      {/* モバイル下部固定のチャンネル登録CTA */}
       <MobileCtaBar />
     </div>
+    </SmoothScroll>
   );
 }

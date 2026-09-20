@@ -1,5 +1,7 @@
 # CLAUDE.md — プロジェクト運用ルール（Loop Engineering）
 
+> 現在の作業入口は `AGENTS.md`、`CURRENT_STATUS.md`、`README.md`。2026-09-15にMacのGit/依存関係を復旧し、Cloudflare試験版を追加した。詳細は `CLOUDFLARE.md`。以下のループ説明と旧Vaultパスは過去の運用情報を含む。
+
 今日ポケ（KYOUPOKE）非公式ファンサイト。詳細な背景・技術スタック・作業ログはObsidian Vault（`kyoupoke_site/MOC.md`）を参照。このファイルはClaude Codeが自動/半自動でこのリポジトリを触るときの安全ルールを定義する。
 
 ## 自動ブラッシュアップループについて

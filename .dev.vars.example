@@ -1,0 +1,4 @@
+# Cloudflareローカル実行用。コピー先 .dev.vars はGit管理外。
+# 本番VercelのSensitive値は再取得不可。Notionの元の接続キーを設定する。
+NOTION_TOKEN=
+CONTACT_EMAIL=

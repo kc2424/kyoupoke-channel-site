@@ -1,8 +1,10 @@
 // お知らせ/ニュースのデータソース。
-// NotionのDB(お知らせ)を優先して取得し、未接続または0件のときだけ
+// NotionのDB(お知らせ)を優先して取得し、未設定のときだけ
 // このファイル内のfallbackArticlesを表示する。
 
 import { fetchNews } from "@/lib/notion";
+import { cache } from "react";
+import { formatPublicationDate, isPublishedBy, publicationTimestamp, validSlug } from "@/lib/content-validation";
 
 export type NewsCategory = "お知らせ" | "イベント" | "メディア" | "動画";
 
@@ -11,6 +13,7 @@ export type NewsArticle = {
   slug: string;
   /** 公開日。YYYY-MM-DD形式。並び順とSEOの日付表記に使う。 */
   date: string;
+  updatedAt?: string;
   category: NewsCategory;
   title: string;
   /** 一覧・OGPで使う1〜2文の要約。 */
@@ -144,12 +147,16 @@ const fallbackArticles: NewsArticle[] = [
   },
 ];
 
-/** 新しい順に並べたお知らせ一覧を返す。Notion未接続/0件時はfallbackArticlesを使う。 */
-export async function getAllNews(): Promise<NewsArticle[]> {
+/** 未設定時のみサンプルを使用。障害を投げ、ISRの前回成功結果を維持する。 */
+export const getAllNews = cache(async (): Promise<NewsArticle[]> => {
   const notionNews = await fetchNews();
-  const articles = notionNews && notionNews.length > 0 ? notionNews : fallbackArticles;
-  return [...articles].sort((a, b) => b.date.localeCompare(a.date));
-}
+  if (notionNews === null && process.env.NOTION_TOKEN) {
+    throw new Error("お知らせを取得できませんでした。時間をおいて再度お試しください。");
+  }
+  const articles = notionNews ?? fallbackArticles;
+  return articles.filter((article) => isPublishedBy(article.date))
+    .sort((a, b) => publicationTimestamp(b.date)! - publicationTimestamp(a.date)!);
+});
 
 /** トップページのお知らせ抜粋で使う、先頭 limit 件。 */
 export async function getLatestNews(limit = 3): Promise<NewsArticle[]> {
@@ -157,11 +164,11 @@ export async function getLatestNews(limit = 3): Promise<NewsArticle[]> {
 }
 
 export async function getNewsBySlug(slug: string): Promise<NewsArticle | undefined> {
+  if (!validSlug(slug)) return undefined;
   return (await getAllNews()).find((a) => a.slug === slug);
 }
 
 /** 「2026年7月20日」のような日本語表記に整形する。 */
 export function formatNewsDate(date: string): string {
-  const [y, m, d] = date.split("-");
-  return `${y}年${Number(m)}月${Number(d)}日`;
+  return formatPublicationDate(date);
 }
