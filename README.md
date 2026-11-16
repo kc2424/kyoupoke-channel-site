@@ -1,41 +1,39 @@
-# 🎮 今日ポケ ファンサイト
+# 今日ポケch. ファンサイト
 
-今日ポケ（[@KYOUPOKE](https://www.youtube.com/@KYOUPOKE)）の**非公式**ファンサイトです。
-Next.js + Tailwind CSS で作られています。
+ポケモン対戦を中心に活動するYouTuberグループ「今日ポケ」の非公式ファンサイトです。メンバー紹介、対戦実績、おすすめ動画、お知らせを掲載しています。
 
-## 📁 ファイル構成
+[ファンサイトを見る](https://kyoupoke-channel-site.vercel.app) · [今日ポケ公式YouTube](https://www.youtube.com/@KYOUPOKE)
 
-```
-kyoupoke-channel-site/
-├── src/app/page.tsx     ページの中身（文章・動画・リンク）
-├── src/app/layout.tsx   フォント・メタデータなど全体の設定
-├── src/app/globals.css  ブランドカラーなどのテーマ設定
-└── README.md            このファイル
-```
+Next.js、TypeScript、Tailwind CSSを使用し、メンバー紹介やお知らせなどの掲載内容はNotionで管理しています。
 
-## ✏️ 編集する場所
+## ローカルで起動する
 
-`src/app/page.tsx` の中の `TODO` コメント箇所が、書き換えるべき場所です。
+Node.js 24とnpmを用意し、リポジトリのルートで実行します。
 
-- **プロフィール文**: `id="profile"` セクションの文章
-- **メンバー紹介**: ファイル先頭の `members` 配列
-- **おすすめ動画**: `id="videos"` セクションの `iframe` の `src="https://www.youtube.com/embed/動画ID"` の「動画ID」部分
-  - 動画URL `https://www.youtube.com/watch?v=XXXXXXXXXXX` の `XXXXXXXXXXX` が動画IDです
-- **SNSリンク**: ファイル先頭の `links` 配列に追加すると増やせます
-
-## 👀 確認方法（ローカル）
-
-初回のみ依存パッケージのインストールが必要です。
-
-```
-npm install
+```sh
+npm ci --legacy-peer-deps
 npm run dev
 ```
 
-その後 `http://localhost:3000` をブラウザで開くと確認できます。
+npm 11.19.0では通常の `npm ci` で依存関係の検証エラーが出るため、`--legacy-peer-deps` を指定します。
 
-## 🚀 公開方法（Vercel・自分だけに非公開で）
+起動後に [http://localhost:3000](http://localhost:3000) を開きます。初期状態では同梱のサンプルデータで表示を確認できます。
 
-1. `git push` すると GitHub 経由で Vercel が自動的にビルド・デプロイします
-2. Vercel プロジェクトの **Settings → Deployment Protection** で **Vercel Authentication** が有効になっています
-   - URLを知っている人でも Vercel アカウントでログインしていないと中身を見られません
+### 環境変数（任意）
+
+Notionの掲載内容を表示する場合は、対象データソースにアクセスできる連携キーを `NOTION_TOKEN` として、Git管理外の `.env.local` に設定します。[環境変数の雛形](.env.example)
+
+## 動作を確認する
+
+```sh
+npm run lint
+npm run build
+```
+
+## 運用資料
+
+本番はVercel、試験版はCloudflare Workersで公開しています。
+
+- Cloudflare試験版の手順と公開履歴は、監査改善ブランチの [CLOUDFLARE.md](https://github.com/kc2424/kyoupoke-channel-site/blob/1fd7b54fd3f16143152a19e5152cb754ab041933/CLOUDFLARE.md) と [CURRENT_STATUS.md](https://github.com/kc2424/kyoupoke-channel-site/blob/1fd7b54fd3f16143152a19e5152cb754ab041933/CURRENT_STATUS.md) を参照してください。
+
+リポジトリ管理者は [kc2424](https://github.com/kc2424) です。
