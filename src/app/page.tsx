@@ -360,11 +360,11 @@ export default async function Home() {
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[45%] bg-gradient-to-t from-white via-white/90 to-transparent" />
           <HeroStickers subscribers={formatStat(subscribers)} views={formatStat(views)} />
           <div className="relative z-20 mx-auto flex w-full max-w-6xl flex-col items-center px-6 pt-96 pb-10 text-center sm:px-10 sm:pt-80 lg:pt-64 lg:pb-8">
-            <p className="mb-3 flex flex-col items-center rounded-2xl border border-brand-dark/20 bg-white/95 px-4 py-1.5 leading-tight text-brand-dark">
+            <p className="mb-3 rounded-2xl border border-brand-dark/20 bg-white/95 px-4 py-1.5 leading-tight text-brand-dark">
               <strong className="text-lg font-extrabold">今日ポケch.</strong>
-              <span className="text-sm font-semibold">公認ファンサイト</span>
             </p>
             <GiantTitle>KYOU POKE</GiantTitle>
+            <p className="text-xs leading-tight font-medium tracking-wide text-black sm:text-sm">公認ファンサイト</p>
             <p className="mt-4 max-w-xl whitespace-pre-line text-sm font-semibold leading-relaxed text-neutral-800 sm:text-base">{texts.hero_tagline}</p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <a href="#videos" className="rounded-full bg-brand-dark px-7 py-3 text-sm font-bold text-white hover:bg-neutral-900">動画を見る ↓</a>

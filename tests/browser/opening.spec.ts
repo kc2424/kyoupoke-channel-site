@@ -36,19 +36,21 @@ test("reduced motion keeps the opening closed through hydration", async ({ page 
 test.describe("home without JavaScript", () => {
   test.use({ javaScriptEnabled: false, reducedMotion: "no-preference" });
 
-  test("the hero shows the site name above its endorsement and the footer keeps its disclaimer", async ({ page }) => {
+  test("the hero shows its endorsement below the wordmark and the footer keeps its disclaimer", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByTestId("intro-loader")).toBeHidden();
     const hero = page.getByRole("main");
-    const title = hero.getByText("今日ポケch.", { exact: true });
+    const title = hero.getByRole("heading", { name: "KYOU POKE", exact: true });
     const endorsement = hero.getByText("公認ファンサイト", { exact: true });
     for (const width of [390, 1280]) {
       await page.setViewportSize({ width, height: 844 });
       await expect(title).toBeVisible();
       await expect(endorsement).toBeVisible();
+      await expect(endorsement).toHaveCSS("color", "rgb(0, 0, 0)");
       const titleBox = await title.boundingBox();
       const endorsementBox = await endorsement.boundingBox();
       expect(endorsementBox!.y).toBeGreaterThanOrEqual(titleBox!.y + titleBox!.height - 1);
+      expect(endorsementBox!.y - (titleBox!.y + titleBox!.height)).toBeLessThan(8);
     }
     await expect(page.locator("footer")).toContainText("非公式");
   });
