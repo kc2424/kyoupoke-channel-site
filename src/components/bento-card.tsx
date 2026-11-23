@@ -27,7 +27,7 @@ export function BentoCard({
 }) {
   const toneStyles = {
     light: "border-neutral-200 bg-white text-neutral-900",
-    brand: "border-brand bg-brand text-white",
+    brand: "border-brand-dark bg-brand-dark text-white",
     dark: "border-neutral-900 bg-neutral-900 text-white",
     // ブランドオレンジを淡く敷いた暖色トーン。黒ほど浮かず、白カードとも並べやすい。
     warm: "border-brand/30 bg-[#fff1e4] text-neutral-900",

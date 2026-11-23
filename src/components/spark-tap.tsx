@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { useRef } from "react";
 
 const SPARK_COLORS = ["bg-brand", "bg-white", "bg-black"];
@@ -10,10 +10,12 @@ export function SparkTap({
   children,
   className,
   sparkCount = 10,
+  celebrationLabel = "この実績を祝う",
 }: {
   children: ReactNode;
   className?: string;
   sparkCount?: number;
+  celebrationLabel?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -52,29 +54,27 @@ export function SparkTap({
     }
   }
 
-  function handleClick(event: MouseEvent<HTMLDivElement>) {
-    const rect = event.currentTarget.getBoundingClientRect();
+  function handleClick(event: MouseEvent<HTMLButtonElement>) {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
     burst(event.clientX - rect.left, event.clientY - rect.top);
-  }
-
-  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    event.preventDefault();
-    const rect = event.currentTarget.getBoundingClientRect();
-    burst(rect.width / 2, rect.height / 2);
   }
 
   return (
     <div
       ref={containerRef}
-      role="button"
-      tabIndex={0}
-      aria-label="タップして祝う"
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
       className={`relative overflow-hidden ${className ?? ""}`}
     >
       {children}
+      <button
+        type="button"
+        onClick={handleClick}
+        aria-label={celebrationLabel}
+        data-cursor-label="CELEBRATE"
+        className="absolute top-3 right-3 z-20 flex min-h-11 min-w-11 items-center justify-center rounded-full border-2 border-white/80 bg-neutral-900/75 text-lg text-white shadow-sm backdrop-blur-sm transition-transform hover:scale-110 focus-visible:scale-110 sm:top-4 sm:right-4"
+      >
+        <span aria-hidden="true">✦</span>
+      </button>
     </div>
   );
 }

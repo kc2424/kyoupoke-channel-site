@@ -10,7 +10,11 @@ const TONE_STYLES = {
 } as const;
 
 export function SectionHeading({
+  index,
+  total,
+  label,
   heading,
+  note,
   tone = "light",
   className,
 }: {
@@ -26,6 +30,18 @@ export function SectionHeading({
 
   return (
     <div className={cn("flex flex-col gap-2", className)}>
+      {(index !== undefined || label) && (
+        <p className={cn("font-mono text-xs font-bold tracking-widest uppercase lg:text-sm", styles.label)}>
+          {index !== undefined && (
+            <span>
+              {String(index).padStart(2, "0")}
+              {total !== undefined ? ` / ${String(total).padStart(2, "0")}` : ""}
+            </span>
+          )}
+          {index !== undefined && label ? <span aria-hidden="true"> — </span> : null}
+          {label}
+        </p>
+      )}
       <RevealText
         as="h2"
         text={heading}
@@ -34,6 +50,7 @@ export function SectionHeading({
           styles.heading
         )}
       />
+      {note && <p className={cn("text-sm leading-relaxed", styles.note)}>{note}</p>}
     </div>
   );
 }

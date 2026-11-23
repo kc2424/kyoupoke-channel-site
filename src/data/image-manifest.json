@@ -1,0 +1,488 @@
+{
+  "/achievements/kyoupoke-gym.jpg": {
+    "width": 1280,
+    "height": 720,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/achievements-kyoupoke-gym-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/achievements-kyoupoke-gym-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/achievements-kyoupoke-gym-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/achievements-kyoupoke-gym-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/achievements-kyoupoke-gym-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/achievements-kyoupoke-gym-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/achievements-kyoupoke-gym-960.webp"
+      },
+      {
+        "width": 1280,
+        "src": "/optimized/achievements-kyoupoke-gym-1280.webp"
+      }
+    ]
+  },
+  "/achievements/reject-cup-victory.jpg": {
+    "width": 1920,
+    "height": 1920,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/achievements-reject-cup-victory-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/achievements-reject-cup-victory-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/achievements-reject-cup-victory-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/achievements-reject-cup-victory-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/achievements-reject-cup-victory-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/achievements-reject-cup-victory-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/achievements-reject-cup-victory-960.webp"
+      },
+      {
+        "width": 1280,
+        "src": "/optimized/achievements-reject-cup-victory-1280.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/optimized/achievements-reject-cup-victory-1600.webp"
+      }
+    ]
+  },
+  "/achievements/reject-partnership.jpg": {
+    "width": 4015,
+    "height": 2731,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/achievements-reject-partnership-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/achievements-reject-partnership-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/achievements-reject-partnership-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/achievements-reject-partnership-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/achievements-reject-partnership-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/achievements-reject-partnership-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/achievements-reject-partnership-960.webp"
+      },
+      {
+        "width": 1280,
+        "src": "/optimized/achievements-reject-partnership-1280.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/optimized/achievements-reject-partnership-1600.webp"
+      }
+    ]
+  },
+  "/achievements/tv-tokyo-battle-of.jpg": {
+    "width": 1080,
+    "height": 360,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/achievements-tv-tokyo-battle-of-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/achievements-tv-tokyo-battle-of-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/achievements-tv-tokyo-battle-of-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/achievements-tv-tokyo-battle-of-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/achievements-tv-tokyo-battle-of-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/achievements-tv-tokyo-battle-of-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/achievements-tv-tokyo-battle-of-960.webp"
+      },
+      {
+        "width": 1080,
+        "src": "/optimized/achievements-tv-tokyo-battle-of-1080.webp"
+      }
+    ]
+  },
+  "/achievements/wcs-logo.png": {
+    "width": 512,
+    "height": 512,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/achievements-wcs-logo-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/achievements-wcs-logo-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/achievements-wcs-logo-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/achievements-wcs-logo-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/achievements-wcs-logo-384.webp"
+      },
+      {
+        "width": 512,
+        "src": "/optimized/achievements-wcs-logo-512.webp"
+      }
+    ]
+  },
+  "/achievements/youtube-award.jpg": {
+    "width": 400,
+    "height": 266,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/achievements-youtube-award-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/achievements-youtube-award-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/achievements-youtube-award-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/achievements-youtube-award-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/achievements-youtube-award-384.webp"
+      },
+      {
+        "width": 400,
+        "src": "/optimized/achievements-youtube-award-400.webp"
+      }
+    ]
+  },
+  "/hero-mascots.png": {
+    "width": 1800,
+    "height": 1238,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/hero-mascots-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/hero-mascots-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/hero-mascots-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/hero-mascots-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/hero-mascots-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/hero-mascots-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/hero-mascots-960.webp"
+      },
+      {
+        "width": 1280,
+        "src": "/optimized/hero-mascots-1280.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/optimized/hero-mascots-1600.webp"
+      }
+    ]
+  },
+  "/hero-members.jpg": {
+    "width": 1601,
+    "height": 1101,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/hero-members-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/hero-members-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/hero-members-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/hero-members-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/hero-members-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/hero-members-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/hero-members-960.webp"
+      },
+      {
+        "width": 1280,
+        "src": "/optimized/hero-members-1280.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/optimized/hero-members-1600.webp"
+      }
+    ]
+  },
+  "/hero-mobile.png": {
+    "width": 1127,
+    "height": 2322,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/hero-mobile-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/hero-mobile-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/hero-mobile-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/hero-mobile-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/hero-mobile-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/hero-mobile-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/hero-mobile-960.webp"
+      },
+      {
+        "width": 1127,
+        "src": "/optimized/hero-mobile-1127.webp"
+      }
+    ]
+  },
+  "/icon.png": {
+    "width": 400,
+    "height": 400,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/icon-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/icon-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/icon-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/icon-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/icon-384.webp"
+      },
+      {
+        "width": 400,
+        "src": "/optimized/icon-400.webp"
+      }
+    ]
+  },
+  "/members/banbee.png": {
+    "width": 1206,
+    "height": 1207,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/members-banbee-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/members-banbee-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/members-banbee-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/members-banbee-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/members-banbee-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/members-banbee-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/members-banbee-960.webp"
+      },
+      {
+        "width": 1206,
+        "src": "/optimized/members-banbee-1206.webp"
+      }
+    ]
+  },
+  "/members/iroha.png": {
+    "width": 1206,
+    "height": 1207,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/members-iroha-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/members-iroha-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/members-iroha-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/members-iroha-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/members-iroha-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/members-iroha-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/members-iroha-960.webp"
+      },
+      {
+        "width": 1206,
+        "src": "/optimized/members-iroha-1206.webp"
+      }
+    ]
+  },
+  "/members/kuroko.png": {
+    "width": 1206,
+    "height": 1207,
+    "variants": [
+      {
+        "width": 48,
+        "src": "/optimized/members-kuroko-48.webp"
+      },
+      {
+        "width": 96,
+        "src": "/optimized/members-kuroko-96.webp"
+      },
+      {
+        "width": 192,
+        "src": "/optimized/members-kuroko-192.webp"
+      },
+      {
+        "width": 256,
+        "src": "/optimized/members-kuroko-256.webp"
+      },
+      {
+        "width": 384,
+        "src": "/optimized/members-kuroko-384.webp"
+      },
+      {
+        "width": 640,
+        "src": "/optimized/members-kuroko-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/optimized/members-kuroko-960.webp"
+      },
+      {
+        "width": 1206,
+        "src": "/optimized/members-kuroko-1206.webp"
+      }
+    ]
+  }
+}

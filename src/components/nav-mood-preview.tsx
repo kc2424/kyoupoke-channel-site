@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/site-image";
 import { useState, type ReactNode } from "react";
 
 import { scrollToHash } from "@/lib/lenis";

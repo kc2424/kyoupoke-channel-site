@@ -1,0 +1,10 @@
+.git/
+.env*
+.dev.vars*
+.next/
+.wrangler/
+.vinext/
+dist/
+node_modules/
+test-results/
+playwright-report/

@@ -38,6 +38,7 @@ export async function generateMetadata({
     path: `/news/${article.slug}`,
     type: "article",
     publishedTime: article.date,
+    modifiedTime: article.updatedAt,
   });
 }
 
@@ -61,6 +62,7 @@ export default async function NewsArticlePage({
           title: article.title,
           description: article.summary,
           date: article.date,
+          updatedAt: article.updatedAt,
           path: `/news/${article.slug}`,
         })}
       />
@@ -73,20 +75,20 @@ export default async function NewsArticlePage({
       />
       <SiteHeader />
 
-      <main className="flex-1 pt-28 pb-20 sm:pt-36 lg:pt-44">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-28 pb-20 sm:pt-36 lg:pt-44">
         <article className={CONTAINER}>
           <nav aria-label="パンくずリスト" className="text-xs text-neutral-500 lg:text-sm">
-            <Link href="/" className="transition-colors hover:text-brand">
+            <Link href="/" className="transition-colors hover:text-brand-dark">
               ホーム
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/news" className="transition-colors hover:text-brand">
+            <Link href="/news" className="transition-colors hover:text-brand-dark">
               お知らせ
             </Link>
           </nav>
 
           <div className="mt-6 flex items-center gap-3">
-            <span className="rounded-full bg-brand px-3 py-1 text-[11px] font-bold text-white lg:text-xs">
+            <span className="rounded-full bg-brand-dark px-3 py-1 text-[11px] font-bold text-white lg:text-xs">
               {article.category}
             </span>
             <time
@@ -95,6 +97,11 @@ export default async function NewsArticlePage({
             >
               {formatNewsDate(article.date)}
             </time>
+            {article.updatedAt && article.updatedAt !== article.date && (
+              <span className="text-xs text-neutral-500 lg:text-sm">
+                更新 {formatNewsDate(article.updatedAt)}
+              </span>
+            )}
           </div>
 
           <h1 className="font-display mt-4 text-2xl leading-snug text-neutral-900 sm:text-3xl lg:text-4xl">
@@ -142,7 +149,7 @@ export default async function NewsArticlePage({
                       >
                         {formatNewsDate(other.date)}
                       </time>
-                      <span className="text-sm font-bold text-neutral-800 transition-colors duration-300 group-hover:text-brand lg:text-base">
+                      <span className="text-sm font-bold text-neutral-800 transition-colors duration-300 group-hover:text-brand-dark lg:text-base">
                         {other.title}
                       </span>
                     </Link>
@@ -154,7 +161,7 @@ export default async function NewsArticlePage({
 
           <Link
             href="/news"
-            className="mt-12 inline-flex items-center gap-2 text-sm font-bold text-brand transition-colors hover:text-brand-dark"
+            className="mt-12 inline-flex items-center gap-2 text-sm font-bold text-brand-dark transition-colors hover:text-brand-dark"
           >
             <span>←</span>
             お知らせ一覧に戻る

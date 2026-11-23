@@ -13,12 +13,11 @@ const CONTAINER = "mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16";
 export function SiteFooter({ isHome = false }: { isHome?: boolean }) {
   return (
     <footer className="relative overflow-hidden border-t border-brand/20 bg-gradient-to-b from-[#3b180e] via-[#2a0e06] to-[#1c0803] pt-20 pb-28 text-white sm:pb-20">
-      <div className="flex select-none whitespace-nowrap">
+      <div aria-hidden="true" className="flex select-none whitespace-nowrap">
         {[0, 1].map((row) => (
           <div
             key={row}
-            aria-hidden={row === 1}
-            className="animate-marquee flex shrink-0 items-center gap-10 pr-10"
+            className="animate-marquee flex shrink-0 items-center gap-10 pr-10 motion-reduce:animate-none"
           >
             {Array.from({ length: 6 }).map((_, i) => (
               <span key={i} className="flex items-center gap-4">

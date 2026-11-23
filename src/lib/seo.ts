@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { publicationTimestamp, validVideoId } from "@/lib/content-validation";
 
 /**
  * このサイトを検索エンジンにインデックスさせるかどうかの唯一のスイッチ。
@@ -39,7 +40,7 @@ export const SOCIAL_URLS = [
 ] as const;
 
 /** OGP画像。1200x630相当の実画像に差し替えられるよう1か所にまとめる。 */
-const OG_IMAGE = "/hero-members.jpg";
+const OG_IMAGE = "/og-image.jpg";
 
 export const robotsMeta: Metadata["robots"] = SITE_INDEXABLE
   ? { index: true, follow: true }
@@ -54,12 +55,14 @@ export function buildMetadata({
   path = "/",
   type = "website",
   publishedTime,
+  modifiedTime,
 }: {
   title?: string;
   description?: string;
   path?: string;
   type?: "website" | "article";
   publishedTime?: string;
+  modifiedTime?: string;
 } = {}): Metadata {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const url = new URL(path, SITE_URL).toString();
@@ -78,6 +81,7 @@ export function buildMetadata({
       locale: "ja_JP",
       images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
       ...(publishedTime ? { publishedTime } : {}),
+      ...(modifiedTime ? { modifiedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",
@@ -113,21 +117,30 @@ export function websiteJsonLd() {
 export function videoJsonLd(
   videos: { videoId: string; title: string; publishedAt?: string }[]
 ) {
+  const seen = new Set<string>();
+  const publishable = videos.filter((video) => {
+    if (!validVideoId(video.videoId) || !video.title.trim() || !video.publishedAt ||
+        publicationTimestamp(video.publishedAt) === undefined || seen.has(video.videoId)) {
+      return false;
+    }
+    seen.add(video.videoId);
+    return true;
+  });
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "今日ポケの動画",
-    itemListElement: videos.map((v, i) => ({
+    itemListElement: publishable.map((v, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {
         "@type": "VideoObject",
         name: v.title,
+        description: v.title,
         thumbnailUrl: [`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`],
         embedUrl: `https://www.youtube.com/embed/${v.videoId}`,
         url: `https://www.youtube.com/watch?v=${v.videoId}`,
-        // uploadDateはVideoObjectの必須項目。RSSから取れた動画のみ付与する。
-        ...(v.publishedAt ? { uploadDate: v.publishedAt } : {}),
+        uploadDate: v.publishedAt,
         publisher: {
           "@type": "Organization",
           name: CHANNEL.name,
@@ -143,11 +156,13 @@ export function newsArticleJsonLd({
   title,
   description,
   date,
+  updatedAt,
   path,
 }: {
   title: string;
   description: string;
   date: string;
+  updatedAt?: string;
   path: string;
 }) {
   return {
@@ -156,7 +171,7 @@ export function newsArticleJsonLd({
     headline: title,
     description,
     datePublished: date,
-    dateModified: date,
+    dateModified: updatedAt ?? date,
     inLanguage: "ja",
     mainEntityOfPage: new URL(path, SITE_URL).toString(),
     publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },

@@ -24,8 +24,10 @@ export function MobileCtaBar() {
 
   return (
     <div
+      inert={!visible}
+      aria-hidden={!visible}
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 px-4 pb-4 transition-all duration-300 ease-out lg:hidden",
+        "fixed inset-x-0 bottom-0 z-40 px-4 pb-4 transition-all duration-300 ease-out motion-reduce:transition-none lg:hidden",
         visible
           ? "pointer-events-auto translate-y-0 opacity-100"
           : "pointer-events-none translate-y-full opacity-0"
@@ -36,9 +38,9 @@ export function MobileCtaBar() {
         href="https://www.youtube.com/@KYOUPOKE?sub_confirmation=1"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex w-full items-center justify-center gap-2.5 rounded-full bg-brand px-6 py-4 text-sm font-bold text-white shadow-xl transition-transform duration-200 ease-out active:scale-[0.98]"
+        className="flex w-full items-center justify-center gap-2.5 rounded-full bg-brand-dark px-6 py-4 text-sm font-bold text-white shadow-xl transition-transform duration-200 ease-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
       >
-        <YouTubeIcon className="h-5 w-5" />
+        <YouTubeIcon aria-hidden="true" className="h-5 w-5" />
         チャンネル登録する
       </a>
     </div>

@@ -9,6 +9,7 @@ import { LogoMark } from "@/components/logo-mark";
 import { UnderlineLink } from "@/components/underline-link";
 import { Badge } from "@/components/ui/badge";
 import { WipeLink } from "@/components/wipe-link";
+import { scrollToPageTop } from "@/lib/lenis";
 import { navItems, resolveNavHref } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 
@@ -30,10 +31,11 @@ export function SiteHeader() {
   // トップページにいるときだけ「先頭へスクロール」に差し替える。
   // 下層ページではふつうに / へ遷移させる。
   const handleLogoClick = (e: React.MouseEvent) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if (!isHome) return;
     e.preventDefault();
     if (window.scrollY > 0) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      scrollToPageTop();
     } else {
       router.refresh();
     }
@@ -50,21 +52,21 @@ export function SiteHeader() {
         <Link
           href="/"
           onClick={handleLogoClick}
-          className="flex min-w-0 items-center gap-2 cursor-pointer sm:gap-3 lg:gap-4 group"
+          className="group flex min-w-0 cursor-pointer items-center gap-2 sm:gap-3 xl:gap-4"
         >
           <LogoMark
             animated
             className="h-9 w-9 shrink-0 drop-shadow-md sm:h-12 sm:w-12 lg:h-14 lg:w-14 transition-transform duration-300 group-hover:scale-110"
           />
-          <span className="font-wordmark text-brand truncate text-lg sm:text-2xl lg:text-3xl">
+          <span className="font-wordmark whitespace-nowrap text-lg text-brand sm:text-2xl xl:text-3xl">
             KYOU POKE
           </span>
-          <Badge className="bg-brand-dark hidden shrink-0 text-white sm:inline-flex lg:px-4 lg:py-1.5 lg:text-sm">
+          <Badge className="hidden shrink-0 bg-brand-dark text-white sm:inline-flex lg:hidden xl:inline-flex xl:px-4 xl:py-1.5 xl:text-sm">
             FAN SITE
           </Badge>
         </Link>
-        {/* 項目数が増えたため、横並びはlg以上に限定してlg未満はハンバーガーに寄せる */}
-        <nav className="hidden items-center gap-5 text-sm font-bold text-neutral-800 lg:flex lg:gap-6">
+        {/* 項目数が増えても折り返さないよう、横並びは1280px以上に限定する。 */}
+        <nav className="hidden items-center gap-5 whitespace-nowrap text-sm font-bold text-neutral-800 xl:flex xl:gap-6">
           {navItems.map((item) => (
             <UnderlineLink key={item.href} href={resolveNavHref(item.href, isHome)}>
               {item.label}
@@ -75,7 +77,7 @@ export function SiteHeader() {
           <WipeLink
             href="https://www.youtube.com/@KYOUPOKE"
             cursorLabel="OPEN"
-            className="hidden sm:inline-flex lg:px-7 lg:py-3.5 lg:text-base"
+            className="hidden sm:inline-flex xl:px-7 xl:py-3.5 xl:text-base"
           >
             YouTubeを見る
           </WipeLink>
