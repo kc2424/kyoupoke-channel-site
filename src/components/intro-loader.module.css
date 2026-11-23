@@ -1,0 +1,111 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  color: white;
+  background: radial-gradient(circle, #fff3 2px, transparent 2px) 0 0 / 24px 24px var(--brand);
+}
+
+.loader[open] {
+  display: grid;
+  place-items: center;
+  animation: reveal 800ms ease-in-out 1200ms both;
+}
+
+.loader::backdrop { background: transparent; }
+.parade { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+
+.runner, .logo {
+  display: block;
+  aspect-ratio: 1;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: white url("/optimized/icon-192.webp") center / cover;
+  box-shadow: 0 10px 20px #0003;
+}
+
+.runner {
+  position: absolute;
+  left: 0;
+  animation: cross ease-in-out both;
+}
+
+.center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  animation: enter 500ms cubic-bezier(.2, 1.5, .5, 1) both;
+}
+
+.logo {
+  width: clamp(96px, 16vw, 112px);
+  border-width: 4px;
+  margin-bottom: 12px;
+  animation: bounce 800ms ease-in-out infinite;
+}
+
+.title {
+  font-family: var(--font-wordmark), sans-serif;
+  font-size: clamp(36px, 7vw, 60px);
+  line-height: 1;
+  text-shadow: 0 2px 4px #0004;
+}
+
+.welcome, .skip {
+  border-radius: 999px;
+  font-size: .875rem;
+  font-weight: 800;
+}
+
+.welcome {
+  padding: 4px 16px;
+  letter-spacing: .1em;
+  color: var(--brand-dark);
+  background: white;
+  box-shadow: 0 2px 5px #0002;
+}
+
+.skip {
+  position: absolute;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid white;
+  background: var(--brand-dark);
+  color: white;
+  cursor: pointer;
+}
+
+.skip:hover { background: white; color: var(--brand-dark); }
+
+@keyframes cross {
+  0% { transform: translateX(-20vw) rotate(var(--tilt)) scale(.6); opacity: 0; }
+  33% { transform: translate(28vw, -12px) rotate(var(--tilt)) scale(1.1); opacity: 1; }
+  67% { transform: translate(77vw, 12px) rotate(var(--tilt)); opacity: 1; }
+  100% { transform: translateX(125vw) rotate(var(--tilt)) scale(.7); opacity: 0; }
+}
+
+@keyframes enter {
+  from { opacity: 0; transform: scale(.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounce { 50% { transform: translateY(-12px); } }
+@keyframes reveal {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader[open] { display: none; }
+}
