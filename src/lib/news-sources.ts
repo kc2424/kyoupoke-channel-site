@@ -1,10 +1,12 @@
-import { isPublishedBy } from "./content-validation";
+import { XMLParser, XMLValidator } from "fast-xml-parser";
+import { isPublishedBy, rejectReleaseSlug } from "./content-validation";
 import type { NewsSourceArticle } from "./sync-news";
 import { CHANNEL_ID, parseChannelVideos, readFeedText } from "./youtube";
 
 const TV_CHANNEL = "UCDqvZvUgRq5RRmy_zZd5Yaw"; // 有吉ぃぃeeeee！【公式】
 const TOURNAMENT_CHANNEL = "UCVpaaZ-p7GTTFEDR_NCnfNg"; // 成人男性三人組 Official
 const FIRST_DAY = "2026-08-21"; // 8月20日までのお知らせは編集部が掲載済み。
+const REJECT_FEED = "https://prtimes.jp/companyrdf.php?company_id=50979";
 const feedUrl = (id: string) => `https://www.youtube.com/feeds/videos.xml?channel_id=${id}`;
 const videoLink = (id: string) => ({ label: "公式YouTubeで見る", href: `https://www.youtube.com/watch?v=${id}` });
 // Slugs must be lowercase. Keep case-sensitive YouTube IDs distinct.
@@ -67,7 +69,7 @@ const historical: NewsSourceArticle[] = [
 // still supports it. A corrected title is taken from the ongoing feed.
 function verifiedCopy(slug: string, title: string, intro = "") {
   const checks: Record<string, boolean> = {
-    "reject-11250": title.includes("いろは") && title.includes("ワールドチャンピオンシップス2026") && title.includes("部門に出場"),
+    "reject-11250": title === "eスポーツチーム「REJECT」がサポートする「今日ポケch.」いろは、『ポケモンワールドチャンピオンシップス2026』のPokemon Champions部門に出場",
     [videoSlug("nBRTyGwEZ2w")]: title.includes("SEIDΔNTHEM") && intro.includes("いろは") && intro.includes("ビエラ"),
     [videoSlug("BraIOg7l2R0")]: title.includes("なんもしない合宿") && intro.includes("蔵王町") && /#PR/i.test(intro),
     [videoSlug("HozUF2gTvXc")]: title.includes("ルカリオ×カイリュー") && title.includes("いろは構築") && intro.includes("第21弾"),
@@ -127,24 +129,28 @@ async function getVideos(id: string) {
 }
 
 async function getReject(): Promise<NewsSourceArticle[]> {
-  const url = new URL("https://reject.jp/wp-json/wp/v2/posts");
-  url.search = new URLSearchParams({ search: "今日ポケ", after: FIRST_DAY + "T00:00:00", per_page: "100", _fields: "id,date_gmt,link,title" }).toString();
-  const posts: unknown = JSON.parse(await requestText(url.href));
-  if (!Array.isArray(posts)) throw new Error("invalid_reject_feed");
-  return posts.flatMap((post): NewsSourceArticle[] => {
-    const title = post?.title?.rendered;
-    const iso = `${post?.date_gmt}Z`;
-    if (!Number.isSafeInteger(post?.id) || post.id <= 0 || typeof title !== "string" || !title.trim() || !isPublishedBy(iso) ||
-        !namedMember(title) || !/今日ポケ|KYOUPOKE|ポケモン|Pokémon|REJECT杯/i.test(title) ||
-        typeof post.link !== "string" || !/^https:\/\/reject\.jp\/\d{4}\/\d{2}\/\d{2}\//.test(post.link)) return [];
-    if (japanDay(iso) < FIRST_DAY) return [];
-    const verified = verifiedCopy(`reject-${post.id}`, title);
-    if (verified) return [{ ...verified, date: japanDay(iso), link: { ...verified.link, href: post.link } }];
+  const xml = await requestText(REJECT_FEED);
+  if (/<!DOCTYPE/i.test(xml) || XMLValidator.validate(xml) !== true) throw new Error("invalid_reject_feed");
+  const root = new XMLParser({
+    ignoreAttributes: false, parseTagValue: false, isArray: name => name === "item",
+  }).parse(xml)?.["rdf:RDF"];
+  if (root?.channel?.["@_rdf:about"] !== REJECT_FEED || !Array.isArray(root.item)) throw new Error("invalid_reject_feed");
+  return root.item.flatMap((item: Record<string, unknown>): NewsSourceArticle[] => {
+    const { title, link, "dc:date": published, "dc:corp": company } = item;
+    if (company !== "株式会社REJECT" || typeof link !== "string" || link !== item["@_rdf:about"] ||
+        typeof title !== "string" || !title.trim() || typeof published !== "string" || !isPublishedBy(published)) return [];
+    const slug = rejectReleaseSlug(link);
+    const date = japanDay(published);
+    if (!slug || date < FIRST_DAY) return [];
+    // An already published release can be corrected even if its new heading no longer names the subject.
+    if (slug !== "reject-11250" && (!namedMember(title) || !/今日ポケ|KYOUPOKE|ポケモン|Pok[eé]mon|REJECT杯/i.test(title))) return [];
+    const verified = verifiedCopy(slug, title);
+    if (verified) return [{ ...verified, date }];
     return [{
-      slug: `reject-${post.id}`, date: japanDay(iso), category: /大会|選手権|チャンピオンシップス/.test(title) ? "イベント" : "お知らせ",
-      title, summary: "REJECTが今日ポケに関する情報を公式サイトで発表しました。",
-      body: [`REJECTによる発表の見出しは「${title}」です。詳細はREJECTの公式記事で確認できます。`],
-      link: { label: "REJECTの発表を読む", href: post.link },
+      slug, date, category: /大会|選手権|チャンピオンシップス|REJECT杯/.test(title) ? "イベント" : "お知らせ",
+      title, summary: "株式会社REJECTがPR TIMESで発表しました。",
+      body: ["発表の詳細は、株式会社REJECTが配信したプレスリリースでご確認ください。"],
+      link: { label: "REJECTの発表を読む", href: link },
     }];
   });
 }

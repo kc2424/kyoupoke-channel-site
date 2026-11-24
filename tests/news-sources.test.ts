@@ -5,6 +5,14 @@ import { fetchOfficialNews } from "../src/lib/news-sources";
 const group = "UCmnZL4tFRl4sm-uJOxTLHmg";
 const tv = "UCDqvZvUgRq5RRmy_zZd5Yaw";
 const host = "UCVpaaZ-p7GTTFEDR_NCnfNg";
+const prFeed = "https://prtimes.jp/companyrdf.php?company_id=50979";
+const release = (id: number, company = "000050979") => `https://prtimes.jp/main/html/rd/p/${String(id).padStart(9, "0")}.${company}.html`;
+function pressItem(link: string, title: string, corp = "株式会社REJECT", about = link) {
+  return `<item rdf:about="${about}"><title>${title}</title><link>${link}</link><dc:corp>${corp}</dc:corp><dc:date>2026-09-01T19:00:02+09:00</dc:date></item>`;
+}
+function pressFeed(items: string, channel = prFeed) {
+  return `<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel rdf:about="${channel}"><title>株式会社REJECT</title></channel>${items}</rdf:RDF>`;
+}
 function feed(channel: string, entries: { id: string; title: string; description?: string; channel?: string }[]) {
   return `<feed xmlns:yt="yt" xmlns:media="media"><author><uri>https://www.youtube.com/channel/${channel}</uri></author>${entries.map(e =>
     `<entry><yt:channelId>${e.channel ?? channel}</yt:channelId><yt:videoId>${e.id}</yt:videoId><published>2026-09-01T18:00:00Z</published><title>${e.title}</title><media:group><media:description>${e.description ?? ""}</media:description></media:group></entry>`).join("")}</feed>`;
@@ -26,10 +34,13 @@ test("固定した発表元の新着を選別し、失敗した取得元だけ�
       { id: "mk000000006", title: "新作ゲームで勝負", description: "過去にいろはも出演" },
     ]));
     if (id === host) return new Response("unavailable", { status: 503 });
-    if (url.hostname === "reject.jp") return Response.json([
-      { id: 1234, date_gmt: "2026-09-01T00:00:00", link: "https://reject.jp/2026/09/01/event/", title: { rendered: "今日ポケとのイベント開催" } },
-      { id: 1235, date_gmt: "2026-09-01T00:00:00", link: "https://reject.jp/2026/09/01/test/", title: { rendered: "別チームのリーグ戦" } },
-    ]);
+    if (url.href === prFeed) return new Response(pressFeed([
+      pressItem(release(1234), "今日ポケとのイベント開催"),
+      pressItem(release(1235), "別チームのリーグ戦"),
+      pressItem(release(1236, "000000001"), "今日ポケとの偽のイベント"),
+      pressItem(release(1237), "今日ポケとの偽のイベント", "別の発表元"),
+      pressItem(release(1238), "今日ポケとの偽のイベント", "株式会社REJECT", release(1239)),
+    ].join("")));
     throw new Error("unknown source");
   });
   const before = process.env.X_BEARER_TOKEN;
@@ -41,16 +52,32 @@ test("固定した発表元の新着を選別し、失敗した取得元だけ�
   assert.equal(fresh.length, 3);
   assert.equal(fresh.find(a => a.title.includes("80万人"))?.date, "2026-09-02");
   assert.equal(fresh.find(a => a.title.includes("31弾"))?.link.href, "https://www.youtube.com/watch?v=mk000000005");
-  assert.ok(fresh.some(a => a.slug === "reject-1234"));
+  assert.equal(fresh.find(a => a.slug === "reject-prtimes-1234")?.link.href, release(1234));
   assert.ok(articles.some(a => a.initialOnly && a.date === "2026-09-26"));
 });
 
 test("誤ったチャンネルのXMLを読み込まずニュースの上書きを防ぐ", async t => {
   t.mock.method(globalThis, "fetch", async (input: string) => {
-    if (new URL(input).hostname === "reject.jp") return Response.json([]);
+    if (new URL(input).href === prFeed) return new Response(pressFeed(pressItem(release(500), "別チーム"), "https://example.org/"));
     return new Response(feed("unrelated", []));
   });
   const { articles, failedSources } = await fetchOfficialNews();
   assert.equal(articles.every(a => a.initialOnly), true);
   assert.ok(failedSources.includes("youtube-kyoupoke"));
+  assert.ok(failedSources.includes("reject"));
+});
+
+test("掲載済みのWCS発表は同じスラッグを保ち、訂正後の見出しを反映する", async t => {
+  const corrected = "【訂正】今日ポケの世界大会出場に関するお知らせ";
+  t.mock.method(globalThis, "fetch", async (input: string) => {
+    if (input === prFeed) return new Response(pressFeed(pressItem(release(634), corrected)));
+    return new Response("unavailable", { status: 503 });
+  });
+  const { articles, failedSources } = await fetchOfficialNews();
+  const result = articles.filter(a => a.slug === "reject-11250");
+  assert.equal(failedSources.includes("reject"), false);
+  assert.equal(result.length, 1);
+  assert.equal(result[0].title, corrected);
+  assert.equal(result[0].link.href, release(634));
+  assert.ok(!result[0].initialOnly);
 });

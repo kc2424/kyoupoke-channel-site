@@ -30,3 +30,8 @@ export async function syncContent({ dryRun = false } = {}) {
   const news = await updateNews(notion, dryRun);
   return { stats, news };
 }
+
+/** A missing statistics key leaves the installation in news-only mode. */
+export function syncSucceeded(report: Awaited<ReturnType<typeof syncContent>>) {
+  return report.news.status === "ok" && report.stats.status !== "failed";
+}
