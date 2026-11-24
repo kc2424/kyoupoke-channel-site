@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/contact-form";
 import { JsonLd } from "@/components/json-ld";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { SiteFooter } from "@/components/site-footer";
-import { formatNewsDate, getLatestNews } from "@/content/news";
+import { formatNewsDate, getAllNews } from "@/content/news";
 import { videoJsonLd } from "@/lib/seo";
 import {
   InstagramIcon,
@@ -35,7 +35,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WipeLink } from "@/components/wipe-link";
 import {
-  fetchAchievements,
+  fetchAchievementCatalog,
   fetchLinks,
   fetchPublishedMembers,
   fetchSiteTexts,
@@ -43,6 +43,7 @@ import {
   fetchVideos,
   type NotionLinkIcon,
 } from "@/lib/notion";
+import { achievementCards } from "@/lib/news-achievements";
 import { fetchLatestVideos } from "@/lib/youtube";
 import Image from "@/components/site-image";
 import { SmoothScroll } from "@/components/smooth-scroll";
@@ -309,24 +310,29 @@ export default async function Home() {
     notionLinks,
     notionTexts,
     latestVideos,
-    latestNews,
+    allNews,
   ] = await Promise.all([
     fetchPublishedMembers("メインメンバー"),
     fetchPublishedMembers("スタッフ"),
     fetchStats(),
-    fetchAchievements(),
+    fetchAchievementCatalog(),
     fetchVideos(),
     fetchLinks(),
     fetchSiteTexts(),
     fetchLatestVideos(3),
-    getLatestNews(3).catch(() => null),
+    getAllNews().catch(() => null),
   ]);
 
   const cmsConfigured = Boolean(process.env.NOTION_TOKEN);
   const members = notionMembers ?? (cmsConfigured ? [] : fallbackMembers);
   const staff = notionStaff ?? (cmsConfigured ? [] : staffMembers);
   const stats = notionStats ?? (cmsConfigured ? [] : fallbackStats);
-  const achievements = notionAchievements ?? (cmsConfigured ? [] : fallbackAchievements);
+  const latestNews = allNews?.slice(0, 3);
+  const achievements = achievementCards(
+    notionAchievements?.visible ?? (cmsConfigured ? [] : fallbackAchievements),
+    notionAchievements?.reserved ?? [],
+    notionAchievements ? allNews ?? [] : [],
+  );
   const achievementWideFrom = achievements.length % 3 === 2 ? achievements.length - 2 : -1;
   const videos = notionVideos ?? (cmsConfigured ? [] : fallbackVideos);
   const mainLinks = notionLinks?.mainLinks ?? (cmsConfigured ? [] : fallbackMainLinks);
@@ -339,6 +345,10 @@ export default async function Home() {
     ? stat.value.toLocaleString("ja-JP", { minimumFractionDigits: stat.decimals, maximumFractionDigits: stat.decimals }) + stat.suffix
     : undefined;
   const statsUpdatedAt = notionStats?.map((stat) => stat.updatedAt).filter((date): date is string => Boolean(date)).sort().at(-1);
+  const checkedStats = notionStats?.flatMap(({ label, checkedOn }) =>
+    checkedOn && (label === "チャンネル登録者数" || label === "総再生回数") ? [{ label, checkedOn }] : []) ?? [];
+  const sharedCheckDate = checkedStats.length === 2 && checkedStats[0].checkedOn === checkedStats[1].checkedOn
+    ? checkedStats[0].checkedOn : undefined;
   const aboutParagraph2 = texts.about_paragraph2
     .replace(/(現在はチャンネル登録者数\s*約?)[\d.]+万人/, (_, prefix) => subscribers ? prefix + subscribers.value + "万人" : _)
     .replace(/(総再生回数は)[\d.]+億回/, (_, prefix) => views ? prefix + views.value + "億回" : _);
@@ -565,14 +575,20 @@ export default async function Home() {
               stats={stats}
               className="mt-8 py-6 sm:py-8 lg:py-10 text-neutral-900"
             />
-            {statsUpdatedAt && <p className="text-xs text-neutral-600">掲載データ更新：<time dateTime={statsUpdatedAt}>{formatNewsDate(statsUpdatedAt)}</time></p>}
+            {checkedStats.length > 0 ? (
+              <p className="text-xs text-neutral-600">
+                <a className="underline" href="https://www.youtube.com/@KYOUPOKE/about">YouTube</a>
+                {sharedCheckDate ? <> 統計確認日：<time dateTime={sharedCheckDate}>{formatNewsDate(sharedCheckDate)}</time></> :
+                  checkedStats.map(({ label, checkedOn }) => <span key={label}> {label}の確認日：<time dateTime={checkedOn}>{formatNewsDate(checkedOn)}</time></span>)}
+              </p>
+            ) : statsUpdatedAt && <p className="text-xs text-neutral-600">掲載データ更新：<time dateTime={statsUpdatedAt}>{formatNewsDate(statsUpdatedAt)}</time></p>}
             <SnapReveal className="mt-10 grid gap-3 sm:grid-cols-6 lg:gap-5">
               {achievements.map((a, i) => {
                 const image = achievementImages[a.label];
                 const wide = achievementWideFrom >= 0 && i >= achievementWideFrom;
                 return (
                   <SparkTap
-                    key={a.label}
+                    key={a.source?.href ?? a.label}
                     celebrationLabel={`${a.label}を祝う`}
                     className={cn(
                       "flex aspect-[4/3] flex-col justify-end rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-lg lg:p-7",
@@ -608,6 +624,7 @@ export default async function Home() {
                     <p className="relative mt-1 text-sm font-bold opacity-90 lg:text-base">
                       {a.sub}
                     </p>
+                    {a.source && <a className="relative mt-2 self-start text-sm underline underline-offset-4" href={a.source.href}>{a.source.label}</a>}
                   </SparkTap>
                 );
               })}
