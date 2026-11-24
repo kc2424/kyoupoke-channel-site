@@ -5,11 +5,11 @@ import { isPublishedBy, publicationTimestamp, safeExternalUrl, safeImagePath, va
 
 const MEMBERS_DATA_SOURCE_ID = "bae6dc6b-1a16-4dab-bc29-17e07e8dcdb2";
 const ACHIEVEMENTS_DATA_SOURCE_ID = "e680e416-6833-4a4a-be31-800cb2f57208";
-const STATS_DATA_SOURCE_ID = "777541f2-088b-460b-9bfe-9b8b8308e6aa";
+export const STATS_DATA_SOURCE_ID = "777541f2-088b-460b-9bfe-9b8b8308e6aa";
 const VIDEOS_DATA_SOURCE_ID = "70745038-6c0e-41bc-8307-e2c456676d02";
 const LINKS_DATA_SOURCE_ID = "6b2c8532-e222-44b8-a5ac-bfba572411ee";
 const SITE_TEXT_DATA_SOURCE_ID = "a816d703-edc6-42ab-a2fe-58a35d7c48b6";
-const NEWS_DATA_SOURCE_ID = "de43ee17-f9cb-47a3-b6f0-47f4b0e86b22";
+export const NEWS_DATA_SOURCE_ID = "de43ee17-f9cb-47a3-b6f0-47f4b0e86b22";
 
 export type NotionMember = {
   name: string;
@@ -33,6 +33,7 @@ export type NotionStat = {
   label: string;
   /** CMS上でこの数値が最後に更新された日時。集計時点とは限らない。 */
   updatedAt?: string;
+  checkedOn?: string;
 };
 
 export type NotionVideo = {
@@ -179,23 +180,23 @@ export const fetchPublishedMembers = cache(async (
   return members;
 });
 
-export const fetchAchievements = cache(async (): Promise<NotionAchievement[] | null> => {
+export const fetchAchievementCatalog = cache(async () => {
   const pages = await queryAllPages({
     data_source_id: ACHIEVEMENTS_DATA_SOURCE_ID,
-    filter: { property: "公開", checkbox: { equals: true } },
     sorts: [{ property: "表示順", direction: "ascending" }],
   }, "achievements");
   if (pages === null) return null;
-  const achievements: NotionAchievement[] = pages.map((page) => {
+  const visible: NotionAchievement[] = [];
+  const reserved: NotionAchievement[] = [];
+  for (const page of pages) {
     const properties = pageProperties(page);
-    return {
-      label: title(properties["見出し"]),
-      sub: richText(properties["補足"]),
-      tone: select(properties["トーン"]) === "ブランド色" ? "brand" as const : "black" as const,
-    };
-  }).filter((achievement) => achievement.label);
-  reportInvalid("achievements", pages.length - achievements.length);
-  return achievements;
+    const label = title(properties["見出し"]);
+    if (!label) continue;
+    const rows = record(properties["公開"]).checkbox === true ? visible : reserved;
+    rows.push({ label, sub: richText(properties["補足"]), tone: select(properties["トーン"]) === "ブランド色" ? "brand" : "black" });
+  }
+  reportInvalid("achievements", pages.length - visible.length - reserved.length);
+  return { visible, reserved };
 });
 
 export const fetchStats = cache(async (): Promise<NotionStat[] | null> => {
@@ -214,7 +215,9 @@ export const fetchStats = cache(async (): Promise<NotionStat[] | null> => {
     const updatedAt = typeof edited === "string" && publicationTimestamp(edited) !== undefined
       ? edited
       : undefined;
-    return [{ value, decimals, suffix: richText(properties["接尾語"]), label, updatedAt }];
+    const observed = dateStart(properties["確認日"]);
+    const checkedOn = isPublishedBy(observed) ? observed : undefined;
+    return [{ value, decimals, suffix: richText(properties["接尾語"]), label, updatedAt, checkedOn }];
   });
   reportInvalid("stats", pages.length - stats.length);
   return stats;
@@ -269,7 +272,7 @@ export const fetchNews = cache(async (): Promise<NotionNewsArticle[] | null> => 
   if (pages === null) return null;
   const now = Date.now();
   let invalid = 0;
-  const articles = pages.flatMap((page): NotionNewsArticle[] => {
+  const articles = pages.flatMap((page) => {
     const properties = pageProperties(page);
     const slug = richText(properties["スラッグ"]);
     const date = dateStart(properties["公開日"]);
@@ -287,16 +290,32 @@ export const fetchNews = cache(async (): Promise<NotionNewsArticle[] | null> => 
       ? edited : undefined;
     const linkLabel = richText(properties["リンクラベル"]);
     const linkHref = safeExternalUrl(url(properties["リンクURL"]));
-    return [{
+    const article: NotionNewsArticle = {
       slug, date, updatedAt,
       category: NEWS_CATEGORIES.includes(category) ? category : "お知らせ",
       title: heading, summary, body,
       link: linkLabel && linkHref ? { label: linkLabel, href: linkHref } : undefined,
-    }];
+    };
+    const row = record(page);
+    return [{ article, pageId: String(row.id), created: String(row.created_time), creator: record(row.created_by).id }];
   });
-  const counts = new Map<string, number>();
-  for (const article of articles) counts.set(article.slug, (counts.get(article.slug) ?? 0) + 1);
-  const unique = articles.filter((article) => counts.get(article.slug) === 1);
+  const groups = new Map<string, typeof articles>();
+  for (const item of articles) {
+    const group = groups.get(item.article.slug);
+    if (group) group.push(item);
+    else groups.set(item.article.slug, [item]);
+  }
+  const unique: NotionNewsArticle[] = [];
+  for (const [slug, group] of groups) {
+    if (group.length > 1) {
+      // Concurrent Notion writes can briefly expose two copies of the same automatic post.
+      const first = group[0];
+      if (!slug.startsWith("auto-") || !first.creator || !first.article.link ||
+        !group.every((item) => item.creator === first.creator && (item.article.link?.href === first.article.link?.href || item.article.title === first.article.title))) continue;
+      group.sort((a, b) => a.created.localeCompare(b.created) || a.pageId.localeCompare(b.pageId));
+    }
+    unique.push(group[0].article);
+  }
   reportInvalid("news", invalid + articles.length - unique.length);
   return unique;
 });
