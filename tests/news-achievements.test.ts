@@ -19,6 +19,10 @@ test("主催REJECTの杯で明記された本人の優勝だけを実績にす�
   const win = { ...milestone, title: "REJECT杯でチームくろこが優勝", slug: "auto-reject-100",
     link: { label: "結果", href: "https://reject.jp/2026/09/30/result/" } };
   assert.equal(achievementCards([], [], [win])[0].label, win.title);
+  const press = { ...win, slug: "auto-reject-prtimes-700", link: { label: "結果", href: "https://prtimes.jp/main/html/rd/p/000000700.000050979.html" } };
+  assert.equal(achievementCards([], [], [press])[0].source?.href, press.link.href);
+  assert.deepEqual(achievementCards([], [], [{ ...press, link: { ...press.link, href: press.link.href.replace("000050979", "000000001") } }]), []);
+  assert.deepEqual(achievementCards([], [], [{ ...press, slug: "auto-reject-prtimes-701" }]), []);
   const earlierWin = { label: "REJECT杯 優勝", sub: "チームくろこ優勝（2026年8月）", tone: "brand" as const };
   assert.equal(achievementCards([earlierWin], [], [win]).length, 2);
   assert.equal(achievementCards([], [], [win, { ...win, date: "2026-08-20", slug: "auto-reject-50" }]).length, 2);

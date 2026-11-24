@@ -1,6 +1,6 @@
 import type { NewsArticle } from "../content/news";
 import type { NotionAchievement } from "./notion";
-import { isPublishedBy } from "./content-validation";
+import { isPublishedBy, rejectReleaseSlug } from "./content-validation";
 
 type AchievementCard = NotionAchievement & { source?: { href: string; label: string } };
 
@@ -56,8 +56,9 @@ export function achievementCards(
       // REJECT's own cup, an identified winner, and a completed victory.
       // Announcements, interviews with winners, predictions and placements stay as news.
       const winner = /(?:チーム)?(いろは|くろこ|バンビー)(?:選手|チーム)?[」』]?が(?:見事)?優勝(?:しました|を果たしました)?[!！。]*$/.exec(article.title);
-      if (!winner || !article.title.includes("REJECT杯") || !/^auto-reject-\d+$/.test(article.slug) ||
-          url.hostname !== "reject.jp" || !/^\/\d{4}\/\d{2}\/\d{2}\//.test(url.pathname)) continue;
+      const original = /^auto-reject-\d+$/.test(article.slug) && url.hostname === "reject.jp" && /^\/\d{4}\/\d{2}\/\d{2}\//.test(url.pathname);
+      const releaseSlug = rejectReleaseSlug(url.href);
+      if (!winner || !article.title.includes("REJECT杯") || !(original || (releaseSlug && article.slug === `auto-${releaseSlug}`))) continue;
       if (claimed.some(text => sameCup(text, article, winner[1]))) continue;
       label = article.title;
     }

@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { POST } from "../src/app/api/content-sync/route";
+import { syncSucceeded } from "../src/lib/content-sync";
+
+test("news-only runs succeed and a failure in any configured source is reported", () => {
+  const news = { status: "ok" as const, created: 0, updated: 0, unchanged: 6, skipped: 0, failedSources: [] };
+  assert.ok(syncSucceeded({ stats: { status: "not_configured" }, news }));
+  assert.ok(!syncSucceeded({ stats: { status: "failed" }, news }));
+  assert.ok(!syncSucceeded({ stats: { status: "not_configured" }, news: { ...news, status: "partial", failedSources: ["reject"] } }));
+});
 
 test("scheduled endpoint accepts work only in production with the configured bearer", async (t) => {
   const request = (authorization?: string) => new Request("https://example.test/api/content-sync", {

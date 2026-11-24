@@ -1,3 +1,10 @@
+/** Stable PR TIMES release ID in REJECT's company feed. Preserve the already published WCS URL. */
+export function rejectReleaseSlug(href: string): string | undefined {
+  const match = /^https:\/\/prtimes\.jp\/main\/html\/rd\/p\/(\d{9})\.000050979\.html$/.exec(href);
+  if (!match || Number(match[1]) === 0) return;
+  return match[1] === "000000634" ? "reject-11250" : `reject-prtimes-${Number(match[1])}`;
+}
+
 /** CMS/RSSの境界で使用する、ネットワークに依存しない検証。 */
 export function validSlug(value: string): boolean {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) && value.length <= 160;
